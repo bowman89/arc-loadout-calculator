@@ -6,7 +6,11 @@ import {
   type Item as Weapon,
   type Mats,
 } from "../lib/calcCosts";
+import { type Augment } from "../lib/getAugments";
+import { type QuickUse } from "../lib/getQuickUse";
+import { type Ammunition } from "../lib/getAmmo";
 
+/* ---------- types ---------- */
 type Item = {
   id: string;
   name?: { en?: string };
@@ -18,6 +22,21 @@ type LoadoutItem = {
   quantity: number;
 };
 
+type LoadoutAugment = {
+  augment: Augment;
+  quantity: number;
+};
+
+type LoadoutQuickUse = {
+  quickUse: QuickUse;
+  quantity: number;
+};
+
+type LoadoutAmmo = {
+  ammo: Ammunition;
+  quantity: number;
+};
+
 /* ---------- helpers ---------- */
 function formatMaterialName(key: string) {
   return key
@@ -25,251 +44,430 @@ function formatMaterialName(key: string) {
     .replace(/\b\w/g, (char) => char.toUpperCase());
 }
 
+function QuantityControl({
+  value,
+  onChange,
+}: {
+  value: number;
+  onChange: (v: number) => void;
+}) {
+  return (
+    <div className="mt-3 flex items-center justify-center gap-3">
+      <button
+        onClick={() => onChange(Math.max(1, value - 1))}
+        className="h-9 w-9 rounded-md bg-black/40 text-lg"
+      >
+        −
+      </button>
+      <div className="min-w-[32px] text-center font-semibold">{value}</div>
+      <button
+        onClick={() => onChange(value + 1)}
+        className="h-9 w-9 rounded-md bg-black/40 text-lg"
+      >
+        +
+      </button>
+    </div>
+  );
+}
+
 /* ---------- component ---------- */
 export default function BuilderClient({
   weapons,
   items,
+  augments,
+  quickUses,
+  ammo = [],
 }: {
   weapons: Weapon[];
   items: Item[];
+  augments: Augment[];
+  quickUses: QuickUse[];
+  ammo?: Ammunition[];
 }) {
   const [selectedWeaponId, setSelectedWeaponId] = useState("");
-  const [quantity, setQuantity] = useState(1);
-  const [loadout, setLoadout] = useState<LoadoutItem[]>([]);
+  const [weaponQty, setWeaponQty] = useState(1);
+  const [weaponLoadout, setWeaponLoadout] = useState<LoadoutItem[]>([]);
 
-  const weaponsById = useMemo(() => {
-    const map: Record<string, Weapon> = {};
-    for (const w of weapons) map[w.id] = w;
-    return map;
-  }, [weapons]);
+  const [selectedAugmentId, setSelectedAugmentId] = useState("");
+  const [augmentQty, setAugmentQty] = useState(1);
+  const [augmentLoadout, setAugmentLoadout] = useState<LoadoutAugment[]>([]);
 
-  const itemsById = useMemo(() => {
-    const map: Record<string, Item> = {};
-    for (const it of items) map[it.id] = it;
-    return map;
-  }, [items]);
+  const [selectedQuickUseId, setSelectedQuickUseId] = useState("");
+  const [quickUseQty, setQuickUseQty] = useState(1);
+  const [quickUseLoadout, setQuickUseLoadout] = useState<LoadoutQuickUse[]>([]);
 
-  const materialTotals: Mats = useMemo(() => {
-    return totalsForLoadout(loadout, weaponsById);
-  }, [loadout, weaponsById]);
+  const [selectedAmmoId, setSelectedAmmoId] = useState("");
+  const [ammoQty, setAmmoQty] = useState(1);
+  const [ammoLoadout, setAmmoLoadout] = useState<LoadoutAmmo[]>([]);
 
-  function addToLoadout() {
-    if (!selectedWeaponId) return;
-    const weapon = weaponsById[selectedWeaponId];
-    if (!weapon) return;
-
-    setLoadout((prev) => [...prev, { weapon, quantity }]);
-  }
-
-  function removeFromLoadout(index: number) {
-    setLoadout((prev) => prev.filter((_, i) => i !== index));
-  }
-
-  function clearLoadout() {
-    setLoadout([]);
-  }
-
-  const materialRows = Object.entries(materialTotals).sort((a, b) =>
-    a[0].localeCompare(b[0])
+  const weaponsById = useMemo(
+    () => Object.fromEntries(weapons.map((w) => [w.id, w])),
+    [weapons]
   );
 
+  const itemsById = useMemo(
+    () => Object.fromEntries(items.map((i) => [i.id, i])),
+    [items]
+  );
+
+  const augmentsById = useMemo(
+    () => Object.fromEntries(augments.map((a) => [a.id, a])),
+    [augments]
+  );
+
+  const quickUsesById = useMemo(
+    () => Object.fromEntries(quickUses.map((q) => [q.id, q])),
+    [quickUses]
+  );
+
+  const ammoById = useMemo(
+    () => Object.fromEntries(ammo.map((a) => [a.id, a])),
+    [ammo]
+  );
+
+  function addWeapon() {
+    const weapon = weaponsById[selectedWeaponId];
+    if (!weapon) return;
+    setWeaponLoadout((p) => [...p, { weapon, quantity: weaponQty }]);
+    setWeaponQty(1);
+  }
+
+  function addAugment() {
+    const augment = augmentsById[selectedAugmentId];
+    if (!augment) return;
+    setAugmentLoadout((p) => [...p, { augment, quantity: augmentQty }]);
+    setAugmentQty(1);
+  }
+
+  function addQuickUse() {
+    const quickUse = quickUsesById[selectedQuickUseId];
+    if (!quickUse) return;
+    setQuickUseLoadout((p) => [...p, { quickUse, quantity: quickUseQty }]);
+    setQuickUseQty(1);
+  }
+
+  function addAmmo() {
+    const a = ammoById[selectedAmmoId];
+    if (!a) return;
+    setAmmoLoadout((p) => [...p, { ammo: a, quantity: ammoQty }]);
+    setAmmoQty(1);
+  }
+
+  function clearAll() {
+    setWeaponLoadout([]);
+    setAugmentLoadout([]);
+    setQuickUseLoadout([]);
+    setAmmoLoadout([]);
+  }
+
+  function removeWeapon(index: number) {
+    setWeaponLoadout((p) => p.filter((_, i) => i !== index));
+  }
+  function removeAugment(index: number) {
+    setAugmentLoadout((p) => p.filter((_, i) => i !== index));
+  }
+  function removeQuickUse(index: number) {
+    setQuickUseLoadout((p) => p.filter((_, i) => i !== index));
+  }
+  function removeAmmo(index: number) {
+    setAmmoLoadout((p) => p.filter((_, i) => i !== index));
+  }
+
+  const weaponMaterials = useMemo(
+    () => totalsForLoadout(weaponLoadout, weaponsById),
+    [weaponLoadout, weaponsById]
+  );
+
+  const mergeMaterials = (...lists: Mats[]) =>
+    lists.reduce((acc, list) => {
+      for (const [k, v] of Object.entries(list)) {
+        acc[k] = (acc[k] ?? 0) + v;
+      }
+      return acc;
+    }, {} as Mats);
+
+  const augmentMaterials = useMemo(() => {
+    const totals: Mats = {};
+    augmentLoadout.forEach(({ augment, quantity }) => {
+      if (!augment.recipe) return;
+      Object.entries(augment.recipe).forEach(
+        ([k, v]) => (totals[k] = (totals[k] ?? 0) + v * quantity)
+      );
+    });
+    return totals;
+  }, [augmentLoadout]);
+
+  const quickUseMaterials = useMemo(() => {
+    const totals: Mats = {};
+    quickUseLoadout.forEach(({ quickUse, quantity }) => {
+      if (!quickUse.recipe) return;
+      Object.entries(quickUse.recipe).forEach(
+        ([k, v]) => (totals[k] = (totals[k] ?? 0) + v * quantity)
+      );
+    });
+    return totals;
+  }, [quickUseLoadout]);
+
+  const ammoMaterials = useMemo(() => {
+    const totals: Mats = {};
+    ammoLoadout.forEach(({ ammo, quantity }) => {
+      if (!ammo.recipe) return;
+      Object.entries(ammo.recipe).forEach(
+        ([k, v]) => (totals[k] = (totals[k] ?? 0) + v * quantity)
+      );
+    });
+    return totals;
+  }, [ammoLoadout]);
+
+  const materialRows = Object.entries(
+    mergeMaterials(
+      weaponMaterials,
+      augmentMaterials,
+      quickUseMaterials,
+      ammoMaterials
+    )
+  ).sort((a, b) => a[0].localeCompare(b[0]));
+
+const hasAnyLoadout = Boolean(
+  weaponLoadout.length ||
+  augmentLoadout.length ||
+  quickUseLoadout.length ||
+  ammoLoadout.length
+);
+
+
+  /* ---------- UI ---------- */
   return (
-    <div
-      className="
-        grid
-        grid-cols-1
-        gap-6
-        items-start
-        md:grid-cols-[320px_420px_320px]
-      "
-    >
-      {/* ADD ITEM */}
-      <section className="rounded-xl bg-white/5 p-6">
-        <h4 className="mb-4 font-semibold text-white">Add item</h4>
+    <div className="space-y-6">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <section className="rounded-xl bg-[#16181d] p-6">
+          <div className="mb-4 flex items-center justify-between">
+            <h4 className="font-semibold">Current loadout</h4>
+  <button
+  onClick={clearAll}
+  disabled={!hasAnyLoadout}
+  className={`text-sm px-3 py-1 rounded border
+    ${hasAnyLoadout
+      ? "cursor-pointer text-red-400 hover:text-red-300"
+      : "cursor-not-allowed text-white/30 border-white/10"}
+  `}
+>
+  Clear all
+</button>
 
-        <label className="block text-sm text-[#A0A4AA]">Weapon</label>
-        <select
-          value={selectedWeaponId}
-          onChange={(e) => setSelectedWeaponId(e.target.value)}
-          className="mt-1 w-full rounded bg-white px-3 py-2 text-black"
-        >
-          <option value="">Select weapon</option>
-          {weapons.map((w) => (
-            <option key={w.id} value={w.id}>
-              {w.name?.en ?? w.id}
-            </option>
-          ))}
-        </select>
-
-        {/* QUANTITY */}
-        <label className="mt-4 block text-sm text-[#A0A4AA]">Quantity</label>
-        <div className="mt-2 flex items-center gap-2">
-          <button
-            onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-            className="h-9 w-9 rounded-md border border-white/10 bg-[#0E0F12] text-white hover:bg-white/10 transition"
-          >
-            −
-          </button>
-
-          <div className="h-9 min-w-[48px] rounded-md bg-[#0E0F12] border border-white/10 text-sm font-medium text-white flex items-center justify-center">
-            {quantity}
           </div>
 
-          <button
-            onClick={() => setQuantity((q) => q + 1)}
-            className="h-9 w-9 rounded-md border border-white/10 bg-[#0E0F12] text-white hover:bg-white/10 transition"
-          >
-            +
-          </button>
-        </div>
+          {!hasAnyLoadout ? (
+            <p className="text-sm text-[#A0A4AA]">No items added yet</p>
+          ) : (
+            <div className="space-y-2">
+              {[
+                ...weaponLoadout.map((e, i) => ({
+                  type: "weapon",
+                  index: i,
+                  entry: e,
+                })),
+                ...augmentLoadout.map((e, i) => ({
+                  type: "augment",
+                  index: i,
+                  entry: e,
+                })),
+                ...quickUseLoadout.map((e, i) => ({
+                  type: "quickUse",
+                  index: i,
+                  entry: e,
+                })),
+                ...ammoLoadout.map((e, i) => ({
+                  type: "ammo",
+                  index: i,
+                  entry: e,
+                })),
+              ].map(({ type, index, entry }, i) => {
+                const item =
+                  entry.weapon || entry.augment || entry.quickUse || entry.ammo;
 
-        <button
-          onClick={addToLoadout}
-          className="mt-6 w-full rounded-md bg-[#C9B400] px-4 py-2 text-sm font-semibold text-[#0E0F12] hover:bg-[#B3A200] transition"
-        >
-          Add to loadout
-        </button>
-      </section>
+                const remove = () => {
+                  if (type === "weapon") removeWeapon(index);
+                  if (type === "augment") removeAugment(index);
+                  if (type === "quickUse") removeQuickUse(index);
+                  if (type === "ammo") removeAmmo(index);
+                };
 
-      {/* CURRENT LOADOUT */}
-      <section className="rounded-xl bg-white/5 p-6">
-        <div className="mb-4 flex items-baseline justify-between">
-          <h4 className="font-semibold text-white">Current loadout</h4>
-          <button
-            onClick={clearLoadout}
-            disabled={loadout.length === 0}
-            className="text-sm text-red-400 hover:text-red-300 disabled:opacity-40 px-2 rounded"
-          >
-            Clear all
-          </button>
-        </div>
-
-        {loadout.length === 0 && (
-          <p className="text-sm text-[#A0A4AA]">No items added yet</p>
-        )}
-
-        <div className="space-y-3">
-          {loadout.map((item, index) => (
-            <div
-              key={`${item.weapon.id}-${index}`}
-              className="flex items-center gap-3 rounded-lg bg-[#0E0F12] border border-white/5 p-3"
-            >
-              {item.weapon.imageFilename && (
-                <img
-                  src={item.weapon.imageFilename}
-                  alt={item.weapon.name?.en ?? item.weapon.id}
-                  className="h-12 w-12 flex-shrink-0 object-contain"
-                />
-              )}
-
-              <div className="min-w-0 flex-1">
-                <strong className="block truncate text-sm text-white">
-                  {item.weapon.name?.en ?? item.weapon.id}
-                </strong>
-                <div className="text-xs text-[#A0A4AA]">
-                  Quantity: {item.quantity}
-                </div>
-              </div>
-
-              <button
-                onClick={() => removeFromLoadout(index)}
-                className="text-zinc-400 hover:text-red-400"
-              >
-                ✕
-              </button>
+                return (
+                  <div
+                    key={i}
+                    className="flex items-center gap-3 rounded-lg bg-black/40 px-3 py-2"
+                  >
+                    {item.imageFilename && (
+                      <img
+                        src={item.imageFilename}
+                        className="h-8 w-8"
+                        alt={item.name?.en ?? item.id}
+                      />
+                    )}
+                    <div className="flex-1">
+                      <div>{item.name?.en ?? item.id}</div>
+                      <div className="text-sm opacity-70">
+                        Qty: {entry.quantity}
+                      </div>
+                    </div>
+                    <button
+                      onClick={remove}
+                      className="cursor-pointer text-red-400 hover:text-red-300 text-lg "
+                    >
+                      ×
+                    </button>
+                  </div>
+                );
+              })}
             </div>
-          ))}
-        </div>
-      </section>
+          )}
+        </section>
 
-      {/* MATERIALS */}
-      <section className="rounded-xl bg-white/5 p-6">
-        <div className="mb-4 flex items-center justify-between">
-          <h4 className="font-semibold text-white">Materials needed</h4>
+        {/* MATERIALS */}
+        <section className="rounded-xl bg-[#16181d] p-6">
+          <h4 className="mb-4 font-semibold">Materials needed</h4>
 
-          {/* INFO ICON */}
-          <div className="relative group">
-            <div
-              className="
-                flex h-6 w-6 items-center justify-center
-                rounded-full
-                border border-[#C9B400]
-                text-xs font-semibold
-                text-[#C9B400]
-                cursor-default
-                hover:bg-white/10
-              "
-            >
-              i
-            </div>
-
-            {/* TOOLTIP */}
-            <div
-              className="
-                pointer-events-none
-                absolute right-0 top-8 z-10
-                w-56
-                rounded-md
-                bg-[#0E0F12]
-                border border-[#C9B400]
-                p-3
-                text-xs
-                text-[#C9B400]
-                opacity-0
-                translate-y-1
-                transition
-                group-hover:opacity-100
-                group-hover:translate-y-0
-              "
-            >
-Shows the <strong className="text-white">total materials</strong> required
-to craft everything in your current loadout.
-<br />
-<br />
-Tip: You can <strong className="text-white">clip this list</strong> using
-the screenshot tool and paste it directly into
-<strong className="text-white"> Steam Notes</strong> for easy in-game reference.
-<br />
-<br />
-Updates automatically when items change.
-            </div>
-          </div>
-        </div>
-
-        {materialRows.length === 0 ? (
-          <p className="text-sm text-[#A0A4AA]">
-            Add items to see required materials.
-          </p>
-        ) : (
-          <div className="space-y-2">
-            {materialRows.map(([matId, amount]) => {
-              const matItem = itemsById[matId];
-
-              return (
-                <div
-                  key={matId}
-                  className="flex items-center justify-between gap-3 rounded-md bg-[#0E0F12] border border-white/5 px-3 py-2"
-                >
-                  <div className="flex min-w-0 items-center gap-2">
+          {materialRows.length === 0 ? (
+            <p className="text-sm text-[#A0A4AA]">
+              Add items to see required materials.
+            </p>
+          ) : (
+            <div className="flex flex-wrap gap-2">
+              {materialRows.map(([matId, amount]) => {
+                const matItem = itemsById[matId];
+                return (
+                  <div
+                    key={matId}
+                    className="inline-flex items-center gap-2 rounded-lg bg-black/40 px-3 py-2"
+                  >
                     {matItem?.imageFilename && (
                       <img
                         src={matItem.imageFilename}
+                        className="h-6 w-6"
                         alt={matItem.name?.en ?? matId}
-                        className="h-6 w-6 flex-shrink-0"
                       />
                     )}
-                    <span className="truncate text-sm text-white">
+                    <span className="text-sm">
                       {matItem?.name?.en ?? formatMaterialName(matId)}
                     </span>
+                    <span className="rounded-full bg-white/10 px-2 text-sm">
+                      {amount}
+                    </span>
                   </div>
+                );
+              })}
+            </div>
+          )}
+        </section>
+      </div>
 
-                  <strong className="text-sm text-white">{amount}</strong>
-                </div>
-              );
-            })}
-          </div>
-        )}
-      </section>
+      {/* INPUT GRID */}
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+        {/* WEAPON */}
+        <section className="rounded-xl bg-[#16181d] p-6">
+          <h4 className="mb-4 font-semibold">Add weapon</h4>
+          <select
+            value={selectedWeaponId}
+            onChange={(e) => setSelectedWeaponId(e.target.value)}
+            className="w-full rounded-md bg-white px-3 py-2 text-black"
+          >
+            <option value="">Select weapon</option>
+            {weapons.map((w) => (
+              <option key={w.id} value={w.id}>
+                {w.name?.en ?? w.id}
+              </option>
+            ))}
+          </select>
+
+          <QuantityControl value={weaponQty} onChange={setWeaponQty} />
+
+          <button
+            onClick={addWeapon}
+            className="mt-4 w-full rounded-md bg-[#C9B400] px-4 py-2 font-semibold text-black"
+          >
+            Add weapon
+          </button>
+        </section>
+
+        {/* AUGMENT */}
+        <section className="rounded-xl bg-[#16181d] p-6">
+          <h4 className="mb-4 font-semibold">Add augment</h4>
+          <select
+            value={selectedAugmentId}
+            onChange={(e) => setSelectedAugmentId(e.target.value)}
+            className="w-full rounded-md bg-white px-3 py-2 text-black"
+          >
+            <option value="">Select augment</option>
+            {augments.map((a) => (
+              <option key={a.id} value={a.id}>
+                {a.name?.en ?? a.id}
+              </option>
+            ))}
+          </select>
+
+          <QuantityControl value={augmentQty} onChange={setAugmentQty} />
+
+          <button
+            onClick={addAugment}
+            className="mt-4 w-full rounded-md bg-[#C9B400] px-4 py-2 font-semibold text-black"
+          >
+            Add augment
+          </button>
+        </section>
+
+        {/* CONSUMABLE */}
+        <section className="rounded-xl bg-[#16181d] p-6">
+          <h4 className="mb-4 font-semibold">Add consumable</h4>
+          <select
+            value={selectedQuickUseId}
+            onChange={(e) => setSelectedQuickUseId(e.target.value)}
+            className="w-full rounded-md bg-white px-3 py-2 text-black"
+          >
+            <option value="">Select consumable</option>
+            {quickUses.map((q) => (
+              <option key={q.id} value={q.id}>
+                {q.name?.en ?? q.id}
+              </option>
+            ))}
+          </select>
+
+          <QuantityControl value={quickUseQty} onChange={setQuickUseQty} />
+
+          <button
+            onClick={addQuickUse}
+            className="mt-4 w-full rounded-md bg-[#C9B400] px-4 py-2 font-semibold text-black"
+          >
+            Add consumable
+          </button>
+        </section>
+
+        {/* AMMO */}
+        <section className="rounded-xl bg-[#16181d] p-6">
+          <h4 className="mb-4 font-semibold">Add ammo</h4>
+          <select
+            value={selectedAmmoId}
+            onChange={(e) => setSelectedAmmoId(e.target.value)}
+            className="w-full rounded-md bg-white px-3 py-2 text-black"
+          >
+            <option value="">Select ammo</option>
+            {ammo.map((a) => (
+              <option key={a.id} value={a.id}>
+                {a.name?.en ?? a.id}
+              </option>
+            ))}
+          </select>
+
+          <QuantityControl value={ammoQty} onChange={setAmmoQty} />
+
+          <button
+            onClick={addAmmo}
+            className="mt-4 w-full rounded-md bg-[#C9B400] px-4 py-2 font-semibold text-black"
+          >
+            Add ammo
+          </button>
+        </section>
+      </div>
     </div>
   );
 }

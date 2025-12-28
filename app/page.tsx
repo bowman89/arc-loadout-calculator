@@ -1,10 +1,12 @@
-import Link from "next/link";
 import Image from "next/image";
 import BuilderClient from "./builder/BuilderClient";
 
-// ✅ SERVER-ONLY DATA
+// SERVER DATA
 import { getWeapons } from "./lib/getWeapons";
 import { getItems } from "./lib/getItems";
+import { getAugments } from "./lib/getAugments";
+import { getQuickUse } from "./lib/getQuickUse";
+import { getAmmo } from "./lib/getAmmo"; // ✅ brug din lib-loader
 
 const COLORS = {
   dark: "#0E0F12",
@@ -20,6 +22,9 @@ const COLORS = {
 export default async function Home() {
   const weapons = getWeapons();
   const items = getItems();
+  const augments = getAugments();
+  const quickUses = getQuickUse();
+  const ammo = getAmmo(); // ✅ kommer nu korrekt med "Ammunition"-items
 
   return (
     <div style={{ backgroundColor: COLORS.dark, color: COLORS.textLight }}>
@@ -34,20 +39,17 @@ export default async function Home() {
         <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/75 to-black/90" />
 
         <div className="relative mx-auto max-w-6xl px-6 py-40 text-center">
-          <h1 className="flex justify-center">
-            <span className="sr-only">ARC RAIDERS</span>
-            <Image
-              src="/logo-white.png"
-              alt="ARC RAIDERS"
-              width={420}
-              height={120}
-              priority
-              className="w-[280px] sm:w-[560px] h-auto"
-            />
-          </h1>
+          <Image
+            src="/logo-white.png"
+            alt="ARC RAIDERS"
+            width={420}
+            height={120}
+            priority
+            className="mx-auto w-[280px] sm:w-[560px]"
+          />
 
-          <h2 className="mt-6 flex items-center justify-center gap-2 text-3xl font-semibold sm:text-4xl">
-            <span>LOADOUT</span>
+          <h2 className="mt-6 text-3xl font-semibold sm:text-4xl">
+            LOADOUT{" "}
             <span
               className="rounded-md px-3 py-1"
               style={{
@@ -59,78 +61,76 @@ export default async function Home() {
             </span>
           </h2>
 
-<p
-  className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed"
-  style={{ color: COLORS.mutedLight }}
->
-  Know exactly what to farm before every raid.
-  <br />
-  <span className="opacity-80">
-    Instant material breakdowns for weapons and attachments.
-  </span>
-</p>
+          <p
+            className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed"
+            style={{ color: COLORS.mutedLight }}
+          >
+            Know exactly what to farm before every raid.
+            <br />
+            <span className="opacity-80">
+              Instant material breakdowns for weapons, augments and consumables.
+            </span>
+          </p>
 
-
-          {/* SCROLL CTA */}
-          <div className="mt-10 flex justify-center">
-            <a
-              href="#calculator"
-              className="inline-block rounded-lg px-8 py-3 text-lg font-semibold transition hover:opacity-90"
-              style={{
-                backgroundColor: COLORS.accent,
-                color: COLORS.dark,
-              }}
-            >
-              Go To Calculator
-            </a>
-          </div>
+          <a
+            href="#calculator"
+            className="mt-10 inline-block rounded-lg px-8 py-3 font-semibold transition hover:opacity-90"
+            style={{ backgroundColor: COLORS.accent, color: COLORS.dark }}
+          >
+            Go To Calculator
+          </a>
         </div>
       </section>
 
-      {/* WHAT YOU’LL GET */}
-      <section className="mx-auto max-w-6xl px-6 py-24">
+      {/* WHAT IS LOADOUT CALCULATOR */}
+      <section className="mx-auto max-w-6xl px-6 pt-24">
         <p
-          className="mb-3 text-xs font-semibold uppercase tracking-widest"
+          className="mb-3 text-xs uppercase tracking-widest"
           style={{ color: COLORS.accentDark }}
         >
           What is Loadout Calculator?
         </p>
 
-        <h3 className="mb-10 text-2xl font-semibold">
+        <h3 className="mb-12 text-3xl font-semibold">
           Plan smarter before every raid
         </h3>
 
-        <div className="grid gap-6 sm:grid-cols-3">
-          {[
-            {
-              title: "Instant calculations",
-              text: "Get immediate material requirements as you build weapons and attachments.",
-            },
-            {
-              title: "Combined totals",
-              text: "See total materials across your entire loadout — no manual math.",
-            },
-            {
-              title: "Community-driven data",
-              text: "Built on community-maintained ARC Raiders data.",
-            },
-          ].map((item) => (
-            <div
-              key={item.title}
-              className="rounded-xl p-6"
-              style={{ backgroundColor: COLORS.darkSoft }}
-            >
-              <h4 className="mb-2 font-semibold">{item.title}</h4>
-              <p className="text-sm" style={{ color: COLORS.mutedLight }}>
-                {item.text}
-              </p>
-            </div>
-          ))}
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+          <div
+            className="rounded-xl p-6"
+            style={{ backgroundColor: COLORS.darkCard }}
+          >
+            <h4 className="mb-2 font-semibold">Instant calculations</h4>
+            <p className="text-sm" style={{ color: COLORS.mutedLight }}>
+              Get immediate material requirements as you build weapons and
+              attachments.
+            </p>
+          </div>
+
+          <div
+            className="rounded-xl p-6"
+            style={{ backgroundColor: COLORS.darkCard }}
+          >
+            <h4 className="mb-2 font-semibold">Combined totals</h4>
+            <p className="text-sm" style={{ color: COLORS.mutedLight }}>
+              See total materials across your entire loadout — no manual math.
+            </p>
+          </div>
+
+          <div
+            className="rounded-xl p-6"
+            style={{ backgroundColor: COLORS.darkCard }}
+          >
+            <h4 className="mb-2 font-semibold">Community-driven data</h4>
+            <p className="text-sm" style={{ color: COLORS.mutedLight }}>
+              Built on community-maintained ARC Raiders data.
+            </p>
+          </div>
         </div>
       </section>
 
       {/* ABOUT TOOL — NEON BORDER */}
-      <section className="mx-auto max-w-6xl px-6 pb-24">
+      <section className="mx-auto max-w-6xl px-6 py-24">
         <div
           className="relative rounded-2xl p-8 sm:p-12 border"
           style={{
@@ -176,11 +176,11 @@ export default async function Home() {
         className="scroll-mt-24"
         style={{ backgroundColor: COLORS.darkSoft }}
       >
-        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24">
+        <div className="mx-auto max-w-7xl px-4 py-24">
           <div
-            className="relative rounded-2xl p-6 sm:p-10 md:p-12 border transition"
+            className="relative rounded-2xl p-8 border transition"
             style={{
-              backgroundColor: COLORS.darkCard,
+              backgroundColor: COLORS.dark,
               borderColor: COLORS.accent,
               boxShadow: `
                 0 0 0 1px rgba(201,180,0,0.35),
@@ -189,33 +189,34 @@ export default async function Home() {
               `,
             }}
           >
-<div className="mb-10 text-center">
-  <p
-    className="mb-2 text-xs font-semibold uppercase tracking-widest"
-    style={{ color: COLORS.accentDark }}
-  >
-    Loadout Calculator
-  </p>
+            <div className="mb-10 text-center">
+              <p
+                className="mb-2 text-xs uppercase tracking-widest"
+                style={{ color: COLORS.accentDark }}
+              >
+                Loadout Calculator
+              </p>
 
-  <h3 className="text-2xl font-semibold">
-    Build your raid loadout
-  </h3>
+              <h3 className="text-2xl font-semibold">
+                Build your raid loadout
+              </h3>
 
-  <p
-    className="mt-3 text-sm"
-    style={{ color: COLORS.mutedLight }}
-  >
-    Attachments, consumables, augments, and shields coming soon.
-  </p>
-</div>
+              <p className="mt-3 text-sm" style={{ color: COLORS.mutedLight }}>
+                Ammo & shields coming later
+              </p>
+            </div>
 
-
-            <BuilderClient weapons={weapons} items={items} />
+            <BuilderClient
+              weapons={weapons}
+              items={items}
+              augments={augments}
+              quickUses={quickUses}
+              ammo={ammo}
+            />
           </div>
         </div>
       </section>
-
-      {/* FOOTER */}
+            {/* FOOTER */}
       <footer
         className="px-6 py-16 text-center text-xs"
         style={{ backgroundColor: COLORS.dark }}
