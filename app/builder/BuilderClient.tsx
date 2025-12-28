@@ -7,7 +7,7 @@ import {
   type Mats,
 } from "../lib/calcCosts";
 import { type Augment } from "../lib/getAugments";
-import { type QuickUse } from "../lib/getQuickUse";
+import { type QuickUseItem as QuickUse } from "../lib/getQuickUse";
 import { type Ammunition } from "../lib/getAmmo";
 
 /* ---------- types ---------- */
@@ -35,6 +35,13 @@ type LoadoutQuickUse = {
 type LoadoutAmmo = {
   ammo: Ammunition;
   quantity: number;
+};
+
+type LoadoutRow = {
+  key: string;
+  item: { id: string; name?: { en?: string }; imageFilename?: string };
+  quantity: number;
+  remove: () => void;
 };
 
 /* ---------- helpers ---------- */
@@ -228,98 +235,113 @@ export default function BuilderClient({
     )
   ).sort((a, b) => a[0].localeCompare(b[0]));
 
-const hasAnyLoadout = Boolean(
-  weaponLoadout.length ||
-  augmentLoadout.length ||
-  quickUseLoadout.length ||
-  ammoLoadout.length
-);
+  const hasAnyLoadout = Boolean(
+    weaponLoadout.length ||
+      augmentLoadout.length ||
+      quickUseLoadout.length ||
+      ammoLoadout.length
+  );
 
+  // ✅ Flatten rows so TS never has to guess the type in render
+  const currentRows: LoadoutRow[] = useMemo(() => {
+    const rows: LoadoutRow[] = [];
+
+    weaponLoadout.forEach((e, i) => {
+      rows.push({
+        key: `weapon-${i}`,
+        item: e.weapon,
+        quantity: e.quantity,
+        remove: () => removeWeapon(i),
+      });
+    });
+
+    augmentLoadout.forEach((e, i) => {
+      rows.push({
+        key: `augment-${i}`,
+        item: e.augment,
+        quantity: e.quantity,
+        remove: () => removeAugment(i),
+      });
+    });
+
+    quickUseLoadout.forEach((e, i) => {
+      rows.push({
+        key: `quickUse-${i}`,
+        item: e.quickUse,
+        quantity: e.quantity,
+        remove: () => removeQuickUse(i),
+      });
+    });
+
+    ammoLoadout.forEach((e, i) => {
+      rows.push({
+        key: `ammo-${i}`,
+        item: e.ammo,
+        quantity: e.quantity,
+        remove: () => removeAmmo(i),
+      });
+    });
+
+    return rows;
+  }, [weaponLoadout, augmentLoadout, quickUseLoadout, ammoLoadout]);
 
   /* ---------- UI ---------- */
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        {/* CURRENT LOADOUT */}
         <section className="rounded-xl bg-[#16181d] p-6">
           <div className="mb-4 flex items-center justify-between">
             <h4 className="font-semibold">Current loadout</h4>
-  <button
-  onClick={clearAll}
-  disabled={!hasAnyLoadout}
-  className={`text-sm px-3 py-1 rounded border
-    ${hasAnyLoadout
-      ? "cursor-pointer text-red-400 hover:text-red-300"
-      : "cursor-not-allowed text-white/30 border-white/10"}
-  `}
->
-  Clear all
-</button>
 
+            {/* ✅ Always render, but disabled when empty */}
+            <button
+              onClick={clearAll}
+              disabled={!hasAnyLoadout}
+              className={`text-sm px-3 py-1 rounded border
+                ${
+                  hasAnyLoadout
+                    ? "cursor-pointer text-red-400 hover:text-red-300 border-red-400/30"
+                    : "cursor-not-allowed text-white/30 border-white/10"
+                }`}
+            >
+              Clear all
+            </button>
           </div>
 
           {!hasAnyLoadout ? (
             <p className="text-sm text-[#A0A4AA]">No items added yet</p>
           ) : (
             <div className="space-y-2">
-              {[
-                ...weaponLoadout.map((e, i) => ({
-                  type: "weapon",
-                  index: i,
-                  entry: e,
-                })),
-                ...augmentLoadout.map((e, i) => ({
-                  type: "augment",
-                  index: i,
-                  entry: e,
-                })),
-                ...quickUseLoadout.map((e, i) => ({
-                  type: "quickUse",
-                  index: i,
-                  entry: e,
-                })),
-                ...ammoLoadout.map((e, i) => ({
-                  type: "ammo",
-                  index: i,
-                  entry: e,
-                })),
-              ].map(({ type, index, entry }, i) => {
-                const item =
-                  entry.weapon || entry.augment || entry.quickUse || entry.ammo;
+              {currentRows.map((row) => (
+                <div
+                  key={row.key}
+                  className="flex items-center gap-3 rounded-lg bg-black/40 px-3 py-2"
+                >
+                  {row.item.imageFilename && (
+                    <img
+                      src={row.item.imageFilename}
+                      className="h-8 w-8"
+                      alt={row.item.name?.en ?? row.item.id}
+                    />
+                  )}
 
-                const remove = () => {
-                  if (type === "weapon") removeWeapon(index);
-                  if (type === "augment") removeAugment(index);
-                  if (type === "quickUse") removeQuickUse(index);
-                  if (type === "ammo") removeAmmo(index);
-                };
-
-                return (
-                  <div
-                    key={i}
-                    className="flex items-center gap-3 rounded-lg bg-black/40 px-3 py-2"
-                  >
-                    {item.imageFilename && (
-                      <img
-                        src={item.imageFilename}
-                        className="h-8 w-8"
-                        alt={item.name?.en ?? item.id}
-                      />
-                    )}
-                    <div className="flex-1">
-                      <div>{item.name?.en ?? item.id}</div>
-                      <div className="text-sm opacity-70">
-                        Qty: {entry.quantity}
-                      </div>
-                    </div>
-                    <button
-                      onClick={remove}
-                      className="cursor-pointer text-red-400 hover:text-red-300 text-lg "
-                    >
-                      ×
-                    </button>
+                  <div className="flex-1">
+                    <div>{row.item.name?.en ?? row.item.id}</div>
+                    <div className="text-sm opacity-70">Qty: {row.quantity}</div>
                   </div>
-                );
-              })}
+
+                  {/* ✅ Big click target + pointer on hover */}
+                  <button
+                    onClick={row.remove}
+                    aria-label="Remove item"
+                    title="Remove"
+                    className="cursor-pointer text-red-400 hover:text-red-300 text-lg leading-none px-2 py-1"
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
             </div>
           )}
         </section>
