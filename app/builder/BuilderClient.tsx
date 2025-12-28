@@ -1,11 +1,9 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import {
-  totalsForLoadout,
-  type Item as Weapon,
-  type Mats,
-} from "../lib/calcCosts";
+import { totalsForLoadout } from "../lib/calcCosts";
+import type { Item as Weapon, Mats } from "../lib/calcCosts";
+
 import { type Augment } from "../lib/getAugments";
 import { type QuickUseItem as QuickUse } from "../lib/getQuickUse";
 import { type Ammunition } from "../lib/getAmmo";
