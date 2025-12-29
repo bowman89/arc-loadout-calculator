@@ -6,8 +6,22 @@ import { getWeapons } from "./lib/getWeapons";
 import { getItems } from "./lib/getItems";
 import { getAugments } from "./lib/getAugments";
 import { getQuickUse } from "./lib/getQuickUse";
-import { getAmmo } from "./lib/getAmmo"; // ✅ brug din lib-loader
+import { getAmmo } from "./lib/getAmmo";
 
+// ICONS
+import {
+  PackageCheck,
+  Layers3,
+  Repeat,
+  Brain,
+  Users,
+  Calculator,
+} from "lucide-react";
+
+// IMAGE
+import Mockup from "../public/mockup.png";
+
+// THEME COLORS
 const COLORS = {
   dark: "#0E0F12",
   darkSoft: "#16181D",
@@ -24,11 +38,14 @@ export default async function Home() {
   const items = getItems();
   const augments = getAugments();
   const quickUses = getQuickUse();
-  const ammo = getAmmo(); // ✅ kommer nu korrekt med "Ammunition"-items
+  const ammo = getAmmo();
 
   return (
     <div style={{ backgroundColor: COLORS.dark, color: COLORS.textLight }}>
-      {/* HERO */}
+
+      {/* ─────────────────────────────────────
+          HERO SECTION
+      ───────────────────────────────────── */}
       <section
         className="relative bg-cover bg-center"
         style={{
@@ -45,83 +62,77 @@ export default async function Home() {
             width={420}
             height={120}
             priority
-            className="mx-auto w-[280px] sm:w-[560px]"
+            className="mx-auto w-[280px] sm:w-[760px]"
           />
 
           <h2 className="mt-6 text-3xl font-semibold sm:text-4xl">
             LOADOUT{" "}
             <span
               className="rounded-md px-3 py-1"
-              style={{
-                backgroundColor: COLORS.accent,
-                color: COLORS.dark,
-              }}
+              style={{ backgroundColor: COLORS.accent, color: COLORS.dark }}
             >
               CALC
             </span>
           </h2>
 
-          <p
-            className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed"
-            style={{ color: COLORS.mutedLight }}
-          >
+          <h2 className="mt-10 text-3xl font-semibold sm:text-4xl text-white">
+            Want a stash full of ready-to-raid loadouts?
+          </h2>
+
+          <p className="mx-auto mt-6 max-w-2xl text-xl text-gray-200 sm:text-2xl leading-relaxed">
             Know exactly what to farm before every raid.
-            <br />
-            <span className="opacity-80">
-              Instant material breakdowns for weapons, augments and consumables.
-            </span>
+          </p>
+
+          <p className="mx-auto mt-4 max-w-2xl text-base text-gray-400 sm:text-lg leading-relaxed">
+            <span className="font-medium text-white">LoadoutCALC</span> gives you instant material breakdowns
+            for what you need to craft weapons, augments, ammo, and quick use items.
           </p>
 
           <a
             href="#calculator"
-            className="mt-10 inline-block rounded-lg px-8 py-3 font-semibold transition hover:opacity-90"
+            className="mt-12 inline-block rounded-lg px-8 py-3 font-semibold transition hover:opacity-90"
             style={{ backgroundColor: COLORS.accent, color: COLORS.dark }}
           >
-            Go To Calculator
+            Start Planning
           </a>
         </div>
       </section>
 
-      {/* WHAT IS LOADOUT CALCULATOR */}
+      {/* ─────────────────────────────────────
+          BENEFITS / VALUE PROPOSITION
+      ───────────────────────────────────── */}
       <section className="mx-auto max-w-6xl px-6 pt-24">
         <p
           className="mb-3 text-xs uppercase tracking-widest"
           style={{ color: COLORS.accentDark }}
         >
-          What is Loadout Calculator?
+          Why Use LoadoutCALC?
         </p>
 
         <h3 className="mb-12 text-3xl font-semibold">
-          Plan smarter before every raid
+          Smarter Loadouts. Less Grinding.
         </h3>
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-          <div
-            className="rounded-xl p-6"
-            style={{ backgroundColor: COLORS.darkCard }}
-          >
-            <h4 className="mb-2 font-semibold">Instant calculations</h4>
+          <div className="rounded-xl p-6 flex flex-col items-center text-center" style={{ backgroundColor: COLORS.darkCard }}>
+            <Calculator className="mb-4 h-6 w-6 text-accent" />
+            <h4 className="mb-2 font-semibold">Instant Calculations</h4>
             <p className="text-sm" style={{ color: COLORS.mutedLight }}>
-              Get immediate material requirements as you build weapons and
-              attachments.
+              Get immediate material requirements as you build weapons and attachments.
             </p>
           </div>
 
-          <div
-            className="rounded-xl p-6"
-            style={{ backgroundColor: COLORS.darkCard }}
-          >
-            <h4 className="mb-2 font-semibold">Combined totals</h4>
+          <div className="rounded-xl p-6 flex flex-col items-center text-center" style={{ backgroundColor: COLORS.darkCard }}>
+            <Layers3 className="mb-4 h-6 w-6 text-accent" />
+            <h4 className="mb-2 font-semibold">Combined Totals</h4>
             <p className="text-sm" style={{ color: COLORS.mutedLight }}>
-              See total materials across your entire loadout — no manual math.
+              See total materials across your entire loadout without manual math.
             </p>
           </div>
 
-          <div
-            className="rounded-xl p-6"
-            style={{ backgroundColor: COLORS.darkCard }}
-          >
-            <h4 className="mb-2 font-semibold">Community-driven data</h4>
+          <div className="rounded-xl p-6 flex flex-col items-center text-center" style={{ backgroundColor: COLORS.darkCard }}>
+            <Users className="mb-4 h-6 w-6 text-accent" />
+            <h4 className="mb-2 font-semibold">Community-Driven Data</h4>
             <p className="text-sm" style={{ color: COLORS.mutedLight }}>
               Built on community-maintained ARC Raiders data.
             </p>
@@ -129,7 +140,74 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* ABOUT TOOL — NEON BORDER */}
+      {/* ─────────────────────────────────────
+          HOW IT WORKS SECTION
+      ───────────────────────────────────── */}
+      <section className="mt-24 py-24" style={{ backgroundColor: COLORS.darkSoft }}>
+        <div className="mx-auto max-w-6xl px-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+
+            {/* TEXT */}
+            <div>
+              <p className="mb-3 text-xs uppercase tracking-widest" style={{ color: COLORS.accentDark }}>
+                How it works
+              </p>
+              <h2 className="mt-2 text-3xl sm:text-4xl font-bold text-white">
+                Plan smarter in 3 steps:
+              </h2>
+
+              <div className="mt-6 space-y-6 text-gray-300 text-sm sm:text-base">
+                <div>
+                  <h4 className="font-semibold text-white mb-1">1. Build your loadout</h4>
+                  <p>Select your desired weapons, augments, ammo and quick use items.</p>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-white mb-1">2. See exact materials needed</h4>
+                  <p>Instantly get total crafting requirements – across your entire build.</p>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-white mb-1">3. Farm with a plan</h4>
+                  <p>Use the breakdown to collect only what you need. No overfarming.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* IMAGE */}
+            <div
+              className="relative rounded-2xl overflow-hidden border"
+              style={{
+                borderColor: COLORS.accentDark,
+                backgroundColor: "rgba(255,255,255,0.02)",
+                boxShadow: `
+                  0 0 0 1px rgba(201,180,0,0.25),
+                  0 0 24px rgba(201,180,0,0.12),
+                  inset 0 0 0 1px rgba(255,255,255,0.02)
+                `,
+              }}
+            >
+              <Image
+                src={Mockup}
+                alt="Loadout calculator example"
+                width={640}
+                height={400}
+                className="w-full h-auto"
+              />
+            </div>
+          </div>
+
+          <a
+            href="#calculator"
+            className="mt-12 block mx-auto rounded-lg text-center px-8 py-3 font-semibold transition hover:opacity-90"
+            style={{ backgroundColor: COLORS.accent, color: COLORS.dark }}
+          >
+            Start Planning
+          </a>
+        </div>
+      </section>
+
+      {/* ─────────────────────────────────────
+          ABOUT SECTION
+      ───────────────────────────────────── */}
       <section className="mx-auto max-w-6xl px-6 py-24">
         <div
           className="relative rounded-2xl p-8 sm:p-12 border"
@@ -147,20 +225,14 @@ export default async function Home() {
             About the Loadout Calculator
           </h3>
 
-          <div
-            className="max-w-3xl space-y-4 text-sm leading-relaxed"
-            style={{ color: COLORS.mutedLight }}
-          >
+          <div className="max-w-3xl space-y-4 text-sm leading-relaxed" style={{ color: COLORS.mutedLight }}>
             <p>
-              The ARC Raiders Loadout Calculator is a fan-made utility built to
-              help players plan weapon loadouts and attachments before
-              deploying. It instantly calculates total crafting materials —
-              eliminating guesswork and manual calculations.
+              The ARC Raiders Loadout Calculator is a fan-made utility built to help players plan weapon loadouts and attachments before deploying.
+              It instantly calculates total crafting materials — eliminating guesswork and manual calculations.
             </p>
 
             <p>
-              All crafting data is sourced from community-driven projects and
-              continuously refined by dedicated ARC Raiders fans.
+              All crafting data is sourced from community-driven projects and continuously refined by dedicated ARC Raiders fans.
             </p>
 
             <p className="text-xs" style={{ color: COLORS.mutedDark }}>
@@ -170,12 +242,10 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* CALCULATOR — PRIMARY NEON PANEL */}
-      <section
-        id="calculator"
-        className="scroll-mt-24"
-        style={{ backgroundColor: COLORS.darkSoft }}
-      >
+      {/* ─────────────────────────────────────
+          CALCULATOR SECTION
+      ───────────────────────────────────── */}
+      <section id="calculator" className="scroll-mt-24" style={{ backgroundColor: COLORS.darkSoft }}>
         <div className="mx-auto max-w-7xl px-4 py-24">
           <div
             className="relative rounded-2xl p-8 border transition"
@@ -190,10 +260,7 @@ export default async function Home() {
             }}
           >
             <div className="mb-10 text-center">
-              <p
-                className="mb-2 text-xs uppercase tracking-widest"
-                style={{ color: COLORS.accentDark }}
-              >
+              <p className="mb-2 text-xs uppercase tracking-widest" style={{ color: COLORS.accentDark }}>
                 Loadout Calculator
               </p>
 
@@ -201,9 +268,6 @@ export default async function Home() {
                 Build your raid loadout
               </h3>
 
-              <p className="mt-3 text-sm" style={{ color: COLORS.mutedLight }}>
-                Ammo & shields coming later
-              </p>
             </div>
 
             <BuilderClient
@@ -216,15 +280,12 @@ export default async function Home() {
           </div>
         </div>
       </section>
-            {/* FOOTER */}
-      <footer
-        className="px-6 py-16 text-center text-xs"
-        style={{ backgroundColor: COLORS.dark }}
-      >
-        <div
-          className="mx-auto max-w-4xl space-y-4 leading-relaxed"
-          style={{ color: COLORS.mutedDark }}
-        >
+
+      {/* ─────────────────────────────────────
+          FOOTER
+      ───────────────────────────────────── */}
+      <footer className="px-6 py-16 text-center text-xs" style={{ backgroundColor: COLORS.dark }}>
+        <div className="mx-auto max-w-4xl space-y-4 leading-relaxed" style={{ color: COLORS.mutedDark }}>
           <p>This is an unofficial fan-made tool for ARC RAIDERS.</p>
 
           <p>
@@ -245,14 +306,12 @@ export default async function Home() {
               className="underline underline-offset-2"
             >
               ArcTracker.io
-            </a>
-            .
+            </a>.
           </p>
 
           <p>
-            This project is licensed under the MIT License. ARC Raiders and all
-            related assets are copyright © Embark Studios AB. This project is
-            not affiliated with or endorsed by Embark Studios AB.
+            This project is licensed under the MIT License. ARC Raiders and all related assets are copyright © Embark Studios AB.
+            This project is not affiliated with or endorsed by Embark Studios AB.
           </p>
 
           <p>
@@ -264,8 +323,7 @@ export default async function Home() {
               className="font-medium underline underline-offset-2"
             >
               Discord
-            </a>
-            .
+            </a>.
           </p>
         </div>
       </footer>

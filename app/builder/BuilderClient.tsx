@@ -412,7 +412,7 @@ export default function BuilderClient({
 
         {/* AUGMENT */}
         <section className="rounded-xl bg-[#16181d] p-6">
-          <h4 className="mb-4 font-semibold">Add augment</h4>
+          <h4 className="mb-4 font-semibold">Add augment / Shield</h4>
           <select
             value={selectedAugmentId}
             onChange={(e) => setSelectedAugmentId(e.target.value)}
@@ -432,7 +432,7 @@ export default function BuilderClient({
             onClick={addAugment}
             className="mt-4 w-full rounded-md bg-[#C9B400] px-4 py-2 font-semibold text-black"
           >
-            Add augment
+            Add augment / shield
           </button>
         </section>
 

@@ -16,8 +16,10 @@ export function getAugments(): Augment[] {
     .readdirSync(dir)
     .filter((f) => f.endsWith(".json"))
     .map((f) => JSON.parse(fs.readFileSync(path.join(dir, f), "utf8")))
-    .filter((i) => i?.type?.toLowerCase() === "augment")
-    .sort((a, b) =>
-      (a.name?.en ?? a.id).localeCompare(b.name?.en ?? b.id)
-    );
+    .filter(
+      (i) =>
+        i?.type?.toLowerCase() === "augment" ||
+        i?.type?.toLowerCase() === "shield"
+    )
+    .sort((a, b) => (a.name?.en ?? a.id).localeCompare(b.name?.en ?? b.id));
 }
