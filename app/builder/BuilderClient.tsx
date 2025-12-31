@@ -403,6 +403,8 @@ export default function BuilderClient({
           <QuantityControl value={weaponQty} onChange={setWeaponQty} />
 
           <button
+            id="btn-add-weapon"
+            data-action="add_weappon"
             onClick={addWeapon}
             className="mt-4 w-full rounded-md bg-[#C9B400] px-4 py-2 font-semibold text-black"
           >
@@ -429,6 +431,8 @@ export default function BuilderClient({
           <QuantityControl value={augmentQty} onChange={setAugmentQty} />
 
           <button
+            id="btn-add-augmentShield"
+            data-action="add_augmentShield"
             onClick={addAugment}
             className="mt-4 w-full rounded-md bg-[#C9B400] px-4 py-2 font-semibold text-black"
           >

@@ -1,3 +1,4 @@
+//Pager.tsx
 import Image from "next/image";
 import BuilderClient from "./builder/BuilderClient";
 
