@@ -307,6 +307,17 @@ export default async function Home() {
               <h3 className="text-2xl font-semibold">
                 Build your raid loadout
               </h3>
+              <p className="mt-3 text-xs text-[#A0A4AA]">
+  Something missing or not working?{" "}
+  <a
+    href="https://docs.google.com/forms/d/e/1FAIpQLSf1PgLtEkk91pI--JvRLkGhKM_KPgtK8O1LdN_zT9ez8g66GQ/viewform"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="text-[#C9B400] hover:underline"
+  >
+    Let me know →
+  </a>
+</p>
 
             </div>
 
@@ -365,6 +376,18 @@ export default async function Home() {
               Discord
             </a>.
           </p>
+          <p className="text-xs text-[#A0A4AA] mt-2">
+  Missing items or something feels off?{" "}
+  <a
+    href="https://docs.google.com/forms/d/e/1FAIpQLSf1PgLtEkk91pI--JvRLkGhKM_KPgtK8O1LdN_zT9ez8g66GQ/viewform"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="text-[#C9B400] hover:underline"
+  >
+    Let me know →
+  </a>
+</p>
+
         </div>
       </footer>
     </div>
