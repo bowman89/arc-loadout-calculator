@@ -59,3 +59,34 @@ Kør git pull --rebase før git push
 Ændringer vises ikke i app
 
 Submodule-pointer er ikke committed i main repo
+
+
+
+
+-----
+
+
+ix 1 (anbefalet): Lad submodule pege på din fork (så Vercel kan hente dine commits)
+
+Det her er den “det virker hver gang”-løsning mens du arbejder.
+
+A) Ret submodule remote så origin både fetch’er og push’er til din fork
+
+Kør i:
+
+cd data/arcraiders-data
+git remote -v
+
+
+Sæt origin til din fork (begge retninger):
+
+git remote set-url origin https://github.com/bowman89/arcraiders-data.git
+git remote add upstream https://github.com/RaidTheory/arcraiders-data.git
+git remote -v
+
+
+Nu har du:
+
+origin = din fork (fetch/push)
+
+upstream = RaidTheory (kun som “kilde” du kan sync’e fra)

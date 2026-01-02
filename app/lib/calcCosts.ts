@@ -28,7 +28,6 @@ const INT_TO_ROMAN = Object.fromEntries(
 ) as Record<number, string>;
 
 function parseId(id: string): { base: string; level: number } {
-  // expects: "anvil_iv"
   const idx = id.lastIndexOf("_");
   if (idx === -1) return { base: id, level: 1 };
 
@@ -46,18 +45,17 @@ function addMats(target: Mats, add?: Mats, multiplier = 1) {
   }
 }
 
-export function fullCraftCostForItem(targetId: string, byId: Record<string, Item>): Mats {
+export function fullCraftCostForItem(
+  targetId: string,
+  byId: Record<string, Item>
+): Mats {
   const { base, level } = parseId(targetId);
-
   const totals: Mats = {};
 
-  // Base craft must come from level 1 recipe: `${base}_i`
-  const baseId = `${base}_${INT_TO_ROMAN[1]}`; // `${base}_i`
+  const baseId = `${base}_${INT_TO_ROMAN[1]}`;
   const baseItem = byId[baseId];
-
   addMats(totals, baseItem?.recipe, 1);
 
-  // Upgrades from 2..level, each cost is on that level item
   for (let l = 2; l <= level; l++) {
     const stepId = `${base}_${INT_TO_ROMAN[l]}`;
     const stepItem = byId[stepId];
@@ -67,11 +65,37 @@ export function fullCraftCostForItem(targetId: string, byId: Record<string, Item
   return totals;
 }
 
-export function totalsForLoadout(loadout: { weapon: Item; quantity: number }[], byId: Record<string, Item>): Mats {
+// ✅ NEW: upgrade-only calculation
+export function upgradeOnlyCostForItem(
+  targetId: string,
+  byId: Record<string, Item>
+): Mats {
+  const { base, level } = parseId(targetId);
+  const totals: Mats = {};
+
+  if (level <= 1) return totals;
+
+  const stepId = `${base}_${INT_TO_ROMAN[level]}`;
+  const stepItem = byId[stepId];
+  addMats(totals, stepItem?.upgradeCost, 1);
+
+  return totals;
+}
+
+// ✅ UPDATED: supports total vs upgrade
+export function totalsForLoadout(
+  loadout: { weapon: Item; quantity: number }[],
+  byId: Record<string, Item>,
+  mode: "total" | "upgrade" = "total"
+): Mats {
   const totals: Mats = {};
 
   for (const entry of loadout) {
-    const cost = fullCraftCostForItem(entry.weapon.id, byId);
+    const cost =
+      mode === "total"
+        ? fullCraftCostForItem(entry.weapon.id, byId)
+        : upgradeOnlyCostForItem(entry.weapon.id, byId);
+
     addMats(totals, cost, entry.quantity);
   }
 

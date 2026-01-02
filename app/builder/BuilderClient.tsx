@@ -116,6 +116,12 @@ export default function BuilderClient({
   const [weaponQty, setWeaponQty] = useState(1);
   const [weaponLoadout, setWeaponLoadout] = useState<LoadoutItem[]>([]);
 
+  type WeaponCostMode = "total" | "upgrade";
+
+  const [weaponCostMode, setWeaponCostMode] =
+  useState<WeaponCostMode>("total");
+
+
   const [selectedAugmentId, setSelectedAugmentId] = useState("");
   const [augmentQty, setAugmentQty] = useState(1);
   const [augmentLoadout, setAugmentLoadout] = useState<LoadoutAugment[]>([]);
@@ -229,9 +235,15 @@ export default function BuilderClient({
   }
 
   const weaponMaterials = useMemo(
-    () => totalsForLoadout(weaponLoadout, weaponsById),
-    [weaponLoadout, weaponsById]
+  () =>
+    totalsForLoadout(
+      weaponLoadout,
+      weaponsById,
+      weaponCostMode
+    ),
+  [weaponLoadout, weaponsById, weaponCostMode]
   );
+
 
   const mergeMaterials = (...lists: Mats[]) =>
     lists.reduce((acc, list) => {
@@ -436,7 +448,37 @@ export default function BuilderClient({
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
         {/* WEAPON */}
         <section className="rounded-xl bg-[#16181d] p-6">
-          <h4 className="mb-4 font-semibold">Add weapon</h4>
+          <h4 className="mb-2 font-semibold">Add weapon</h4>
+
+<div className="mb-3 flex items-center justify-between text-sm">
+  <span className="opacity-70">Weapon cost</span>
+
+  <div className="flex rounded-md bg-black/40 p-1">
+    <button
+      type="button"
+      onClick={() => setWeaponCostMode("total")}
+      className={`px-3 py-1 rounded ${
+        weaponCostMode === "total"
+          ? "bg-[#C9B400] text-black"
+          : "text-white/60"
+      }`}
+    >
+      Total
+    </button>
+
+    <button
+      type="button"
+      onClick={() => setWeaponCostMode("upgrade")}
+      className={`px-3 py-1 rounded ${
+        weaponCostMode === "upgrade"
+          ? "bg-[#C9B400] text-black"
+          : "text-white/60"
+      }`}
+    >
+      Upgrade
+    </button>
+  </div>
+</div>
           <select
             value={selectedWeaponId}
             onChange={(e) => setSelectedWeaponId(e.target.value)}
