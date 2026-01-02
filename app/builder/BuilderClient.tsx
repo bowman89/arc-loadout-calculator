@@ -8,6 +8,8 @@ import { type Augment } from "../lib/getAugments";
 import { type QuickUseItem as QuickUse } from "../lib/getQuickUse";
 import { type Ammunition } from "../lib/getAmmo";
 
+import { track } from "../lib/track";
+
 /* ---------- types ---------- */
 type Item = {
   id: string;
@@ -41,6 +43,9 @@ type LoadoutRow = {
   quantity: number;
   remove: () => void;
 };
+
+/*-- GTM -- */
+
 
 /* ---------- helpers ---------- */
 function formatMaterialName(key: string) {
@@ -133,6 +138,12 @@ export default function BuilderClient({
   function addWeapon() {
     const weapon = weaponsById[selectedWeaponId];
     if (!weapon) return;
+    
+  track("add_weapon", {
+    weapon_id: weapon.id,
+    quantity: weaponQty,
+  });
+
     setWeaponLoadout((p) => [...p, { weapon, quantity: weaponQty }]);
     setWeaponQty(1);
   }
@@ -140,6 +151,13 @@ export default function BuilderClient({
   function addAugment() {
     const augment = augmentsById[selectedAugmentId];
     if (!augment) return;
+    
+  track("add_augmentShield", {
+    augment_id: augment.id,
+    quantity: augmentQty,
+  });
+
+    
     setAugmentLoadout((p) => [...p, { augment, quantity: augmentQty }]);
     setAugmentQty(1);
   }
@@ -147,6 +165,13 @@ export default function BuilderClient({
   function addQuickUse() {
     const quickUse = quickUsesById[selectedQuickUseId];
     if (!quickUse) return;
+    
+  track("add_quickUse", {
+    quickUse_id: quickUse.id,
+    quantity: quickUseQty,
+  });
+
+    
     setQuickUseLoadout((p) => [...p, { quickUse, quantity: quickUseQty }]);
     setQuickUseQty(1);
   }
@@ -154,6 +179,13 @@ export default function BuilderClient({
   function addAmmo() {
     const a = ammoById[selectedAmmoId];
     if (!a) return;
+    
+  track("add_ammo", {
+    a_id: a.id,
+    quantity: ammoQty,
+  });
+
+    
     setAmmoLoadout((p) => [...p, { ammo: a, quantity: ammoQty }]);
     setAmmoQty(1);
   }
