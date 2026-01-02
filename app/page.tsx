@@ -45,6 +45,12 @@ export default async function Home() {
   const quickUses = getQuickUse();
   const ammo = getAmmo();
 
+   console.log("WEAPONS:", weapons.length);
+  console.log("ITEMS:", items.length);
+  console.log("AUGMENTS:", augments.length);
+  console.log("QUICK USE:", quickUses.length);
+  console.log("AMMO:", ammo.length);
+
   return (
     <div style={{ backgroundColor: COLORS.dark, color: COLORS.textLight }}>
 
