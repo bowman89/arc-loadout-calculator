@@ -90,3 +90,4 @@ Nu har du:
 origin = din fork (fetch/push)
 
 upstream = RaidTheory (kun som “kilde” du kan sync’e fra)
+d
