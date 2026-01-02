@@ -1,3 +1,4 @@
+// getAmmo.ts
 import fs from "node:fs";
 import path from "node:path";
 
@@ -14,7 +15,7 @@ export type Ammunition = {
 
 /* ---------- loader ---------- */
 export function getAmmo(): Ammunition[] {
-  const itemsDir = path.join(process.cwd(), "data", "arcraiders-data", "items");
+  const itemsDir = path.join(process.cwd(), "data", "items");
 
   const files = fs.readdirSync(itemsDir).filter((f) => f.endsWith(".json"));
 

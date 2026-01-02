@@ -14,7 +14,6 @@ export function getItems(): Item[] {
   const itemsDir = path.join(
     process.cwd(),
     "data",
-    "arcraiders-data",
     "items"
   );
 

@@ -1,3 +1,4 @@
+// getQuickUse.ts
 import fs from "node:fs";
 import path from "node:path";
 
@@ -15,7 +16,6 @@ export function getQuickUse(): QuickUseItem[] {
   const itemsDir = path.join(
     process.cwd(),
     "data",
-    "arcraiders-data",
     "items"
   );
 

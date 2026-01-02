@@ -1,3 +1,4 @@
+// getAugments.ts
 import fs from "node:fs";
 import path from "node:path";
 
@@ -10,7 +11,7 @@ export type Augment = {
 };
 
 export function getAugments(): Augment[] {
-  const dir = path.join(process.cwd(), "data", "arcraiders-data", "items");
+  const dir = path.join(process.cwd(), "data", "items");
 
   return fs
     .readdirSync(dir)

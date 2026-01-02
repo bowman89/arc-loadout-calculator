@@ -9,7 +9,7 @@ export type WeaponItem = {
 };
 
 export function getWeapons(): WeaponItem[] {
-  const itemsDir = path.join(process.cwd(), "data", "arcraiders-data", "items");
+  const itemsDir = path.join(process.cwd(), "data", "items");
 
   const files = fs
     .readdirSync(itemsDir)
