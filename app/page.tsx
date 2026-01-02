@@ -1,6 +1,9 @@
-//Pager.tsx
+// app/page.tsx
+export const dynamic = "force-dynamic";
+
 import Image from "next/image";
 import BuilderClient from "./builder/BuilderClient";
+
 
 // SERVER DATA
 import { getWeapons } from "./lib/getWeapons";
