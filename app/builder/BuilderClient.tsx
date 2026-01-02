@@ -57,20 +57,37 @@ function formatMaterialName(key: string) {
 function QuantityControl({
   value,
   onChange,
+  min = 1,
 }: {
   value: number;
   onChange: (v: number) => void;
+  min?: number;
 }) {
   return (
-    <div className="mt-3 flex items-center justify-center gap-3">
+    <div className="mt-3 flex items-center justify-center gap-2">
       <button
-        onClick={() => onChange(Math.max(1, value - 1))}
+        type="button"
+        onClick={() => onChange(Math.max(min, value - 1))}
         className="h-9 w-9 rounded-md bg-black/40 text-lg"
       >
         −
       </button>
-      <div className="min-w-[32px] text-center font-semibold">{value}</div>
+
+      <input
+        type="number"
+        min={min}
+        value={value}
+        onChange={(e) => {
+          const next = Number(e.target.value);
+          if (Number.isNaN(next)) return;
+          onChange(Math.max(min, next));
+        }}
+        onFocus={(e) => e.target.select()}
+        className="w-20 rounded-md bg-white px-2 py-1 text-center font-semibold text-black"
+      />
+
       <button
+        type="button"
         onClick={() => onChange(value + 1)}
         className="h-9 w-9 rounded-md bg-black/40 text-lg"
       >
@@ -79,6 +96,7 @@ function QuantityControl({
     </div>
   );
 }
+
 
 /* ---------- component ---------- */
 export default function BuilderClient({
