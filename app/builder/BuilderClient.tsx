@@ -687,7 +687,7 @@ return (
         case "shield":
           return (
             <section key={key} className="rounded-xl bg-[#16181d] p-6">
-              <h4 className="mb-4 font-semibold">Shields</h4>
+              <h4 className="mb-4 font-semibold text-center">Shields</h4>
 
               <select
                 value={selectedShieldId}
@@ -716,7 +716,7 @@ return (
         case "quickUse":
           return (
             <section key={key} className="rounded-xl bg-[#16181d] p-6">
-              <h4 className="mb-4 font-semibold">Quick Use</h4>
+              <h4 className="mb-4 font-semibold text-center">Quick Use</h4>
 
               <select
                 value={selectedQuickUseId}
@@ -745,7 +745,7 @@ return (
         case "ammo":
           return (
             <section key={key} className="rounded-xl bg-[#16181d] p-6">
-              <h4 className="mb-4 font-semibold">Ammo</h4>
+              <h4 className="mb-4 font-semibold text-center">Ammo</h4>
 
               <select
                 value={selectedAmmoId}
@@ -774,7 +774,7 @@ return (
         case "modification":
           return (
             <section key={key} className="rounded-xl bg-[#16181d] p-6">
-              <h4 className="mb-4 font-semibold">Modification</h4>
+              <h4 className="mb-4 font-semibold text-center">Modification</h4>
 
               <select
                 value={selectedModificationId}
