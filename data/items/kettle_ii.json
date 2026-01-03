@@ -52,6 +52,7 @@
     "plastic_parts": 6,
     "rubber_parts": 6
   },
+  "isWeapon": true,
   "imageFilename": "https://cdn.arctracker.io/items/kettle.png",
   "updatedAt": "10/30/2025"
 }
