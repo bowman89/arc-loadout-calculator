@@ -11,7 +11,9 @@ import { type ModificationItem } from "../lib/getModifications";
 
 import { track } from "../lib/track";
 
-/* ---------- types ---------- */
+/* ─────────────────────────────────────
+   TYPES
+───────────────────────────────────── */
 type Item = {
   id: string;
   name?: { en?: string };
@@ -45,15 +47,18 @@ type LoadoutModification = {
 
 type LoadoutRow = {
   key: string;
-  item: { id: string; name?: { en?: string }; imageFilename?: string };
+  item: {
+    id: string;
+    name?: { en?: string };
+    imageFilename?: string;
+  };
   quantity: number;
   remove: () => void;
 };
 
-/*-- GTM -- */
-
-
-/* ---------- helpers ---------- */
+/* ─────────────────────────────────────
+   HELPERS
+───────────────────────────────────── */
 function formatMaterialName(key: string) {
   return key
     .replace(/_/g, " ")
@@ -89,7 +94,18 @@ function QuantityControl({
           onChange(Math.max(min, next));
         }}
         onFocus={(e) => e.target.select()}
-        className="w-20 rounded-md bg-white px-2 py-1 text-center font-semibold text-black"
+        className="
+          w-20
+          h-9
+          rounded-md
+          bg-white
+          text-black
+          text-center
+          font-semibold
+          leading-none
+          px-0
+          appearance-none
+        "
       />
 
       <button
@@ -103,8 +119,9 @@ function QuantityControl({
   );
 }
 
-
-/* ---------- component ---------- */
+/* ─────────────────────────────────────
+   COMPONENT
+───────────────────────────────────── */
 export default function BuilderClient({
   weapons,
   items,
@@ -120,23 +137,24 @@ export default function BuilderClient({
   ammo?: Ammunition[];
   modifications: ModificationItem[];
 }) {
+  /* ───────── STATE ───────── */
   const [selectedWeaponId, setSelectedWeaponId] = useState("");
   const [weaponQty, setWeaponQty] = useState(1);
   const [weaponLoadout, setWeaponLoadout] = useState<LoadoutItem[]>([]);
 
   type WeaponCostMode = "total" | "upgrade";
-
   const [weaponCostMode, setWeaponCostMode] =
-  useState<WeaponCostMode>("total");
-
+    useState<WeaponCostMode>("total");
 
   const [selectedAugmentId, setSelectedAugmentId] = useState("");
   const [augmentQty, setAugmentQty] = useState(1);
-  const [augmentLoadout, setAugmentLoadout] = useState<LoadoutAugment[]>([]);
+  const [augmentLoadout, setAugmentLoadout] =
+    useState<LoadoutAugment[]>([]);
 
   const [selectedQuickUseId, setSelectedQuickUseId] = useState("");
   const [quickUseQty, setQuickUseQty] = useState(1);
-  const [quickUseLoadout, setQuickUseLoadout] = useState<LoadoutQuickUse[]>([]);
+  const [quickUseLoadout, setQuickUseLoadout] =
+    useState<LoadoutQuickUse[]>([]);
 
   const [selectedAmmoId, setSelectedAmmoId] = useState("");
   const [ammoQty, setAmmoQty] = useState(1);
@@ -144,9 +162,10 @@ export default function BuilderClient({
 
   const [selectedModificationId, setSelectedModificationId] = useState("");
   const [modificationQty, setModificationQty] = useState(1);
-  const [modificationLoadout, setModificationLoadout] = useState<LoadoutModification[]>([]);
+  const [modificationLoadout, setModificationLoadout] =
+    useState<LoadoutModification[]>([]);
 
-
+  /* ───────── LOOKUP MAPS ───────── */
   const weaponsById = useMemo(
     () => Object.fromEntries(weapons.map((w) => [w.id, w])),
     [weapons]
@@ -173,159 +192,129 @@ export default function BuilderClient({
   );
 
   const modificationsById = useMemo(
-  () => Object.fromEntries(modifications.map((m) => [m.id, m])),
-  [modifications]
+    () => Object.fromEntries(modifications.map((m) => [m.id, m])),
+    [modifications]
   );
 
+  /* ───────── ADD HANDLERS ───────── */
+  function addWeapon() {
+    const weapon = weaponsById[selectedWeaponId];
+    if (!weapon) return;
 
-function addWeapon() {
-  const weapon = weaponsById[selectedWeaponId];
-  if (!weapon) return;
+    track("add_weapon", {
+      weapon_id: weapon.id,
+      quantity: weaponQty,
+    });
 
-  track("add_weapon", {
-    weapon_id: weapon.id,
-    quantity: weaponQty,
-  });
+    setWeaponLoadout((prev) => {
+      const index = prev.findIndex((e) => e.weapon.id === weapon.id);
+      if (index !== -1) {
+        return prev.map((e, i) =>
+          i === index
+            ? { ...e, quantity: e.quantity + weaponQty }
+            : e
+        );
+      }
+      return [...prev, { weapon, quantity: weaponQty }];
+    });
 
-  setWeaponLoadout((prev) => {
-    const index = prev.findIndex(
-      (entry) => entry.weapon.id === weapon.id
-    );
-
-    // Hvis våbnet allerede findes → læg quantity til
-    if (index !== -1) {
-      return prev.map((entry, i) =>
-        i === index
-          ? { ...entry, quantity: entry.quantity + weaponQty }
-          : entry
-      );
-    }
-
-    // Ellers → ny linje
-    return [...prev, { weapon, quantity: weaponQty }];
-  });
-
-  setWeaponQty(1);
-}
-
-function addAugment() {
-  const augment = augmentsById[selectedAugmentId];
-  if (!augment) return;
-
-  track("add_augmentShield", {
-    augment_id: augment.id,
-    quantity: augmentQty,
-  });
-
-  setAugmentLoadout((prev) => {
-    const index = prev.findIndex(
-      (entry) => entry.augment.id === augment.id
-    );
-
-    // Hvis augment allerede findes → læg quantity til
-    if (index !== -1) {
-      return prev.map((entry, i) =>
-        i === index
-          ? { ...entry, quantity: entry.quantity + augmentQty }
-          : entry
-      );
-    }
-
-    // Ellers → ny linje
-    return [...prev, { augment, quantity: augmentQty }];
-  });
-
-  setAugmentQty(1);
-}
-
-
-  function addQuickUse() {
-  const quickUse = quickUsesById[selectedQuickUseId];
-  if (!quickUse) return;
-
-  track("add_quickUse", {
-    quickUse_id: quickUse.id,
-    quantity: quickUseQty,
-  });
-
-  setQuickUseLoadout((prev) => {
-    const index = prev.findIndex(
-      (entry) => entry.quickUse.id === quickUse.id
-    );
-
-    // Hvis den allerede findes → læg quantity til
-    if (index !== -1) {
-      return prev.map((entry, i) =>
-        i === index
-          ? { ...entry, quantity: entry.quantity + quickUseQty }
-          : entry
-      );
-    }
-
-    // Ellers → ny linje
-    return [...prev, { quickUse, quantity: quickUseQty }];
-  });
-
-  setQuickUseQty(1);
-}
-
-
-  function addAmmo() {
-    const a = ammoById[selectedAmmoId];
-    if (!a) return;
-    
-  track("add_ammo", {
-    a_id: a.id,
-    quantity: ammoQty,
-  });
-
-setAmmoLoadout((prev) => {
-    const index = prev.findIndex(
-      (entry) => entry.ammo.id === a.id
-    );
-
-    if (index !== -1) {
-      return prev.map((entry, i) =>
-        i === index
-          ? { ...entry, quantity: entry.quantity + ammoQty }
-          : entry
-      );
-    }
-
-    return [...prev, { ammo: a, quantity: ammoQty }];
-  });
-
-  setAmmoQty(1);
-}
-
-function addModification() {
-  const modification = modificationsById[selectedModificationId];
-  if (!modification) return;
-
-  setModificationLoadout((prev) => {
-    const existingIndex = prev.findIndex(
-      (m) => m.modification.id === modification.id
-    );
-
-    if (existingIndex !== -1) {
-      return prev.map((m, i) =>
-        i === existingIndex
-          ? { ...m, quantity: m.quantity + modificationQty }
-          : m
-      );
-    }
-
-    return [...prev, { modification, quantity: modificationQty }];
-  });
-
-  setModificationQty(1);
-}
-
-  function removeModification(index: number) {
-    setModificationLoadout((p) => p.filter((_, i) => i !== index));
+    setWeaponQty(1);
   }
 
+  function addAugment() {
+    const augment = augmentsById[selectedAugmentId];
+    if (!augment) return;
 
+    track("add_augmentShield", {
+      augment_id: augment.id,
+      quantity: augmentQty,
+    });
+
+    setAugmentLoadout((prev) => {
+      const index = prev.findIndex((e) => e.augment.id === augment.id);
+      if (index !== -1) {
+        return prev.map((e, i) =>
+          i === index
+            ? { ...e, quantity: e.quantity + augmentQty }
+            : e
+        );
+      }
+      return [...prev, { augment, quantity: augmentQty }];
+    });
+
+    setAugmentQty(1);
+  }
+
+  function addQuickUse() {
+    const quickUse = quickUsesById[selectedQuickUseId];
+    if (!quickUse) return;
+
+    track("add_quickUse", {
+      quickUse_id: quickUse.id,
+      quantity: quickUseQty,
+    });
+
+    setQuickUseLoadout((prev) => {
+      const index = prev.findIndex((e) => e.quickUse.id === quickUse.id);
+      if (index !== -1) {
+        return prev.map((e, i) =>
+          i === index
+            ? { ...e, quantity: e.quantity + quickUseQty }
+            : e
+        );
+      }
+      return [...prev, { quickUse, quantity: quickUseQty }];
+    });
+
+    setQuickUseQty(1);
+  }
+
+  function addAmmo() {
+    const ammoItem = ammoById[selectedAmmoId];
+    if (!ammoItem) return;
+
+    track("add_ammo", {
+      a_id: ammoItem.id,
+      quantity: ammoQty,
+    });
+
+    setAmmoLoadout((prev) => {
+      const index = prev.findIndex((e) => e.ammo.id === ammoItem.id);
+      if (index !== -1) {
+        return prev.map((e, i) =>
+          i === index
+            ? { ...e, quantity: e.quantity + ammoQty }
+            : e
+        );
+      }
+      return [...prev, { ammo: ammoItem, quantity: ammoQty }];
+    });
+
+    setAmmoQty(1);
+  }
+
+  function addModification() {
+    const modification = modificationsById[selectedModificationId];
+    if (!modification) return;
+
+    setModificationLoadout((prev) => {
+      const index = prev.findIndex(
+        (e) => e.modification.id === modification.id
+      );
+      if (index !== -1) {
+        return prev.map((e, i) =>
+          i === index
+            ? { ...e, quantity: e.quantity + modificationQty }
+            : e
+        );
+      }
+      return [...prev, { modification, quantity: modificationQty }];
+    });
+
+    setModificationQty(1);
+  }
+
+  /* ───────── REMOVE / CLEAR ───────── */
   function clearAll() {
     setWeaponLoadout([]);
     setAugmentLoadout([]);
@@ -334,35 +323,33 @@ function addModification() {
     setModificationLoadout([]);
   }
 
-  function removeWeapon(index: number) {
-    setWeaponLoadout((p) => p.filter((_, i) => i !== index));
+  function removeWeapon(i: number) {
+    setWeaponLoadout((p) => p.filter((_, idx) => idx !== i));
   }
-  function removeAugment(index: number) {
-    setAugmentLoadout((p) => p.filter((_, i) => i !== index));
+  function removeAugment(i: number) {
+    setAugmentLoadout((p) => p.filter((_, idx) => idx !== i));
   }
-  function removeQuickUse(index: number) {
-    setQuickUseLoadout((p) => p.filter((_, i) => i !== index));
+  function removeQuickUse(i: number) {
+    setQuickUseLoadout((p) => p.filter((_, idx) => idx !== i));
   }
-  function removeAmmo(index: number) {
-    setAmmoLoadout((p) => p.filter((_, i) => i !== index));
+  function removeAmmo(i: number) {
+    setAmmoLoadout((p) => p.filter((_, idx) => idx !== i));
+  }
+  function removeModification(i: number) {
+    setModificationLoadout((p) => p.filter((_, idx) => idx !== i));
   }
 
+  /* ───────── MATERIAL CALCS ───────── */
   const weaponMaterials = useMemo(
-  () =>
-    totalsForLoadout(
-      weaponLoadout,
-      weaponsById,
-      weaponCostMode
-    ),
-  [weaponLoadout, weaponsById, weaponCostMode]
+    () => totalsForLoadout(weaponLoadout, weaponsById, weaponCostMode),
+    [weaponLoadout, weaponsById, weaponCostMode]
   );
-
 
   const mergeMaterials = (...lists: Mats[]) =>
     lists.reduce((acc, list) => {
-      for (const [k, v] of Object.entries(list)) {
+      Object.entries(list).forEach(([k, v]) => {
         acc[k] = (acc[k] ?? 0) + v;
-      }
+      });
       return acc;
     }, {} as Mats);
 
@@ -400,16 +387,15 @@ function addModification() {
   }, [ammoLoadout]);
 
   const modificationMaterials = useMemo(() => {
-  const totals: Mats = {};
-  modificationLoadout.forEach(({ modification, quantity }) => {
-    if (!modification.recipe) return;
-    Object.entries(modification.recipe).forEach(
-      ([k, v]) => (totals[k] = (totals[k] ?? 0) + v * quantity)
-    );
-  });
-  return totals;
+    const totals: Mats = {};
+    modificationLoadout.forEach(({ modification, quantity }) => {
+      if (!modification.recipe) return;
+      Object.entries(modification.recipe).forEach(
+        ([k, v]) => (totals[k] = (totals[k] ?? 0) + v * quantity)
+      );
+    });
+    return totals;
   }, [modificationLoadout]);
-
 
   const materialRows = Object.entries(
     mergeMaterials(
@@ -421,333 +407,345 @@ function addModification() {
     )
   ).sort((a, b) => a[0].localeCompare(b[0]));
 
-  const hasAnyLoadout = Boolean(
+  const hasAnyLoadout =
     weaponLoadout.length ||
-      augmentLoadout.length ||
-      quickUseLoadout.length ||
-      ammoLoadout.length ||
-      modificationLoadout.length
-  );
+    augmentLoadout.length ||
+    quickUseLoadout.length ||
+    ammoLoadout.length ||
+    modificationLoadout.length;
 
-  // ✅ Flatten rows so TS never has to guess the type in render
+  /* ───────── FLATTEN LOADOUT ───────── */
   const currentRows: LoadoutRow[] = useMemo(() => {
     const rows: LoadoutRow[] = [];
 
-    weaponLoadout.forEach((e, i) => {
+    weaponLoadout.forEach((e, i) =>
       rows.push({
         key: `weapon-${i}`,
         item: e.weapon,
         quantity: e.quantity,
         remove: () => removeWeapon(i),
-      });
-    });
+      })
+    );
 
-    augmentLoadout.forEach((e, i) => {
+    augmentLoadout.forEach((e, i) =>
       rows.push({
         key: `augment-${i}`,
         item: e.augment,
         quantity: e.quantity,
         remove: () => removeAugment(i),
-      });
-    });
+      })
+    );
 
-    quickUseLoadout.forEach((e, i) => {
+    quickUseLoadout.forEach((e, i) =>
       rows.push({
         key: `quickUse-${i}`,
         item: e.quickUse,
         quantity: e.quantity,
         remove: () => removeQuickUse(i),
-      });
-    });
+      })
+    );
 
-    ammoLoadout.forEach((e, i) => {
+    ammoLoadout.forEach((e, i) =>
       rows.push({
         key: `ammo-${i}`,
         item: e.ammo,
         quantity: e.quantity,
         remove: () => removeAmmo(i),
-      });
-    });
+      })
+    );
 
-    modificationLoadout.forEach((e, i) => {
-  rows.push({
-    key: `modification-${i}`,
-    item: e.modification,
-    quantity: e.quantity,
-    remove: () => removeModification(i),
-  });
-});
-
+    modificationLoadout.forEach((e, i) =>
+      rows.push({
+        key: `modification-${i}`,
+        item: e.modification,
+        quantity: e.quantity,
+        remove: () => removeModification(i),
+      })
+    );
 
     return rows;
-  }, [weaponLoadout, augmentLoadout, quickUseLoadout, ammoLoadout, modificationLoadout]);
+  }, [
+    weaponLoadout,
+    augmentLoadout,
+    quickUseLoadout,
+    ammoLoadout,
+    modificationLoadout,
+  ]);
 
-  /* ---------- UI ---------- */
-  return (
-    <div className="space-y-6">
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        {/* CURRENT LOADOUT */}
-        <section className="rounded-xl bg-[#16181d] p-6">
-          <div className="mb-4 flex items-center justify-between">
-            <h4 className="font-semibold">Current loadout</h4>
+ /* ---------- UI ---------- */
+return (
+  <div className="space-y-6">
+    {/* INPUT GRID */}
+    <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+      {/* WEAPON */}
+      <section className="rounded-xl bg-[#16181d] p-6">
+        <div className="mb-3 flex items-center justify-between">
+          <h4 className="font-semibold">Add weapon</h4>
 
-            {/* ✅ Always render, but disabled when empty */}
-            <button
-              onClick={clearAll}
-              disabled={!hasAnyLoadout}
-              className={`text-sm px-3 py-1 rounded border
-                ${
-                  hasAnyLoadout
-                    ? "cursor-pointer text-red-400 hover:text-red-300 border-red-400/30"
-                    : "cursor-not-allowed text-white/30 border-white/10"
-                }`}
-            >
-              Clear all
-            </button>
-          </div>
-
-          {!hasAnyLoadout ? (
-            <p className="text-sm text-[#A0A4AA]">No items added yet</p>
-          ) : (
-            <div className="space-y-2">
-              {currentRows.map((row) => (
-                <div
-                  key={row.key}
-                  className="flex items-center gap-3 rounded-lg bg-black/40 px-3 py-2"
-                >
-                  {row.item.imageFilename && (
-                    <img
-                      src={row.item.imageFilename}
-                      className="h-8 w-8"
-                      alt={row.item.name?.en ?? row.item.id}
-                    />
-                  )}
-
-                  <div className="flex-1">
-                    <div>{row.item.name?.en ?? row.item.id}</div>
-                    <div className="text-sm opacity-70">Qty: {row.quantity}</div>
-                  </div>
-
-                  {/* ✅ Big click target + pointer on hover */}
-                  <button
-                    onClick={row.remove}
-                    aria-label="Remove item"
-                    title="Remove"
-                    className="cursor-pointer text-red-400 hover:text-red-300 text-lg leading-none px-2 py-1"
-                  >
-                    ×
-                  </button>
-                </div>
-              ))}
-            </div>
-          )}
-        </section>
-
-        {/* MATERIALS */}
-        <section className="rounded-xl bg-[#16181d] p-6">
-          <h4 className="mb-4 font-semibold">Materials needed</h4>
-
-          {materialRows.length === 0 ? (
-            <p className="text-sm text-[#A0A4AA]">
-              Add items to see required materials.
-            </p>
-          ) : (
-            <div className="flex flex-wrap gap-2">
-              {materialRows.map(([matId, amount]) => {
-                const matItem = itemsById[matId];
-                return (
-                  <div
-                    key={matId}
-                    className="inline-flex items-center gap-2 rounded-lg bg-black/40 px-3 py-2"
-                  >
-                    {matItem?.imageFilename && (
-                      <img
-                        src={matItem.imageFilename}
-                        className="h-6 w-6"
-                        alt={matItem.name?.en ?? matId}
-                      />
-                    )}
-                    <span className="text-sm">
-                      {matItem?.name?.en ?? formatMaterialName(matId)}
-                    </span>
-                    <span className="rounded-full bg-white/10 px-2 text-sm">
-                      {amount}
-                    </span>
-                  </div>
-                );
-              })}
-            </div>
-          )}
-        </section>
-      </div>
-
-      {/* INPUT GRID */}
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-        {/* WEAPON */}
-        <section className="rounded-xl bg-[#16181d] p-6">
-          <div className="mb-3 flex items-center justify-between">
-            <h4 className="font-semibold">Add weapon</h4>
           <div className="flex rounded-md bg-black/40 p-0.5 text-sm">
             <button
               type="button"
               onClick={() => setWeaponCostMode("total")}
               className={`px-2 py-0.5 rounded transition ${
-              weaponCostMode === "total"
-              ? "bg-[#C9B400] text-black"
-              : "text-white/60 hover:text-white"
+                weaponCostMode === "total"
+                  ? "bg-[#C9B400] text-black"
+                  : "text-white/60 hover:text-white"
               }`}
-            >Total
+            >
+              Total
             </button>
-              <button
-                type="button"
-                onClick={() => setWeaponCostMode("upgrade")}
-                className={`px-2 py-0.5 rounded transition ${
-                  weaponCostMode === "upgrade"
-                    ? "bg-[#C9B400] text-black"
-                    : "text-white/60 hover:text-white"
-                }`}
-              >
-                Upgrade
-              </button>
-            </div>
+
+            <button
+              type="button"
+              onClick={() => setWeaponCostMode("upgrade")}
+              className={`px-2 py-0.5 rounded transition ${
+                weaponCostMode === "upgrade"
+                  ? "bg-[#C9B400] text-black"
+                  : "text-white/60 hover:text-white"
+              }`}
+            >
+              Upgrade
+            </button>
           </div>
+        </div>
 
-          <select
-            value={selectedWeaponId}
-            onChange={(e) => setSelectedWeaponId(e.target.value)}
-            className="w-full rounded-md bg-white px-3 py-2 text-black"
-          >
-            <option value="">Select weapon</option>
-            {weapons.map((w) => (
-              <option key={w.id} value={w.id}>
-                {w.name?.en ?? w.id}
-              </option>
-            ))}
-          </select>
+        <select
+          value={selectedWeaponId}
+          onChange={(e) => setSelectedWeaponId(e.target.value)}
+          className="w-full rounded-md bg-white px-3 py-2 text-black"
+        >
+          <option value="">Select weapon</option>
+          {weapons.map((w) => (
+            <option key={w.id} value={w.id}>
+              {w.name?.en ?? w.id}
+            </option>
+          ))}
+        </select>
 
-          <QuantityControl value={weaponQty} onChange={setWeaponQty} />
+        <QuantityControl value={weaponQty} onChange={setWeaponQty} />
 
-          <button
-            id="btn-add-weapon"
-            data-action="add_weappon"
-            onClick={addWeapon}
-            className="mt-4 w-full rounded-md bg-[#C9B400] px-4 py-2 font-semibold text-black"
-          >
-            Add weapon
-          </button>
-        </section>
+        <button
+          id="btn-add-weapon"
+          data-action="add_weappon"
+          onClick={addWeapon}
+          className="mt-4 w-full rounded-md bg-[#C9B400] px-4 py-2 font-semibold text-black"
+        >
+          Add weapon
+        </button>
+      </section>
 
-        {/* AUGMENT */}
-        <section className="rounded-xl bg-[#16181d] p-6">
-          <h4 className="mb-4 font-semibold">Add augment / Shield</h4>
-          <select
-            value={selectedAugmentId}
-            onChange={(e) => setSelectedAugmentId(e.target.value)}
-            className="w-full rounded-md bg-white px-3 py-2 text-black"
-          >
-            <option value="">Select augment</option>
-            {augments.map((a) => (
-              <option key={a.id} value={a.id}>
-                {a.name?.en ?? a.id}
-              </option>
-            ))}
-          </select>
+      {/* AUGMENT */}
+      <section className="rounded-xl bg-[#16181d] p-6">
+        <h4 className="mb-4 font-semibold">Add augment / Shield</h4>
 
-          <QuantityControl value={augmentQty} onChange={setAugmentQty} />
+        <select
+          value={selectedAugmentId}
+          onChange={(e) => setSelectedAugmentId(e.target.value)}
+          className="w-full rounded-md bg-white px-3 py-2 text-black"
+        >
+          <option value="">Select augment</option>
+          {augments.map((a) => (
+            <option key={a.id} value={a.id}>
+              {a.name?.en ?? a.id}
+            </option>
+          ))}
+        </select>
 
-          <button
-            id="btn-add-augmentShield"
-            data-action="add_augmentShield"
-            onClick={addAugment}
-            className="mt-4 w-full rounded-md bg-[#C9B400] px-4 py-2 font-semibold text-black"
-          >
-            Add augment / shield
-          </button>
-        </section>
+        <QuantityControl value={augmentQty} onChange={setAugmentQty} />
 
-        {/* CONSUMABLE */}
-        <section className="rounded-xl bg-[#16181d] p-6">
-          <h4 className="mb-4 font-semibold">Add consumable</h4>
-          <select
-            value={selectedQuickUseId}
-            onChange={(e) => setSelectedQuickUseId(e.target.value)}
-            className="w-full rounded-md bg-white px-3 py-2 text-black"
-          >
-            <option value="">Select consumable</option>
-            {quickUses.map((q) => (
-              <option key={q.id} value={q.id}>
-                {q.name?.en ?? q.id}
-              </option>
-            ))}
-          </select>
+        <button
+          id="btn-add-augmentShield"
+          data-action="add_augmentShield"
+          onClick={addAugment}
+          className="mt-4 w-full rounded-md bg-[#C9B400] px-4 py-2 font-semibold text-black"
+        >
+          Add augment / shield
+        </button>
+      </section>
 
-          <QuantityControl value={quickUseQty} onChange={setQuickUseQty} />
+      {/* CONSUMABLE */}
+      <section className="rounded-xl bg-[#16181d] p-6">
+        <h4 className="mb-4 font-semibold">Add consumable</h4>
 
-          <button
-            onClick={addQuickUse}
-            className="mt-4 w-full rounded-md bg-[#C9B400] px-4 py-2 font-semibold text-black"
-          >
-            Add consumable
-          </button>
-        </section>
+        <select
+          value={selectedQuickUseId}
+          onChange={(e) => setSelectedQuickUseId(e.target.value)}
+          className="w-full rounded-md bg-white px-3 py-2 text-black"
+        >
+          <option value="">Select consumable</option>
+          {quickUses.map((q) => (
+            <option key={q.id} value={q.id}>
+              {q.name?.en ?? q.id}
+            </option>
+          ))}
+        </select>
 
-        {/* AMMO */}
-        <section className="rounded-xl bg-[#16181d] p-6">
-          <h4 className="mb-4 font-semibold">Add ammo</h4>
-          <select
-            value={selectedAmmoId}
-            onChange={(e) => setSelectedAmmoId(e.target.value)}
-            className="w-full rounded-md bg-white px-3 py-2 text-black"
-          >
-            <option value="">Select ammo</option>
-            {ammo.map((a) => (
-              <option key={a.id} value={a.id}>
-                {a.name?.en ?? a.id}
-              </option>
-            ))}
-          </select>
+        <QuantityControl value={quickUseQty} onChange={setQuickUseQty} />
 
-          <QuantityControl value={ammoQty} onChange={setAmmoQty} />
+        <button
+          onClick={addQuickUse}
+          className="mt-4 w-full rounded-md bg-[#C9B400] px-4 py-2 font-semibold text-black"
+        >
+          Add consumable
+        </button>
+      </section>
 
-          <button
-            onClick={addAmmo}
-            className="mt-4 w-full rounded-md bg-[#C9B400] px-4 py-2 font-semibold text-black"
-          >
-            Add ammo
-          </button>
-        </section>
+      {/* AMMO */}
+      <section className="rounded-xl bg-[#16181d] p-6">
+        <h4 className="mb-4 font-semibold">Add ammo</h4>
 
-        {/* MODIFICATION */}
-<section className="rounded-xl bg-[#16181d] p-6">
-  <h4 className="mb-4 font-semibold">Add modification</h4>
+        <select
+          value={selectedAmmoId}
+          onChange={(e) => setSelectedAmmoId(e.target.value)}
+          className="w-full rounded-md bg-white px-3 py-2 text-black"
+        >
+          <option value="">Select ammo</option>
+          {ammo.map((a) => (
+            <option key={a.id} value={a.id}>
+              {a.name?.en ?? a.id}
+            </option>
+          ))}
+        </select>
 
-  <select
-    value={selectedModificationId}
-    onChange={(e) => setSelectedModificationId(e.target.value)}
-    className="w-full rounded-md bg-white px-3 py-2 text-black"
-  >
-    <option value="">Select modification</option>
-    {modifications.map((m) => (
-      <option key={m.id} value={m.id}>
-        {m.name?.en ?? m.id}
-      </option>
-    ))}
-  </select>
+        <QuantityControl value={ammoQty} onChange={setAmmoQty} />
 
-  <QuantityControl
-    value={modificationQty}
-    onChange={setModificationQty}
-  />
+        <button
+          onClick={addAmmo}
+          className="mt-4 w-full rounded-md bg-[#C9B400] px-4 py-2 font-semibold text-black"
+        >
+          Add ammo
+        </button>
+      </section>
 
-  <button
-    onClick={addModification}
-    className="mt-4 w-full rounded-md bg-[#C9B400] px-4 py-2 font-semibold text-black"
-  >
-    Add modification
-  </button>
-</section>
+      {/* MODIFICATION */}
+      <section className="rounded-xl bg-[#16181d] p-6">
+        <h4 className="mb-4 font-semibold">Add modification</h4>
 
-      </div>
+        <select
+          value={selectedModificationId}
+          onChange={(e) => setSelectedModificationId(e.target.value)}
+          className="w-full rounded-md bg-white px-3 py-2 text-black"
+        >
+          <option value="">Select modification</option>
+          {modifications.map((m) => (
+            <option key={m.id} value={m.id}>
+              {m.name?.en ?? m.id}
+            </option>
+          ))}
+        </select>
+
+        <QuantityControl
+          value={modificationQty}
+          onChange={setModificationQty}
+        />
+
+        <button
+          onClick={addModification}
+          className="mt-4 w-full rounded-md bg-[#C9B400] px-4 py-2 font-semibold text-black"
+        >
+          Add modification
+        </button>
+      </section>
     </div>
-  );
+
+    {/* LOADOUT + MATERIALS */}
+    <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+      {/* CURRENT LOADOUT */}
+      <section className="rounded-xl bg-[#16181d] p-6">
+        <div className="mb-4 flex items-center justify-between">
+          <h4 className="font-semibold">Current loadout</h4>
+
+          <button
+            onClick={clearAll}
+            disabled={!hasAnyLoadout}
+            className={`text-sm rounded border px-3 py-1 ${
+              hasAnyLoadout
+                ? "cursor-pointer text-red-400 hover:text-red-300 border-red-400/30"
+                : "cursor-not-allowed text-white/30 border-white/10"
+            }`}
+          >
+            Clear all
+          </button>
+        </div>
+
+        {!hasAnyLoadout ? (
+          <p className="text-sm text-[#A0A4AA]">No items added yet</p>
+        ) : (
+          <div className="space-y-2">
+            {currentRows.map((row) => (
+              <div
+                key={row.key}
+                className="flex items-center gap-3 rounded-lg bg-black/40 px-3 py-2"
+              >
+                {row.item.imageFilename && (
+                  <img
+                    src={row.item.imageFilename}
+                    alt={row.item.name?.en ?? row.item.id}
+                    className="h-8 w-8"
+                  />
+                )}
+
+                <div className="flex-1">
+                  <div>{row.item.name?.en ?? row.item.id}</div>
+                  <div className="text-sm opacity-70">
+                    Qty: {row.quantity}
+                  </div>
+                </div>
+
+                <button
+                  onClick={row.remove}
+                  aria-label="Remove item"
+                  title="Remove"
+                  className="px-2 py-1 text-lg leading-none text-red-400 hover:text-red-300"
+                >
+                  ×
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
+
+      {/* MATERIALS */}
+      <section className="rounded-xl bg-[#16181d] p-6">
+        <h4 className="mb-4 font-semibold">Materials needed</h4>
+
+        {materialRows.length === 0 ? (
+          <p className="text-sm text-[#A0A4AA]">
+            Add items to see required materials.
+          </p>
+        ) : (
+          <div className="flex flex-wrap gap-2">
+            {materialRows.map(([matId, amount]) => {
+              const matItem = itemsById[matId];
+
+              return (
+                <div
+                  key={matId}
+                  className="inline-flex items-center gap-2 rounded-lg bg-black/40 px-3 py-2"
+                >
+                  {matItem?.imageFilename && (
+                    <img
+                      src={matItem.imageFilename}
+                      alt={matItem.name?.en ?? matId}
+                      className="h-6 w-6"
+                    />
+                  )}
+
+                  <span className="text-sm">
+                    {matItem?.name?.en ?? formatMaterialName(matId)}
+                  </span>
+
+                  <span className="rounded-full bg-white/10 px-2 text-sm">
+                    {amount}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </section>
+    </div>
+  </div>
+);
 }
