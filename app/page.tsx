@@ -3,6 +3,10 @@ export const dynamic = "force-dynamic";
 
 import Image from "next/image";
 import BuilderClient from "./builder/BuilderClient";
+import Changelog from "@/app/components/Changelog";
+import { ArrowRight } from "lucide-react";
+
+
 
 
 // SERVER DATA
@@ -293,6 +297,9 @@ export default async function Home() {
             </p>
           </div>
         </div>
+
+        {/* Changelog */}
+  <Changelog />
       </section>
 
       {/* ─────────────────────────────────────
@@ -321,15 +328,32 @@ export default async function Home() {
                 Build your raid loadout
               </h3>
               <p className="mt-3 text-xs text-[#A0A4AA]">
-  Something missing or not working?{" "}
-  <a
-    href="https://docs.google.com/forms/d/e/1FAIpQLSf1PgLtEkk91pI--JvRLkGhKM_KPgtK8O1LdN_zT9ez8g66GQ/viewform"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="text-[#C9B400] hover:underline"
-  >
-    Let me know →
-  </a>
+<a
+  href="https://docs.google.com/forms/d/e/1FAIpQLSf1PgLtEkk91pI--JvRLkGhKM_KPgtK8O1LdN_zT9ez8g66GQ/viewform"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="
+    inline-flex items-center gap-2
+    rounded-md border border-white/10
+    px-3 py-1.5 text-xs
+    text-[#A0A4AA]
+    transition
+    hover:text-white
+    hover:border-[#C9B400]/40
+    group
+  "
+>
+  <span>Missing something or have suggestions?</span>
+
+  <span className="inline-flex items-center gap-1 text-[#C9B400]">
+    Let me know
+    <ArrowRight
+      size={12}
+      className="transition-transform group-hover:translate-x-0.5"
+    />
+  </span>
+</a>
+
 </p>
 
             </div>
@@ -391,16 +415,34 @@ export default async function Home() {
             </a>.
           </p>
           <p className="text-xs text-[#A0A4AA] mt-2">
-  Missing items or something feels off?{" "}
-  <a
-    href="https://docs.google.com/forms/d/e/1FAIpQLSf1PgLtEkk91pI--JvRLkGhKM_KPgtK8O1LdN_zT9ez8g66GQ/viewform"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="text-[#C9B400] hover:underline"
-  >
-    Let me know →
-  </a>
-</p>
+           
+<a
+  href="https://docs.google.com/forms/d/e/1FAIpQLSf1PgLtEkk91pI--JvRLkGhKM_KPgtK8O1LdN_zT9ez8g66GQ/viewform"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="
+    inline-flex items-center gap-2
+    rounded-md border border-white/10
+    px-3 py-1.5 text-xs
+    text-[#A0A4AA]
+    transition
+    hover:text-white
+    hover:border-[#C9B400]/40
+    group
+  "
+>
+  <span>Missing something or have suggestions?</span>
+
+  <span className="inline-flex items-center gap-1 text-[#C9B400]">
+    Let me know
+    <ArrowRight
+      size={12}
+      className="transition-transform group-hover:translate-x-0.5"
+    />
+  </span>
+</a>
+
+          </p>
 
         </div>
       </footer>

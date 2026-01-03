@@ -41,3 +41,41 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
+/* Subtle dark scrollbar */
+.scrollbar-subtle {
+  scrollbar-width: thin !important;               /* Firefox */
+  scrollbar-color: rgba(255,255,255,0.25) transparent !important;
+}
+
+/* Chrome / Edge / Safari */
+.scrollbar-subtle::-webkit-scrollbar {
+  width: 6px !important;
+}
+
+.scrollbar-subtle::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+.scrollbar-subtle::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.25) !important;
+  border-radius: 999px !important;
+}
+
+.scrollbar-subtle::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.4) !important;
+}
+
+.scrollbar-minimal {
+  scrollbar-width: thin !important;
+  scrollbar-color: rgba(255,255,255,0.15) transparent !important;
+}
+
+.scrollbar-minimal::-webkit-scrollbar {
+  width: 4px !important;
+}
+
+.scrollbar-minimal::-webkit-scrollbar-thumb {
+  background-color: rgba(255,255,255,0.15) !important;
+  border-radius: 999px !important;
+}
+
