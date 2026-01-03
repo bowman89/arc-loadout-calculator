@@ -9,13 +9,17 @@ export const changelog: ChangelogEntry[] = [
     date: "2026-01-03",
     title: "Improvements & fixes",
     items: [
-      "Modifications now stack instead of creating duplicate rows",
-      "Added modifications to the tool",
-      "Clear all now correctly resets modification materials",
-      "Improved loadout removal logic",
-      "Added changelog",
-      "Improved feedback link UX"
-    ],
+      "Separated shields into their own dedicated card",
+      "Reworked input layout to a consistent 2×3 card grid",
+      "Added ordering system for input cards to easily control layout",
+      "Improved ammo handling to reflect bundle crafting quantities (e.g. x25)",
+      "Updated loadout quantity display to show actual received ammo amount",
+      "Added clearer empty-state messaging for Tier I weapons",
+      "Improved materials section UX to reduce confusion for new users",
+      "Refined CTA styling and feedback link interaction",
+      "Minor UI alignment and spacing improvements across input cards"
+    ]
+    
   },
   {
     date: "2026-01-02",

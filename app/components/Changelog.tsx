@@ -21,7 +21,7 @@ export default function Changelog() {
       </div>
 
       {/* Content */}
-      <div className="mx-auto max-w-3xl">
+      <div className="mx-auto max-w-3xl rounded-2xl border border-white/10 transition hover:border-white/20 px-6 py-5">
         <div className="max-h-30 space-y-4 overflow-y-auto pr-2 text-sm text-[#A0A4AA] scrollbar-subtle">
           {changelog.map((entry) => (
             <div key={entry.date}>

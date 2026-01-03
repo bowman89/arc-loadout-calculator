@@ -8,6 +8,7 @@ import { type Augment } from "../lib/getAugments";
 import { type QuickUseItem as QuickUse } from "../lib/getQuickUse";
 import { type Ammunition } from "../lib/getAmmo";
 import { type ModificationItem } from "../lib/getModifications";
+import { type Shield } from "../lib/getShields";
 
 import { track } from "../lib/track";
 
@@ -46,6 +47,11 @@ type LoadoutModification = {
   modification: ModificationItem;
   quantity: number;
 };
+
+type LoadoutShield ={
+  shield: Shield;
+  quantity: number;
+}
 
 type LoadoutRow = {
   key: string;
@@ -121,6 +127,41 @@ function QuantityControl({
   );
 }
 
+function hasCraftQuantity(
+  item: unknown
+): item is { craftQuantity: number } {
+  if (typeof item !== "object" || item === null) {
+    return false;
+  }
+
+  if (!("craftQuantity" in item)) {
+    return false;
+  }
+
+  return typeof (item as Record<string, unknown>).craftQuantity === "number";
+}
+
+
+function getDisplayQuantity(item: unknown, quantity: number) {
+  return hasCraftQuantity(item)
+    ? quantity * item.craftQuantity
+    : quantity;
+}
+
+type InputCardKey =
+  | "weapon"
+  | "augment"
+  | "shield"
+  | "quickUse"
+  | "ammo"
+  | "modification";
+
+type InputCard = {
+  order: number;
+  key: InputCardKey;
+};
+
+
 /* ─────────────────────────────────────
    COMPONENT
 ───────────────────────────────────── */
@@ -128,6 +169,7 @@ export default function BuilderClient({
   weapons,
   items,
   augments,
+  shields,
   quickUses,
   ammo = [],
   modifications,
@@ -135,6 +177,7 @@ export default function BuilderClient({
   weapons: Weapon[];
   items: Item[];
   augments: Augment[];
+  shields: Shield[];
   quickUses: QuickUse[];
   ammo?: Ammunition[];
   modifications: ModificationItem[];
@@ -150,13 +193,16 @@ export default function BuilderClient({
 
   const [selectedAugmentId, setSelectedAugmentId] = useState("");
   const [augmentQty, setAugmentQty] = useState(1);
-  const [augmentLoadout, setAugmentLoadout] =
-    useState<LoadoutAugment[]>([]);
+  const [augmentLoadout, setAugmentLoadout] = useState<LoadoutAugment[]>([]);
+
+  const [selectedShieldId, setSelectedShieldId] = useState("");
+  const [shieldQty, setShieldQty] = useState(1);
+  const [shieldLoadout, setShieldLoadout] = useState<LoadoutShield[]>([]);
+
 
   const [selectedQuickUseId, setSelectedQuickUseId] = useState("");
   const [quickUseQty, setQuickUseQty] = useState(1);
-  const [quickUseLoadout, setQuickUseLoadout] =
-    useState<LoadoutQuickUse[]>([]);
+  const [quickUseLoadout, setQuickUseLoadout] = useState<LoadoutQuickUse[]>([]);
 
   const [selectedAmmoId, setSelectedAmmoId] = useState("");
   const [ammoQty, setAmmoQty] = useState(1);
@@ -164,8 +210,7 @@ export default function BuilderClient({
 
   const [selectedModificationId, setSelectedModificationId] = useState("");
   const [modificationQty, setModificationQty] = useState(1);
-  const [modificationLoadout, setModificationLoadout] =
-    useState<LoadoutModification[]>([]);
+  const [modificationLoadout, setModificationLoadout] = useState<LoadoutModification[]>([]);
 
   /* ───────── LOOKUP MAPS ───────── */
   const weaponsById = useMemo(
@@ -182,6 +227,12 @@ export default function BuilderClient({
     () => Object.fromEntries(augments.map((a) => [a.id, a])),
     [augments]
   );
+
+  const shieldsById = useMemo(
+  () => Object.fromEntries(shields.map((s) => [s.id, s])),
+  [shields]
+  );
+
 
   const quickUsesById = useMemo(
     () => Object.fromEntries(quickUses.map((q) => [q.id, q])),
@@ -246,6 +297,31 @@ export default function BuilderClient({
 
     setAugmentQty(1);
   }
+
+  function addShield() {
+    const shield = shieldsById[selectedShieldId];
+    if (!shield) return;
+
+    track("add_shield", {
+      shield_id: shield.id,
+      quantity: shieldQty,
+    });
+
+    setShieldLoadout((prev) => {
+      const index = prev.findIndex((e) => e.shield.id === shield.id);
+      if (index !== -1) {
+        return prev.map((e, i) =>
+          i === index
+            ? { ...e, quantity: e.quantity + shieldQty }
+            : e
+        );
+      }
+      return [...prev, { shield, quantity: shieldQty }];
+    });
+
+    setShieldQty(1);
+  }
+
 
   function addQuickUse() {
     const quickUse = quickUsesById[selectedQuickUseId];
@@ -320,6 +396,7 @@ export default function BuilderClient({
   function clearAll() {
     setWeaponLoadout([]);
     setAugmentLoadout([]);
+    setShieldLoadout([]);
     setQuickUseLoadout([]);
     setAmmoLoadout([]);
     setModificationLoadout([]);
@@ -330,6 +407,9 @@ export default function BuilderClient({
   }
   function removeAugment(i: number) {
     setAugmentLoadout((p) => p.filter((_, idx) => idx !== i));
+  }
+  function removeShield(i: number) {
+  setShieldLoadout((p) => p.filter((_, idx) => idx !== i));
   }
   function removeQuickUse(i: number) {
     setQuickUseLoadout((p) => p.filter((_, idx) => idx !== i));
@@ -365,6 +445,18 @@ export default function BuilderClient({
     });
     return totals;
   }, [augmentLoadout]);
+
+  const shieldMaterials = useMemo(() => {
+  const totals: Mats = {};
+  shieldLoadout.forEach(({ shield, quantity }) => {
+    if (!shield.recipe) return;
+    Object.entries(shield.recipe).forEach(
+      ([k, v]) => (totals[k] = (totals[k] ?? 0) + v * quantity)
+    );
+  });
+  return totals;
+  }, [shieldLoadout]);
+
 
   const quickUseMaterials = useMemo(() => {
     const totals: Mats = {};
@@ -403,6 +495,7 @@ export default function BuilderClient({
     mergeMaterials(
       weaponMaterials,
       augmentMaterials,
+      shieldMaterials,
       quickUseMaterials,
       ammoMaterials,
       modificationMaterials
@@ -412,6 +505,7 @@ export default function BuilderClient({
   const hasAnyLoadout =
     weaponLoadout.length ||
     augmentLoadout.length ||
+    shieldLoadout.length ||
     quickUseLoadout.length ||
     ammoLoadout.length ||
     modificationLoadout.length;
@@ -438,6 +532,15 @@ export default function BuilderClient({
       })
     );
 
+    shieldLoadout.forEach((e, i) =>
+      rows.push({
+        key: `shield-${i}`,
+        item: e.shield,
+        quantity: e.quantity,
+        remove: () => removeShield(i),
+      })
+    );
+    
     quickUseLoadout.forEach((e, i) =>
       rows.push({
         key: `quickUse-${i}`,
@@ -469,186 +572,243 @@ export default function BuilderClient({
   }, [
     weaponLoadout,
     augmentLoadout,
+    shieldLoadout,
     quickUseLoadout,
     ammoLoadout,
     modificationLoadout,
   ]);
 
+const inputCards: InputCard[] = [
+  { order: 1, key: "weapon" },
+  { order: 4, key: "augment" },
+  { order: 5, key: "shield" },
+  { order: 6, key: "quickUse" },
+  { order: 3, key: "ammo" },
+  { order: 2, key: "modification" },
+];
+
+
  /* ---------- UI ---------- */
 return (
   <div className="space-y-6">
-    {/* INPUT GRID */}
-    <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-      {/* WEAPON */}
-      <section className="rounded-xl bg-[#16181d] p-6">
-        <div className="mb-3 flex items-center justify-between">
-          <h4 className="font-semibold">Add weapon</h4>
+{/* INPUT GRID */}
+<div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+  {inputCards
+    .sort((a, b) => a.order - b.order)
+    .map(({ key }) => {
+      switch (key) {
+        case "weapon":
+          return (
+            <section key={key} className="rounded-xl bg-[#16181d] p-6">
+              {/* WEAPON */}
+              <div className="mb-3 relative flex items-center">
+  <h4 className="absolute left-1/2 -translate-x-1/2 font-semibold">Weapon</h4>
 
-          <div className="flex rounded-md bg-black/40 p-0.5 text-sm">
-            <button
-              type="button"
-              onClick={() => setWeaponCostMode("total")}
-              className={`px-2 py-0.5 rounded transition ${
-                weaponCostMode === "total"
-                  ? "bg-[#C9B400] text-black"
-                  : "text-white/60 hover:text-white"
-              }`}
-            >
-              Total
-            </button>
+                <div className="flex rounded-md bg-black/40 p-0.5 text-sm">
+                  <button
+                    type="button"
+                    onClick={() => setWeaponCostMode("total")}
+                    className={`px-2 py-0.5 rounded transition ${
+                      weaponCostMode === "total"
+                        ? "bg-[#C9B400] text-black"
+                        : "text-white/60 hover:text-white"
+                    }`}
+                  >
+                    Total
+                  </button>
 
-            <button
-              type="button"
-              onClick={() => setWeaponCostMode("upgrade")}
-              className={`px-2 py-0.5 rounded transition ${
-                weaponCostMode === "upgrade"
-                  ? "bg-[#C9B400] text-black"
-                  : "text-white/60 hover:text-white"
-              }`}
-            >
-              Upgrade
-            </button>
-          </div>
-        </div>
+                  <button
+                    type="button"
+                    onClick={() => setWeaponCostMode("upgrade")}
+                    className={`px-2 py-0.5 rounded transition ${
+                      weaponCostMode === "upgrade"
+                        ? "bg-[#C9B400] text-black"
+                        : "text-white/60 hover:text-white"
+                    }`}
+                  >
+                    Upgrade
+                  </button>
+                </div>
+              </div>
 
-        <select
-          value={selectedWeaponId}
-          onChange={(e) => setSelectedWeaponId(e.target.value)}
-          className="w-full rounded-md bg-white px-3 py-2 text-black"
-        >
-          <option value="">Select weapon</option>
-          {weapons.map((w) => (
-            <option key={w.id} value={w.id}>
-              {w.name?.en ?? w.id}
-            </option>
-          ))}
-        </select>
+              <select
+                value={selectedWeaponId}
+                onChange={(e) => setSelectedWeaponId(e.target.value)}
+                className="w-full rounded-md bg-white px-3 py-2 text-black"
+              >
+                <option value="">Select weapon</option>
+                {weapons.map((w) => (
+                  <option key={w.id} value={w.id}>
+                    {w.name?.en ?? w.id}
+                  </option>
+                ))}
+              </select>
 
-        <QuantityControl value={weaponQty} onChange={setWeaponQty} />
+              <QuantityControl value={weaponQty} onChange={setWeaponQty} />
 
-        <button
-          id="btn-add-weapon"
-          data-action="add_weappon"
-          onClick={addWeapon}
-          className="mt-4 w-full rounded-md bg-[#C9B400] px-4 py-2 font-semibold text-black"
-        >
-          Add weapon
-        </button>
-      </section>
+              <button
+                onClick={addWeapon}
+                className="mt-4 w-full rounded-md bg-[#C9B400] px-4 py-2 font-semibold text-black"
+              >
+                Add Weapon
+              </button>
+            </section>
+          );
 
-      {/* AUGMENT */}
-      <section className="rounded-xl bg-[#16181d] p-6">
-        <h4 className="mb-4 font-semibold">Add augment / Shield</h4>
+        case "augment":
+          return (
+            <section key={key} className="rounded-xl bg-[#16181d] p-6">
+              <h4 className="mb-4 font-semibold text-center">Augment</h4>
 
-        <select
-          value={selectedAugmentId}
-          onChange={(e) => setSelectedAugmentId(e.target.value)}
-          className="w-full rounded-md bg-white px-3 py-2 text-black"
-        >
-          <option value="">Select augment</option>
-          {augments.map((a) => (
-            <option key={a.id} value={a.id}>
-              {a.name?.en ?? a.id}
-            </option>
-          ))}
-        </select>
+              <select
+                value={selectedAugmentId}
+                onChange={(e) => setSelectedAugmentId(e.target.value)}
+                className="w-full rounded-md bg-white px-3 py-2 text-black"
+              >
+                <option value="">Select augment</option>
+                {augments.map((a) => (
+                  <option key={a.id} value={a.id}>
+                    {a.name?.en ?? a.id}
+                  </option>
+                ))}
+              </select>
 
-        <QuantityControl value={augmentQty} onChange={setAugmentQty} />
+              <QuantityControl value={augmentQty} onChange={setAugmentQty} />
 
-        <button
-          id="btn-add-augmentShield"
-          data-action="add_augmentShield"
-          onClick={addAugment}
-          className="mt-4 w-full rounded-md bg-[#C9B400] px-4 py-2 font-semibold text-black"
-        >
-          Add augment / shield
-        </button>
-      </section>
+              <button
+                onClick={addAugment}
+                className="mt-4 w-full rounded-md bg-[#C9B400] px-4 py-2 font-semibold text-black"
+              >
+                Add Augment
+              </button>
+            </section>
+          );
 
-      {/* CONSUMABLE */}
-      <section className="rounded-xl bg-[#16181d] p-6">
-        <h4 className="mb-4 font-semibold">Add consumable</h4>
+        case "shield":
+          return (
+            <section key={key} className="rounded-xl bg-[#16181d] p-6">
+              <h4 className="mb-4 font-semibold">Shields</h4>
 
-        <select
-          value={selectedQuickUseId}
-          onChange={(e) => setSelectedQuickUseId(e.target.value)}
-          className="w-full rounded-md bg-white px-3 py-2 text-black"
-        >
-          <option value="">Select consumable</option>
-          {quickUses.map((q) => (
-            <option key={q.id} value={q.id}>
-              {q.name?.en ?? q.id}
-            </option>
-          ))}
-        </select>
+              <select
+                value={selectedShieldId}
+                onChange={(e) => setSelectedShieldId(e.target.value)}
+                className="w-full rounded-md bg-white px-3 py-2 text-black"
+              >
+                <option value="">Select shield</option>
+                {shields.map((s) => (
+                  <option key={s.id} value={s.id}>
+                    {s.name?.en ?? s.id}
+                  </option>
+                ))}
+              </select>
 
-        <QuantityControl value={quickUseQty} onChange={setQuickUseQty} />
+              <QuantityControl value={shieldQty} onChange={setShieldQty} />
 
-        <button
-          onClick={addQuickUse}
-          className="mt-4 w-full rounded-md bg-[#C9B400] px-4 py-2 font-semibold text-black"
-        >
-          Add consumable
-        </button>
-      </section>
+              <button
+                onClick={addShield}
+                className="mt-4 w-full rounded-md bg-[#C9B400] px-4 py-2 font-semibold text-black"
+              >
+                Add Shield
+              </button>
+            </section>
+          );
 
-      {/* AMMO */}
-      <section className="rounded-xl bg-[#16181d] p-6">
-        <h4 className="mb-4 font-semibold">Add ammo</h4>
+        case "quickUse":
+          return (
+            <section key={key} className="rounded-xl bg-[#16181d] p-6">
+              <h4 className="mb-4 font-semibold">Quick Use</h4>
 
-        <select
-          value={selectedAmmoId}
-          onChange={(e) => setSelectedAmmoId(e.target.value)}
-          className="w-full rounded-md bg-white px-3 py-2 text-black"
-        >
-          <option value="">Select ammo</option>
-          {ammo.map((a) => (
-            <option key={a.id} value={a.id}>
-              {a.name?.en ?? a.id}
-            </option>
-          ))}
-        </select>
+              <select
+                value={selectedQuickUseId}
+                onChange={(e) => setSelectedQuickUseId(e.target.value)}
+                className="w-full rounded-md bg-white px-3 py-2 text-black"
+              >
+                <option value="">Select quick use</option>
+                {quickUses.map((q) => (
+                  <option key={q.id} value={q.id}>
+                    {q.name?.en ?? q.id}
+                  </option>
+                ))}
+              </select>
 
-        <QuantityControl value={ammoQty} onChange={setAmmoQty} />
+              <QuantityControl value={quickUseQty} onChange={setQuickUseQty} />
 
-        <button
-          onClick={addAmmo}
-          className="mt-4 w-full rounded-md bg-[#C9B400] px-4 py-2 font-semibold text-black"
-        >
-          Add ammo
-        </button>
-      </section>
+              <button
+                onClick={addQuickUse}
+                className="mt-4 w-full rounded-md bg-[#C9B400] px-4 py-2 font-semibold text-black"
+              >
+                Add consumable
+              </button>
+            </section>
+          );
 
-      {/* MODIFICATION */}
-      <section className="rounded-xl bg-[#16181d] p-6">
-        <h4 className="mb-4 font-semibold">Add modification</h4>
+        case "ammo":
+          return (
+            <section key={key} className="rounded-xl bg-[#16181d] p-6">
+              <h4 className="mb-4 font-semibold">Ammo</h4>
 
-        <select
-          value={selectedModificationId}
-          onChange={(e) => setSelectedModificationId(e.target.value)}
-          className="w-full rounded-md bg-white px-3 py-2 text-black"
-        >
-          <option value="">Select modification</option>
-          {modifications.map((m) => (
-            <option key={m.id} value={m.id}>
-              {m.name?.en ?? m.id}
-            </option>
-          ))}
-        </select>
+              <select
+                value={selectedAmmoId}
+                onChange={(e) => setSelectedAmmoId(e.target.value)}
+                className="w-full rounded-md bg-white px-3 py-2 text-black"
+              >
+                <option value="">Select ammo</option>
+                {ammo.map((a) => (
+                  <option key={a.id} value={a.id}>
+                    {a.name?.en ?? a.id} (x{a.craftQuantity ?? 25})
+                  </option>
+                ))}
+              </select>
 
-        <QuantityControl
-          value={modificationQty}
-          onChange={setModificationQty}
-        />
+              <QuantityControl value={ammoQty} onChange={setAmmoQty} />
 
-        <button
-          onClick={addModification}
-          className="mt-4 w-full rounded-md bg-[#C9B400] px-4 py-2 font-semibold text-black"
-        >
-          Add modification
-        </button>
-      </section>
-    </div>
+              <button
+                onClick={addAmmo}
+                className="mt-4 w-full rounded-md bg-[#C9B400] px-4 py-2 font-semibold text-black"
+              >
+                Add Ammo
+              </button>
+            </section>
+          );
+
+        case "modification":
+          return (
+            <section key={key} className="rounded-xl bg-[#16181d] p-6">
+              <h4 className="mb-4 font-semibold">Modification</h4>
+
+              <select
+                value={selectedModificationId}
+                onChange={(e) => setSelectedModificationId(e.target.value)}
+                className="w-full rounded-md bg-white px-3 py-2 text-black"
+              >
+                <option value="">Select Modification</option>
+                {modifications.map((m) => (
+                  <option key={m.id} value={m.id}>
+                    {m.name?.en ?? m.id}
+                  </option>
+                ))}
+              </select>
+
+              <QuantityControl
+                value={modificationQty}
+                onChange={setModificationQty}
+              />
+
+              <button
+                onClick={addModification}
+                className="mt-4 w-full rounded-md bg-[#C9B400] px-4 py-2 font-semibold text-black"
+              >
+                Add Modification
+              </button>
+            </section>
+          );
+
+        default:
+          return null;
+      }
+    })}
+</div>
+
 
     {/* LOADOUT + MATERIALS */}
     <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
@@ -690,7 +850,7 @@ return (
                 <div className="flex-1">
                   <div>{row.item.name?.en ?? row.item.id}</div>
                   <div className="text-sm opacity-70">
-                    Qty: {row.quantity}
+                    Qty: {getDisplayQuantity(row.item, row.quantity)}
                   </div>
                 </div>
 
@@ -714,7 +874,10 @@ return (
 
         {materialRows.length === 0 ? (
           <p className="text-sm text-[#A0A4AA]">
-            Add items to see required materials.
+            Add items to see required materials.  
+  <span className="block mt-1 text-[#C9B400]/40">
+    Note: Tier I weapons do not require upgrade materials — materials will only appear for Tier II weapons and above.
+  </span>
           </p>
         ) : (
           <div className="flex flex-wrap gap-2">

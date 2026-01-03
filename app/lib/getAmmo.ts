@@ -35,8 +35,11 @@ export function getAmmo(): Ammunition[] {
         item.recipe && typeof item.recipe === "object" && Object.keys(item.recipe).length > 0;
 
       if (isAmmoType && hasRecipe) {
-        ammo.push(item);
-      }
+  ammo.push({
+    ...item,
+    craftQuantity: item.craftQuantity ?? 25,
+  });
+}
     } catch {
       // ignore bad json
     }
