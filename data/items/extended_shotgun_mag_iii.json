@@ -67,7 +67,7 @@
       "value": "+6"
     }
   },
-  "upgradeCost": {
+  "recipe": {
     "mod_components": 2,
     "steel_spring": 5
   },

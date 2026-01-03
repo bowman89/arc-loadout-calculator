@@ -41,6 +41,10 @@
   },
   "id": "padded_stock",
   "type": "Modification",
+  "recipe": {
+    "mod_components": 2,
+    "duct_tape": 5
+  },
   "value": 5000,
   "rarity": "Epic",
   "weightKg": 0.5,

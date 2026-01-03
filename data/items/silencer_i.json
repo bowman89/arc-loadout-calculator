@@ -1,5 +1,9 @@
 {
   "id": "silencer_i",
+  "recipe": {
+    "wires": 4,
+    "mechanical_components": 2
+  },
   "name": {
     "en": "Silencer I",
     "de": "Schalldämpfer I",

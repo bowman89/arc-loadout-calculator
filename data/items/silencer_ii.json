@@ -1,5 +1,9 @@
 {
   "id": "silencer_ii",
+  "recipe": {
+    "mod_components": 2,
+    "wires": 8
+  },
   "name": {
     "en": "Silencer II",
     "de": "Schalldämpfer II",

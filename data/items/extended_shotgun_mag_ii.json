@@ -1,5 +1,9 @@
 {
   "id": "extended_shotgun_mag_ii",
+  "recipe": {
+    "mechanical_components": 2,
+    "steel_spring": 3
+  },
   "name": {
     "en": "Extended Shotgun Mag II",
     "de": "Erweitertes Schrotflintenmagazin II",

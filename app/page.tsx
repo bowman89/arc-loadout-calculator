@@ -11,6 +11,7 @@ import { getItems } from "./lib/getItems";
 import { getAugments } from "./lib/getAugments";
 import { getQuickUse } from "./lib/getQuickUse";
 import { getAmmo } from "./lib/getAmmo";
+import { getModifications } from "./lib/getModifications";
 
 // ICONS
 import {
@@ -44,12 +45,14 @@ export default async function Home() {
   const augments = getAugments();
   const quickUses = getQuickUse();
   const ammo = getAmmo();
+  const modification = getModifications();
 
    console.log("WEAPONS:", weapons.length);
   console.log("ITEMS:", items.length);
   console.log("AUGMENTS:", augments.length);
   console.log("QUICK USE:", quickUses.length);
   console.log("AMMO:", ammo.length);
+  console.log("MODIFICATION:", modification.length);
 
   return (
     <div style={{ backgroundColor: COLORS.dark, color: COLORS.textLight }}>
@@ -337,6 +340,7 @@ export default async function Home() {
               augments={augments}
               quickUses={quickUses}
               ammo={ammo}
+              modifications={modification}
             />
           </div>
         </div>

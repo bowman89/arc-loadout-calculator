@@ -7,6 +7,7 @@ import type { Item as Weapon, Mats } from "../lib/calcCosts";
 import { type Augment } from "../lib/getAugments";
 import { type QuickUseItem as QuickUse } from "../lib/getQuickUse";
 import { type Ammunition } from "../lib/getAmmo";
+import { type ModificationItem } from "../lib/getModifications";
 
 import { track } from "../lib/track";
 
@@ -34,6 +35,11 @@ type LoadoutQuickUse = {
 
 type LoadoutAmmo = {
   ammo: Ammunition;
+  quantity: number;
+};
+
+type LoadoutModification = {
+  modification: ModificationItem;
   quantity: number;
 };
 
@@ -105,12 +111,14 @@ export default function BuilderClient({
   augments,
   quickUses,
   ammo = [],
+  modifications,
 }: {
   weapons: Weapon[];
   items: Item[];
   augments: Augment[];
   quickUses: QuickUse[];
   ammo?: Ammunition[];
+  modifications: ModificationItem[];
 }) {
   const [selectedWeaponId, setSelectedWeaponId] = useState("");
   const [weaponQty, setWeaponQty] = useState(1);
@@ -133,6 +141,11 @@ export default function BuilderClient({
   const [selectedAmmoId, setSelectedAmmoId] = useState("");
   const [ammoQty, setAmmoQty] = useState(1);
   const [ammoLoadout, setAmmoLoadout] = useState<LoadoutAmmo[]>([]);
+
+  const [selectedModificationId, setSelectedModificationId] = useState("");
+  const [modificationQty, setModificationQty] = useState(1);
+  const [modificationLoadout, setModificationLoadout] = useState<LoadoutModification[]>([]);
+
 
   const weaponsById = useMemo(
     () => Object.fromEntries(weapons.map((w) => [w.id, w])),
@@ -159,46 +172,103 @@ export default function BuilderClient({
     [ammo]
   );
 
-  function addWeapon() {
-    const weapon = weaponsById[selectedWeaponId];
-    if (!weapon) return;
-    
+  const modificationsById = useMemo(
+  () => Object.fromEntries(modifications.map((m) => [m.id, m])),
+  [modifications]
+  );
+
+
+function addWeapon() {
+  const weapon = weaponsById[selectedWeaponId];
+  if (!weapon) return;
+
   track("add_weapon", {
     weapon_id: weapon.id,
     quantity: weaponQty,
   });
 
-    setWeaponLoadout((p) => [...p, { weapon, quantity: weaponQty }]);
-    setWeaponQty(1);
-  }
+  setWeaponLoadout((prev) => {
+    const index = prev.findIndex(
+      (entry) => entry.weapon.id === weapon.id
+    );
 
-  function addAugment() {
-    const augment = augmentsById[selectedAugmentId];
-    if (!augment) return;
-    
+    // Hvis våbnet allerede findes → læg quantity til
+    if (index !== -1) {
+      return prev.map((entry, i) =>
+        i === index
+          ? { ...entry, quantity: entry.quantity + weaponQty }
+          : entry
+      );
+    }
+
+    // Ellers → ny linje
+    return [...prev, { weapon, quantity: weaponQty }];
+  });
+
+  setWeaponQty(1);
+}
+
+function addAugment() {
+  const augment = augmentsById[selectedAugmentId];
+  if (!augment) return;
+
   track("add_augmentShield", {
     augment_id: augment.id,
     quantity: augmentQty,
   });
 
-    
-    setAugmentLoadout((p) => [...p, { augment, quantity: augmentQty }]);
-    setAugmentQty(1);
-  }
+  setAugmentLoadout((prev) => {
+    const index = prev.findIndex(
+      (entry) => entry.augment.id === augment.id
+    );
+
+    // Hvis augment allerede findes → læg quantity til
+    if (index !== -1) {
+      return prev.map((entry, i) =>
+        i === index
+          ? { ...entry, quantity: entry.quantity + augmentQty }
+          : entry
+      );
+    }
+
+    // Ellers → ny linje
+    return [...prev, { augment, quantity: augmentQty }];
+  });
+
+  setAugmentQty(1);
+}
+
 
   function addQuickUse() {
-    const quickUse = quickUsesById[selectedQuickUseId];
-    if (!quickUse) return;
-    
+  const quickUse = quickUsesById[selectedQuickUseId];
+  if (!quickUse) return;
+
   track("add_quickUse", {
     quickUse_id: quickUse.id,
     quantity: quickUseQty,
   });
 
-    
-    setQuickUseLoadout((p) => [...p, { quickUse, quantity: quickUseQty }]);
-    setQuickUseQty(1);
-  }
+  setQuickUseLoadout((prev) => {
+    const index = prev.findIndex(
+      (entry) => entry.quickUse.id === quickUse.id
+    );
+
+    // Hvis den allerede findes → læg quantity til
+    if (index !== -1) {
+      return prev.map((entry, i) =>
+        i === index
+          ? { ...entry, quantity: entry.quantity + quickUseQty }
+          : entry
+      );
+    }
+
+    // Ellers → ny linje
+    return [...prev, { quickUse, quantity: quickUseQty }];
+  });
+
+  setQuickUseQty(1);
+}
+
 
   function addAmmo() {
     const a = ammoById[selectedAmmoId];
@@ -209,16 +279,59 @@ export default function BuilderClient({
     quantity: ammoQty,
   });
 
-    
-    setAmmoLoadout((p) => [...p, { ammo: a, quantity: ammoQty }]);
-    setAmmoQty(1);
+setAmmoLoadout((prev) => {
+    const index = prev.findIndex(
+      (entry) => entry.ammo.id === a.id
+    );
+
+    if (index !== -1) {
+      return prev.map((entry, i) =>
+        i === index
+          ? { ...entry, quantity: entry.quantity + ammoQty }
+          : entry
+      );
+    }
+
+    return [...prev, { ammo: a, quantity: ammoQty }];
+  });
+
+  setAmmoQty(1);
+}
+
+function addModification() {
+  const modification = modificationsById[selectedModificationId];
+  if (!modification) return;
+
+  setModificationLoadout((prev) => {
+    const existingIndex = prev.findIndex(
+      (m) => m.modification.id === modification.id
+    );
+
+    if (existingIndex !== -1) {
+      return prev.map((m, i) =>
+        i === existingIndex
+          ? { ...m, quantity: m.quantity + modificationQty }
+          : m
+      );
+    }
+
+    return [...prev, { modification, quantity: modificationQty }];
+  });
+
+  setModificationQty(1);
+}
+
+  function removeModification(index: number) {
+    setModificationLoadout((p) => p.filter((_, i) => i !== index));
   }
+
 
   function clearAll() {
     setWeaponLoadout([]);
     setAugmentLoadout([]);
     setQuickUseLoadout([]);
     setAmmoLoadout([]);
+    setModificationLoadout([]);
   }
 
   function removeWeapon(index: number) {
@@ -286,12 +399,25 @@ export default function BuilderClient({
     return totals;
   }, [ammoLoadout]);
 
+  const modificationMaterials = useMemo(() => {
+  const totals: Mats = {};
+  modificationLoadout.forEach(({ modification, quantity }) => {
+    if (!modification.recipe) return;
+    Object.entries(modification.recipe).forEach(
+      ([k, v]) => (totals[k] = (totals[k] ?? 0) + v * quantity)
+    );
+  });
+  return totals;
+  }, [modificationLoadout]);
+
+
   const materialRows = Object.entries(
     mergeMaterials(
       weaponMaterials,
       augmentMaterials,
       quickUseMaterials,
-      ammoMaterials
+      ammoMaterials,
+      modificationMaterials
     )
   ).sort((a, b) => a[0].localeCompare(b[0]));
 
@@ -299,7 +425,8 @@ export default function BuilderClient({
     weaponLoadout.length ||
       augmentLoadout.length ||
       quickUseLoadout.length ||
-      ammoLoadout.length
+      ammoLoadout.length ||
+      modificationLoadout.length
   );
 
   // ✅ Flatten rows so TS never has to guess the type in render
@@ -342,8 +469,18 @@ export default function BuilderClient({
       });
     });
 
+    modificationLoadout.forEach((e, i) => {
+  rows.push({
+    key: `modification-${i}`,
+    item: e.modification,
+    quantity: e.quantity,
+    remove: () => removeModification(i),
+  });
+});
+
+
     return rows;
-  }, [weaponLoadout, augmentLoadout, quickUseLoadout, ammoLoadout]);
+  }, [weaponLoadout, augmentLoadout, quickUseLoadout, ammoLoadout, modificationLoadout]);
 
   /* ---------- UI ---------- */
   return (
@@ -448,37 +585,33 @@ export default function BuilderClient({
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
         {/* WEAPON */}
         <section className="rounded-xl bg-[#16181d] p-6">
-          <h4 className="mb-2 font-semibold">Add weapon</h4>
+          <div className="mb-3 flex items-center justify-between">
+            <h4 className="font-semibold">Add weapon</h4>
+          <div className="flex rounded-md bg-black/40 p-0.5 text-sm">
+            <button
+              type="button"
+              onClick={() => setWeaponCostMode("total")}
+              className={`px-2 py-0.5 rounded transition ${
+              weaponCostMode === "total"
+              ? "bg-[#C9B400] text-black"
+              : "text-white/60 hover:text-white"
+              }`}
+            >Total
+            </button>
+              <button
+                type="button"
+                onClick={() => setWeaponCostMode("upgrade")}
+                className={`px-2 py-0.5 rounded transition ${
+                  weaponCostMode === "upgrade"
+                    ? "bg-[#C9B400] text-black"
+                    : "text-white/60 hover:text-white"
+                }`}
+              >
+                Upgrade
+              </button>
+            </div>
+          </div>
 
-<div className="mb-3 flex items-center justify-between text-sm">
-  <span className="opacity-70">Weapon cost</span>
-
-  <div className="flex rounded-md bg-black/40 p-1">
-    <button
-      type="button"
-      onClick={() => setWeaponCostMode("total")}
-      className={`px-3 py-1 rounded ${
-        weaponCostMode === "total"
-          ? "bg-[#C9B400] text-black"
-          : "text-white/60"
-      }`}
-    >
-      Total
-    </button>
-
-    <button
-      type="button"
-      onClick={() => setWeaponCostMode("upgrade")}
-      className={`px-3 py-1 rounded ${
-        weaponCostMode === "upgrade"
-          ? "bg-[#C9B400] text-black"
-          : "text-white/60"
-      }`}
-    >
-      Upgrade
-    </button>
-  </div>
-</div>
           <select
             value={selectedWeaponId}
             onChange={(e) => setSelectedWeaponId(e.target.value)}
@@ -583,6 +716,37 @@ export default function BuilderClient({
             Add ammo
           </button>
         </section>
+
+        {/* MODIFICATION */}
+<section className="rounded-xl bg-[#16181d] p-6">
+  <h4 className="mb-4 font-semibold">Add modification</h4>
+
+  <select
+    value={selectedModificationId}
+    onChange={(e) => setSelectedModificationId(e.target.value)}
+    className="w-full rounded-md bg-white px-3 py-2 text-black"
+  >
+    <option value="">Select modification</option>
+    {modifications.map((m) => (
+      <option key={m.id} value={m.id}>
+        {m.name?.en ?? m.id}
+      </option>
+    ))}
+  </select>
+
+  <QuantityControl
+    value={modificationQty}
+    onChange={setModificationQty}
+  />
+
+  <button
+    onClick={addModification}
+    className="mt-4 w-full rounded-md bg-[#C9B400] px-4 py-2 font-semibold text-black"
+  >
+    Add modification
+  </button>
+</section>
+
       </div>
     </div>
   );
