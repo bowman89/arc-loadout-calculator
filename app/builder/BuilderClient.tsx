@@ -590,7 +590,9 @@ const inputCards: InputCard[] = [
 
  /* ---------- UI ---------- */
 return (
+  
   <div className="space-y-6">
+    
 {/* INPUT GRID */}
 <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
   {inputCards
@@ -598,62 +600,101 @@ return (
     .map(({ key }) => {
       switch (key) {
         case "weapon":
-          return (
-            <section key={key} className="rounded-xl bg-[#16181d] p-6">
-              {/* WEAPON */}
-              <div className="mb-3 relative flex items-center">
-  <h4 className="absolute left-1/2 -translate-x-1/2 font-semibold">Weapon</h4>
+  return (
+    <section key={key} className="rounded-xl bg-[#16181d] p-6">
+     {/* HEADER */}
+<div className="mb-4">
+  {/* MOBILE HEADER */}
+  <div className="flex flex-col items-center gap-2 md:hidden">
+    <h4 className="font-semibold text-center">Weapon</h4>
 
-                <div className="flex rounded-md bg-black/40 p-0.5 text-sm">
-                  <button
-                    type="button"
-                    onClick={() => setWeaponCostMode("total")}
-                    className={`px-2 py-0.5 rounded transition ${
-                      weaponCostMode === "total"
-                        ? "bg-[#C9B400] text-black"
-                        : "text-white/60 hover:text-white"
-                    }`}
-                  >
-                    Total
-                  </button>
+    <div className="flex rounded-md bg-black/40 p-0.5 text-sm">
+      <button
+        type="button"
+        onClick={() => setWeaponCostMode("total")}
+        className={`px-2 py-0.5 rounded transition ${
+          weaponCostMode === "total"
+            ? "bg-[#C9B400] text-black"
+            : "text-white/60 hover:text-white"
+        }`}
+      >
+        Total
+      </button>
 
-                  <button
-                    type="button"
-                    onClick={() => setWeaponCostMode("upgrade")}
-                    className={`px-2 py-0.5 rounded transition ${
-                      weaponCostMode === "upgrade"
-                        ? "bg-[#C9B400] text-black"
-                        : "text-white/60 hover:text-white"
-                    }`}
-                  >
-                    Upgrade
-                  </button>
-                </div>
-              </div>
+      <button
+        type="button"
+        onClick={() => setWeaponCostMode("upgrade")}
+        className={`px-2 py-0.5 rounded transition ${
+          weaponCostMode === "upgrade"
+            ? "bg-[#C9B400] text-black"
+            : "text-white/60 hover:text-white"
+        }`}
+      >
+        Upgrade
+      </button>
+    </div>
+  </div>
 
-              <select
-                value={selectedWeaponId}
-                onChange={(e) => setSelectedWeaponId(e.target.value)}
-                className="w-full rounded-md bg-white px-3 py-2 text-black"
-              >
-                <option value="">Select weapon</option>
-                {weapons.map((w) => (
-                  <option key={w.id} value={w.id}>
-                    {w.name?.en ?? w.id}
-                  </option>
-                ))}
-              </select>
+  {/* DESKTOP HEADER */}
+  <div className="relative hidden md:flex items-center justify-end">
+    <h4 className="absolute left-1/2 -translate-x-1/2 font-semibold">
+      Weapon
+    </h4>
 
-              <QuantityControl value={weaponQty} onChange={setWeaponQty} />
+    <div className="flex rounded-md bg-black/40 p-0.5 text-sm">
+      <button
+        type="button"
+        onClick={() => setWeaponCostMode("total")}
+        className={`px-2 py-0.5 rounded transition ${
+          weaponCostMode === "total"
+            ? "bg-[#C9B400] text-black"
+            : "text-white/60 hover:text-white"
+        }`}
+      >
+        Total
+      </button>
 
-              <button
-                onClick={addWeapon}
-                className="mt-4 w-full rounded-md bg-[#C9B400] px-4 py-2 font-semibold text-black"
-              >
-                Add Weapon
-              </button>
-            </section>
-          );
+      <button
+        type="button"
+        onClick={() => setWeaponCostMode("upgrade")}
+        className={`px-2 py-0.5 rounded transition ${
+          weaponCostMode === "upgrade"
+            ? "bg-[#C9B400] text-black"
+            : "text-white/60 hover:text-white"
+        }`}
+      >
+        Upgrade
+      </button>
+    </div>
+  </div>
+</div>
+
+
+      {/* CONTENT */}
+      <select
+        value={selectedWeaponId}
+        onChange={(e) => setSelectedWeaponId(e.target.value)}
+        className="w-full rounded-md bg-white px-3 py-2 text-black"
+      >
+        <option value="">Select weapon</option>
+        {weapons.map((w) => (
+          <option key={w.id} value={w.id}>
+            {w.name?.en ?? w.id}
+          </option>
+        ))}
+      </select>
+
+      <QuantityControl value={weaponQty} onChange={setWeaponQty} />
+
+      <button
+        onClick={addWeapon}
+        className="mt-4 w-full rounded-md bg-[#C9B400] px-4 py-2 font-semibold text-black"
+      >
+        Add Weapon
+      </button>
+    </section>
+  );
+
 
         case "augment":
           return (
