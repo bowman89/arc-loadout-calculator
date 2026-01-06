@@ -9,6 +9,7 @@ import { type QuickUseItem as QuickUse } from "../lib/getQuickUse";
 import { type Ammunition } from "../lib/getAmmo";
 import { type ModificationItem } from "../lib/getModifications";
 import { type Shield } from "../lib/getShields";
+import { type Material } from "../lib/getMaterials";
 
 import { track } from "../lib/track";
 
@@ -47,6 +48,12 @@ type LoadoutModification = {
   modification: ModificationItem;
   quantity: number;
 };
+
+type LoadoutExtraMaterial = {
+  material: Material;
+  quantity: number;
+};
+
 
 type LoadoutShield ={
   shield: Shield;
@@ -154,7 +161,8 @@ type InputCardKey =
   | "shield"
   | "quickUse"
   | "ammo"
-  | "modification";
+  | "modification"
+  | "extraMaterial";
 
 type InputCard = {
   order: number;
@@ -173,6 +181,7 @@ export default function BuilderClient({
   quickUses,
   ammo = [],
   modifications,
+  materials,
 }: {
   weapons: Weapon[];
   items: Item[];
@@ -181,6 +190,7 @@ export default function BuilderClient({
   quickUses: QuickUse[];
   ammo?: Ammunition[];
   modifications: ModificationItem[];
+  materials: Material[];
 }) {
   /* ───────── STATE ───────── */
   const [selectedWeaponId, setSelectedWeaponId] = useState("");
@@ -212,15 +222,23 @@ export default function BuilderClient({
   const [modificationQty, setModificationQty] = useState(1);
   const [modificationLoadout, setModificationLoadout] = useState<LoadoutModification[]>([]);
 
-  // Track how many materials the user already has
-  const [materialHave, setMaterialHave] = useState<Record<string, number>>({});
+    // Track how many materials the user already has (for progress / done state)
+  const [materialHave, setMaterialHave] =
+    useState<Record<string, number>>({});
 
-function updateMaterialHave(matId: string, value: number) {
+  const [extraMaterialLoadout, setExtraMaterialLoadout] =
+  useState<LoadoutExtraMaterial[]>([]);
+
+
+  const [selectedExtraMaterialId, setSelectedExtraMaterialId] = useState("");
+  const [extraMaterialQty, setExtraMaterialQty] = useState(1);
+
+  function updateMaterialHave(matId: string, value: number) {
   setMaterialHave((prev) => ({
     ...prev,
     [matId]: Math.max(0, value),
-  }));
-}
+   }));
+  }
 
 function resetMaterialHave() {
   setMaterialHave({});
@@ -407,6 +425,26 @@ function resetMaterialHave() {
     setModificationQty(1);
   }
 
+function addExtraMaterial() {
+  const material = materials.find(m => m.id === selectedExtraMaterialId);
+  if (!material) return;
+
+  setExtraMaterialLoadout(prev => {
+    const index = prev.findIndex(e => e.material.id === material.id);
+    if (index !== -1) {
+      return prev.map((e, i) =>
+        i === index
+          ? { ...e, quantity: e.quantity + extraMaterialQty }
+          : e
+      );
+    }
+    return [...prev, { material, quantity: extraMaterialQty }];
+  });
+
+  setExtraMaterialQty(1);
+}
+
+
   /* ───────── REMOVE / CLEAR ───────── */
   function clearAll() {
     setWeaponLoadout([]);
@@ -443,6 +481,13 @@ function resetMaterialHave() {
     setModificationLoadout((p) => p.filter((_, idx) => idx !== i));
     resetMaterialHave()
   }
+
+  function removeExtraMaterial(i: number) {
+  setExtraMaterialLoadout(p => p.filter((_, idx) => idx !== i));
+  resetMaterialHave();
+}
+
+
 
   /* ───────── MATERIAL CALCS ───────── */
   const weaponMaterials = useMemo(
@@ -514,6 +559,16 @@ function resetMaterialHave() {
     return totals;
   }, [modificationLoadout]);
 
+  const extraMaterialTotals = useMemo(() => {
+  const totals: Mats = {};
+  extraMaterialLoadout.forEach(({ material, quantity }) => {
+    totals[material.id] = (totals[material.id] ?? 0) + quantity;
+  });
+  return totals;
+}, [extraMaterialLoadout]);
+
+
+
   const materialRows = Object.entries(
     mergeMaterials(
       weaponMaterials,
@@ -521,7 +576,8 @@ function resetMaterialHave() {
       shieldMaterials,
       quickUseMaterials,
       ammoMaterials,
-      modificationMaterials
+      modificationMaterials,
+      extraMaterialTotals
     )
   ).sort(([, amountA], [, amountB]) => amountB - amountA);
 
@@ -531,7 +587,9 @@ function resetMaterialHave() {
     shieldLoadout.length ||
     quickUseLoadout.length ||
     ammoLoadout.length ||
-    modificationLoadout.length;
+    modificationLoadout.length ||
+    Object.keys(extraMaterialTotals).length;
+
 
   /* ───────── FLATTEN LOADOUT ───────── */
   const currentRows: LoadoutRow[] = useMemo(() => {
@@ -581,7 +639,7 @@ function resetMaterialHave() {
         remove: () => removeAmmo(i),
       })
     );
-
+    
     modificationLoadout.forEach((e, i) =>
       rows.push({
         key: `modification-${i}`,
@@ -590,15 +648,26 @@ function resetMaterialHave() {
         remove: () => removeModification(i),
       })
     );
+    
+extraMaterialLoadout.forEach((e, i) =>
+  rows.push({
+    key: `extra-material-${i}`,
+    item: e.material,
+    quantity: e.quantity,
+    remove: () => removeExtraMaterial(i),
+  })
+);
+
 
     return rows;
   }, [
-    weaponLoadout,
-    augmentLoadout,
-    shieldLoadout,
-    quickUseLoadout,
-    ammoLoadout,
-    modificationLoadout,
+ weaponLoadout,
+  augmentLoadout,
+  shieldLoadout,
+  quickUseLoadout,
+  ammoLoadout,
+  modificationLoadout,
+  extraMaterialLoadout,
   ]);
 
 const inputCards: InputCard[] = [
@@ -866,6 +935,40 @@ return (
               </button>
             </section>
           );
+        case "extraMaterial":
+  return (
+    <section key={key} className="rounded-xl bg-[#16181d] p-6">
+      <h4 className="mb-4 font-semibold text-center">
+        Extra Materials
+      </h4>
+
+      <select
+        value={selectedExtraMaterialId}
+        onChange={(e) => setSelectedExtraMaterialId(e.target.value)}
+        className="w-full rounded-md bg-white px-3 py-2 text-black"
+      >
+        <option value="">Select material</option>
+        {materials.map((m) => (
+          <option key={m.id} value={m.id}>
+            {m.name?.en ?? m.id}
+          </option>
+        ))}
+      </select>
+
+      <QuantityControl
+        value={extraMaterialQty}
+        onChange={setExtraMaterialQty}
+        min={1}
+      />
+
+      <button
+        onClick={addExtraMaterial}
+        className="mt-4 w-full rounded-md bg-[#C9B400] px-4 py-2 font-semibold text-black"
+      >
+        Add Material
+      </button>
+    </section>
+  );
 
         default:
           return null;
@@ -934,7 +1037,13 @@ return (
 
       {/* MATERIALS */}
       <section className="rounded-xl bg-[#16181d] p-6">
-        <h4 className="mb-4 font-semibold">Materials needed</h4>
+        <div className="mb-4">
+  <h4 className="font-semibold">Materials needed</h4>
+  <p className="text-xs text-[#A0A4AA] mt-1">
+    Track what you need, what you already have, and what’s left to farm.
+  </p>
+</div>
+
 
         {materialRows.length === 0 ? (
           <p className="text-sm text-[#A0A4AA]">
@@ -945,6 +1054,13 @@ return (
           </p>
         ) : (
           <div className="space-y-2">
+            <div className="flex items-center gap-3 px-3 py-1 text-xs text-[#A0A4AA]">
+  <div className="flex-1">Material</div>
+  <div className="w-14 text-center">Need</div>
+  <div className="w-20 text-center">Have</div>
+  <div className="w-20 text-center">Status</div>
+</div>
+
             {materialRows.map(([matId, amount]) => {
               const matItem = itemsById[matId];
 
@@ -975,7 +1091,7 @@ return (
     </div>
 
     {/* NEEDED */}
-    <span className="w-14 text-center text-sm opacity-70">
+    <span className="w-14 text-center text-sm font-medium">
       {amount}
     </span>
 
@@ -1005,7 +1121,56 @@ return (
   </div>
 );
 
-            })}
+            }
+            )}
+            {/* EXTRA MATERIALS */}
+<div className="mt-6 border-t border-white/10 pt-4">
+  <div className="mb-3">
+    <h5 className="text-sm font-semibold">
+      Extra materials <span className="opacity-50">(optional)</span>
+    </h5>
+    <p className="text-xs text-[#A0A4AA] mt-1">
+      Add materials you already have, or want to account for manually.
+    </p>
+  </div>
+
+  <div className="flex gap-2">
+    <select
+      value={selectedExtraMaterialId}
+      onChange={(e) => setSelectedExtraMaterialId(e.target.value)}
+      className="flex-1 rounded-md bg-white px-3 py-2 text-black text-sm"
+    >
+      <option value="">Select material</option>
+      {materials.map((m) => (
+        <option key={m.id} value={m.id}>
+          {m.name?.en ?? m.id}
+        </option>
+      ))}
+    </select>
+
+    <input
+      type="number"
+      min={1}
+      value={extraMaterialQty}
+      onChange={(e) =>
+        setExtraMaterialQty(Math.max(1, Number(e.target.value) || 1))
+      }
+      className="w-20 rounded-md bg-white text-black text-center text-sm"
+    />
+
+    <button
+      onClick={addExtraMaterial}
+      className="
+        rounded-md px-3 text-sm font-medium
+        bg-black/40 text-[#C9B400]
+        hover:bg-black/60
+      "
+    >
+      + Add
+    </button>
+  </div>
+</div>
+
           </div>
         )}
       </section>

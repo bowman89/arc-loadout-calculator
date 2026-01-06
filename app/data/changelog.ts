@@ -6,13 +6,15 @@ export type ChangelogEntry = {
 
 export const changelog: ChangelogEntry[] = [
   {
-    date: "2026-01-06",
-    title: "Materials needed - New feature",
-    items: [
-      "Added a feature that allows users to keep track of gathered materials",
-      "Changed the order of \"Materials needed\" to display materials from highest to lowest required amount"
-    ]
-  },  
+  date: "2026-01-06",
+  title: "Materials needed – usability improvements",
+  items: [
+    "Added material tracking so players can mark how many materials they already have",
+    "Materials are now sorted from highest to lowest required amount for better farming prioritization",
+    "Introduced an \"Extra materials (optional)\" section to manually account for additional materials",
+    "Improved the Materials Needed layout with clearer structure and visual hierarchy"
+  ]
+},
   {
     date: "2026-01-03",
     title: "Improvements & fixes",
