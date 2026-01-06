@@ -5,6 +5,7 @@ import Image from "next/image";
 import BuilderClient from "./builder/BuilderClient";
 import Changelog from "@/app/components/Changelog";
 import { ArrowRight } from "lucide-react";
+import Poll from "./components/Poll";
 
 
 
@@ -44,6 +45,7 @@ const COLORS = {
   mutedLight: "#A0A4AA",
   mutedDark: "#6B7077",
 };
+
 
 export default async function Home() {
   const weapons = getWeapons();
@@ -313,6 +315,23 @@ export default async function Home() {
       ───────────────────────────────────── */}
       <section id="calculator" className="scroll-mt-24" style={{ backgroundColor: COLORS.darkSoft }}>
         <div className="mx-auto max-w-7xl px-4 py-24">
+<div className="mb-10 text-center">
+  <p
+    className="mb-1 text-xs uppercase tracking-widest"
+    style={{ color: COLORS.accentDark }}
+  >
+    Help me shape the tool
+  </p>
+
+  <p className="mx-auto mb-4 max-w-xl text-xs text-[#A0A4AA]">
+    Your feedback helps prioritize new features and improvements for the community.
+  </p>
+
+  <Poll />
+</div>
+
+
+
           <div
             className="relative rounded-2xl p-8 border transition"
             style={{
