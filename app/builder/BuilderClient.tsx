@@ -212,6 +212,21 @@ export default function BuilderClient({
   const [modificationQty, setModificationQty] = useState(1);
   const [modificationLoadout, setModificationLoadout] = useState<LoadoutModification[]>([]);
 
+  // Track how many materials the user already has
+  const [materialHave, setMaterialHave] = useState<Record<string, number>>({});
+
+function updateMaterialHave(matId: string, value: number) {
+  setMaterialHave((prev) => ({
+    ...prev,
+    [matId]: Math.max(0, value),
+  }));
+}
+
+function resetMaterialHave() {
+  setMaterialHave({});
+}
+
+
   /* ───────── LOOKUP MAPS ───────── */
   const weaponsById = useMemo(
     () => Object.fromEntries(weapons.map((w) => [w.id, w])),
@@ -400,25 +415,33 @@ export default function BuilderClient({
     setQuickUseLoadout([]);
     setAmmoLoadout([]);
     setModificationLoadout([]);
+
+    resetMaterialHave();
   }
 
   function removeWeapon(i: number) {
     setWeaponLoadout((p) => p.filter((_, idx) => idx !== i));
+    resetMaterialHave()
   }
   function removeAugment(i: number) {
     setAugmentLoadout((p) => p.filter((_, idx) => idx !== i));
+    resetMaterialHave()
   }
   function removeShield(i: number) {
   setShieldLoadout((p) => p.filter((_, idx) => idx !== i));
+  resetMaterialHave()
   }
   function removeQuickUse(i: number) {
     setQuickUseLoadout((p) => p.filter((_, idx) => idx !== i));
+    resetMaterialHave()
   }
   function removeAmmo(i: number) {
     setAmmoLoadout((p) => p.filter((_, idx) => idx !== i));
+    resetMaterialHave()
   }
   function removeModification(i: number) {
     setModificationLoadout((p) => p.filter((_, idx) => idx !== i));
+    resetMaterialHave()
   }
 
   /* ───────── MATERIAL CALCS ───────── */
@@ -500,7 +523,7 @@ export default function BuilderClient({
       ammoMaterials,
       modificationMaterials
     )
-  ).sort((a, b) => a[0].localeCompare(b[0]));
+  ).sort(([, amountA], [, amountB]) => amountB - amountA);
 
   const hasAnyLoadout =
     weaponLoadout.length ||
@@ -778,7 +801,7 @@ return (
                 onClick={addQuickUse}
                 className="mt-4 w-full rounded-md bg-[#C9B400] px-4 py-2 font-semibold text-black"
               >
-                Add consumable
+                Add quick use
               </button>
             </section>
           );
@@ -921,32 +944,67 @@ return (
   </span>
           </p>
         ) : (
-          <div className="flex flex-wrap gap-2">
+          <div className="space-y-2">
             {materialRows.map(([matId, amount]) => {
               const matItem = itemsById[matId];
 
-              return (
-                <div
-                  key={matId}
-                  className="inline-flex items-center gap-2 rounded-lg bg-black/40 px-3 py-2"
-                >
-                  {matItem?.imageFilename && (
-                    <img
-                      src={matItem.imageFilename}
-                      alt={matItem.name?.en ?? matId}
-                      className="h-6 w-6"
-                    />
-                  )}
+             return (
+  <div
+    key={matId}
+    className={`flex w-full items-center gap-3 rounded-lg px-3 py-2
+      ${
+        (materialHave[matId] ?? 0) >= amount
+          ? "bg-green-500/10"
+          : "bg-black/40"
+      }
+    `}
+  >
+    {/* ICON + NAME */}
+    <div className="flex items-center gap-2 flex-1">
+      {matItem?.imageFilename && (
+        <img
+          src={matItem.imageFilename}
+          alt={matItem.name?.en ?? matId}
+          className="h-6 w-6"
+        />
+      )}
 
-                  <span className="text-sm">
-                    {matItem?.name?.en ?? formatMaterialName(matId)}
-                  </span>
+      <span className="text-sm">
+        {matItem?.name?.en ?? formatMaterialName(matId)}
+      </span>
+    </div>
 
-                  <span className="rounded-full bg-white/10 px-2 text-sm">
-                    {amount}
-                  </span>
-                </div>
-              );
+    {/* NEEDED */}
+    <span className="w-14 text-center text-sm opacity-70">
+      {amount}
+    </span>
+
+    {/* HAVE INPUT */}
+    <input
+      type="number"
+      min={0}
+      placeholder="0"
+      value={materialHave[matId] ?? ""}
+      onChange={(e) =>
+        updateMaterialHave(matId, Number(e.target.value) || 0)
+      }
+      onFocus={(e) => e.target.select()}
+      className="w-20 rounded-md bg-white text-black text-center text-sm placeholder:text-gray-400"
+    />
+
+    {/* STATUS */}
+    <div className="w-20 text-center text-sm">
+      {(materialHave[matId] ?? 0) >= amount ? (
+        <span className="text-green-400">✔ Done</span>
+      ) : (
+        <span className="text-yellow-400">
+          {amount - (materialHave[matId] ?? 0)} left
+        </span>
+      )}
+    </div>
+  </div>
+);
+
             })}
           </div>
         )}

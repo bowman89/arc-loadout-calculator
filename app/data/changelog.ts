@@ -6,6 +6,14 @@ export type ChangelogEntry = {
 
 export const changelog: ChangelogEntry[] = [
   {
+    date: "2026-01-06",
+    title: "Materials needed - New feature",
+    items: [
+      "Added a feature that allows users to keep track of gathered materials",
+      "Changed the order of \"Materials needed\" to display materials from highest to lowest required amount"
+    ]
+  },  
+  {
     date: "2026-01-03",
     title: "Improvements & fixes",
     items: [
