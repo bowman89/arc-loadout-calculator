@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Navbar from "./components/Navbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -40,7 +41,6 @@ export default function RootLayout({
             `,
           }}
         />
-        
       </head>
 
       <body
@@ -56,7 +56,10 @@ export default function RootLayout({
           />
         </noscript>
 
-        {children}
+        {/*<Navbar /> */}
+
+        <div className="pt-0">{children}</div>
+        {/* set pt-18 on navbar init */}
 
         {/* Donation / Tip box */}
         <div
@@ -80,8 +83,8 @@ export default function RootLayout({
           </a>
 
           <p className="mt-2 text-center text-[11px] leading-snug text-[#A0A4AA]">
-            This tool is free to use.  
-            If you find it useful, a small tip is appreciated ❤️
+            This tool is free to use. If you find it useful, a small tip is
+            appreciated ❤️
           </p>
         </div>
       </body>

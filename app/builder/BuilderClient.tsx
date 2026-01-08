@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { totalsForLoadout } from "../lib/calcCosts";
 import type { Item as Weapon, Mats } from "../lib/calcCosts";
 import { Search } from "lucide-react";
@@ -74,6 +74,10 @@ type LoadoutRow = {
 ───────────────────────────────────── */
 function formatMaterialName(key: string) {
   return key.replace(/_/g, " ").replace(/\b\w/g, (char) => char.toUpperCase());
+}
+
+function getItemLabel(item?: { name?: { en?: string } }, fallback?: string) {
+  return item?.name?.en ?? fallback ?? "Unknown";
 }
 
 function QuantityControl({
@@ -235,6 +239,22 @@ export default function BuilderClient({
   const [recycleMaterialId, setRecycleMaterialId] = useState<string | null>(
     null
   );
+
+  useEffect(() => {
+    if (!recycleMaterialId) return;
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setRecycleMaterialId(null);
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [recycleMaterialId]);
 
   function updateMaterialHave(matId: string, value: number) {
     setMaterialHave((prev) => ({
@@ -1049,6 +1069,12 @@ export default function BuilderClient({
               Track what you need, what you already have, and what’s left to
               farm.
             </p>
+            {materialRows.length > 0 && (
+              <p className="mt-1 text-xs text-[#C9B400]/50 flex items-center gap-1">
+                Click the <Search size={12} className="shrink-0" /> to view
+                recycle sources
+              </p>
+            )}
           </div>
 
           {materialRows.length === 0 ? (
@@ -1089,12 +1115,34 @@ export default function BuilderClient({
                         type="button"
                         onClick={() => setRecycleMaterialId(matId)}
                         className="
-                      text-white/30
-                      hover:text-[#C9B400]
-                        transition"
-                        title="See recycle sources"
+    relative
+    text-white/30
+    transition
+    group-hover:text-[#C9B400]
+    group-hover:scale-110
+    hover:text-[#C9B400]
+    hover:scale-110
+  "
+                        aria-label="See recycle sources"
                       >
                         <Search size={16} />
+
+                        {/* Tooltip – vises KUN når man hover loopen */}
+                        <span
+                          className="
+      pointer-events-none
+      absolute left-1/2 top-full mt-1
+      -translate-x-1/2
+      whitespace-nowrap
+      rounded-md bg-black px-2 py-1
+      text-xs text-white
+      opacity-0
+      hover:opacity-100
+      transition
+    "
+                        >
+                          See recycle sources
+                        </span>
                       </button>
 
                       {matItem?.imageFilename && (
@@ -1200,21 +1248,28 @@ export default function BuilderClient({
                                         <img
                                           src={itemMeta.imageFilename}
                                           alt={
-                                            itemMeta.name ?? src.sourceItemId
+                                            itemMeta.name?.en ??
+                                            src.sourceName ??
+                                            src.sourceItemId
                                           }
                                           className="h-6 w-6"
                                         />
                                       )}
 
                                       <span className="text-[#E5E7EB]">
-                                        {itemMeta?.name?.en ??
-                                          src.sourceName ??
-                                          src.sourceItemId}
+                                        {getItemLabel(
+                                          itemMeta,
+                                          src.sourceName ?? src.sourceItemId
+                                        )}
                                       </span>
                                     </div>
 
                                     <span className="text-[#A0A4AA]">
-                                      → {src.amount}
+                                      <span className="text-[#C9B400] mr-40">
+                                        →{" "}
+                                      </span>
+                                      <span className="text-[#A0A4AA]">x </span>
+                                      {src.amount}
                                     </span>
                                   </div>
                                 );
