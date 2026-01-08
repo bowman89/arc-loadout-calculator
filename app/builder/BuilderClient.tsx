@@ -1125,7 +1125,7 @@ export default function BuilderClient({
   "
                         aria-label="See recycle sources"
                       >
-                        <Search size={16} />
+                        <Search size={16} className="cursor-pointer" />
 
                         {/* Tooltip – vises KUN når man hover loopen */}
                         <span

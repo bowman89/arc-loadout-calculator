@@ -62,7 +62,8 @@ export default function RecycleLabClient({
           <h2 className="text-lg font-semibold">Recycle Playground</h2>
           <p className="text-xs text-[#A0A4AA]">
             Designed to be used together with the{" "}
-            <span className="text-[#C9B400]">Loadout Calculator</span> for smarter raid planning.
+            <span className="text-[#C9B400]">Loadout Calculator</span> for
+            smarter raid planning.
           </p>
         </div>
 
@@ -113,42 +114,39 @@ export default function RecycleLabClient({
 
         {/* Results */}
         {targetMaterial && (
-  <div className="space-y-2 pt-2">
-    {graph[targetMaterial]?.map((src) => {
-      const itemMeta = materialsById[src.sourceItemId];
+          <div className="space-y-2 pt-2">
+            {graph[targetMaterial]?.map((src) => {
+              const itemMeta = materialsById[src.sourceItemId];
 
-      return (
-        <div
-          key={src.sourceItemId}
-          className="
+              return (
+                <div
+                  key={src.sourceItemId}
+                  className="
             flex items-center justify-between
             rounded-md px-4 py-2
             bg-black/40 text-sm
           "
-        >
-          <div className="flex items-center gap-3">
-            {itemMeta?.imageFilename && (
-              <img
-                src={itemMeta.imageFilename}
-                alt={itemMeta.name ?? src.sourceItemId}
-                className="h-6 w-6"
-              />
-            )}
+                >
+                  <div className="flex items-center gap-3">
+                    {itemMeta?.imageFilename && (
+                      <img
+                        src={itemMeta.imageFilename}
+                        alt={itemMeta.name ?? src.sourceItemId}
+                        className="h-6 w-6"
+                      />
+                    )}
 
-            <span className="text-[#E5E7EB]">
-              {itemMeta?.name ?? src.sourceName ?? src.sourceItemId}
-            </span>
+                    <span className="text-[#E5E7EB]">
+                      {itemMeta?.name ?? src.sourceName ?? src.sourceItemId}
+                    </span>
+                  </div>
+
+                  <span className="text-[#A0A4AA]">→ {src.amount}</span>
+                </div>
+              );
+            })}
           </div>
-
-          <span className="text-[#A0A4AA]">
-            → {src.amount}
-          </span>
-        </div>
-      );
-    })}
-  </div>
-)}
-
+        )}
       </section>
 
       {/* ─────────────────────────────────────
@@ -224,9 +222,7 @@ export default function RecycleLabClient({
                         {src.sourceName ?? src.sourceItemId}
                       </span>
 
-                      <span className="text-[#9CA3AF]">
-                        → {src.amount}
-                      </span>
+                      <span className="text-[#9CA3AF]">→ {src.amount}</span>
                     </div>
                   ))}
                 </div>

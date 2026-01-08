@@ -28,21 +28,20 @@ export function getRecycleGraph(): RecycleGraph {
     try {
       const item = JSON.parse(raw);
 
-      if (!item?.recyclesInto || typeof item.recyclesInto !== "object") continue;
+      if (!item?.recyclesInto || typeof item.recyclesInto !== "object")
+        continue;
 
-      Object.entries(item.recyclesInto).forEach(
-        ([materialId, amount]) => {
-          if (!graph[materialId]) {
-            graph[materialId] = [];
-          }
-
-          graph[materialId].push({
-            sourceItemId: item.id,
-            sourceName: item.name?.en,
-            amount: Number(amount),
-          });
+      Object.entries(item.recyclesInto).forEach(([materialId, amount]) => {
+        if (!graph[materialId]) {
+          graph[materialId] = [];
         }
-      );
+
+        graph[materialId].push({
+          sourceItemId: item.id,
+          sourceName: item.name?.en,
+          amount: Number(amount),
+        });
+      });
     } catch {
       // ignore broken json
     }
