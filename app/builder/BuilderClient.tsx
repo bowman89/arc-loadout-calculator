@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, useEffect } from "react";
+import { useMemo, useState, useEffect, useRef } from "react";
 import { totalsForLoadout } from "../lib/calcCosts";
 import type { Item as Weapon, Mats } from "../lib/calcCosts";
 import { Search } from "lucide-react";
@@ -68,6 +68,25 @@ type LoadoutRow = {
   quantity: number;
   remove: () => void;
 };
+
+type LoadoutSnapshot = {
+  id: string;
+  createdAt: number;
+
+  weaponLoadout: LoadoutItem[];
+  augmentLoadout: LoadoutAugment[];
+  shieldLoadout: LoadoutShield[];
+  quickUseLoadout: LoadoutQuickUse[];
+  ammoLoadout: LoadoutAmmo[];
+  modificationLoadout: LoadoutModification[];
+  extraMaterialLoadout: LoadoutExtraMaterial[];
+
+  weaponCostMode: WeaponCostMode;
+
+  note?: string;
+  manuallySaved?: boolean;
+};
+type WeaponCostMode = "total" | "upgrade";
 
 /* ─────────────────────────────────────
    HELPERS
@@ -164,6 +183,19 @@ type InputCard = {
   key: InputCardKey;
 };
 
+function getLoadoutSignature(input: {
+  weaponLoadout: LoadoutItem[];
+  augmentLoadout: LoadoutAugment[];
+  shieldLoadout: LoadoutShield[];
+  quickUseLoadout: LoadoutQuickUse[];
+  ammoLoadout: LoadoutAmmo[];
+  modificationLoadout: LoadoutModification[];
+  extraMaterialLoadout: LoadoutExtraMaterial[];
+  weaponCostMode: WeaponCostMode;
+}) {
+  return JSON.stringify(input);
+}
+
 /* ─────────────────────────────────────
    COMPONENT
 ───────────────────────────────────── */
@@ -195,12 +227,26 @@ export default function BuilderClient({
     }[]
   >;
 }) {
+  const BUILDER_STATE_KEY = "arclc_builder_state_v1";
+  const LOADOUT_HISTORY_KEY = "arclc_loadout_history_v1";
+
+  type SavedState = {
+    weaponLoadout: LoadoutItem[];
+    augmentLoadout: LoadoutAugment[];
+    shieldLoadout: LoadoutShield[];
+    quickUseLoadout: LoadoutQuickUse[];
+    ammoLoadout: LoadoutAmmo[];
+    modificationLoadout: LoadoutModification[];
+    extraMaterialLoadout: LoadoutExtraMaterial[];
+    materialHave: Record<string, number>;
+    weaponCostMode: WeaponCostMode;
+  };
+
   /* ───────── STATE ───────── */
   const [selectedWeaponId, setSelectedWeaponId] = useState("");
   const [weaponQty, setWeaponQty] = useState(1);
   const [weaponLoadout, setWeaponLoadout] = useState<LoadoutItem[]>([]);
 
-  type WeaponCostMode = "total" | "upgrade";
   const [weaponCostMode, setWeaponCostMode] = useState<WeaponCostMode>("total");
 
   const [selectedAugmentId, setSelectedAugmentId] = useState("");
@@ -237,8 +283,89 @@ export default function BuilderClient({
 
   // Recycle modal state
   const [recycleMaterialId, setRecycleMaterialId] = useState<string | null>(
-    null
+    null,
   );
+
+  // Preview modal state
+  const [previewLoadout, setPreviewLoadout] = useState<LoadoutSnapshot | null>(
+    null,
+  );
+
+  const [showAllLoadouts, setShowAllLoadouts] = useState(false);
+
+  const [showClearHistoryConfirm, setShowClearHistoryConfirm] = useState(false);
+
+  const [showSaveLoadoutModal, setShowSaveLoadoutModal] = useState(false);
+  const [saveLoadoutNote, setSaveLoadoutNote] = useState("");
+
+  const [hasMounted, setHasMounted] = useState(false);
+
+  const [expandedLoadoutId, setExpandedLoadoutId] = useState<string | null>(
+    null,
+  );
+
+  const [loadoutHistory, setLoadoutHistory] = useState<LoadoutSnapshot[]>([]);
+
+  const lastSnapshotRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!hasMounted) return;
+
+    const raw = localStorage.getItem(LOADOUT_HISTORY_KEY);
+    setLoadoutHistory(raw ? JSON.parse(raw) : []);
+  }, [hasMounted]);
+
+  useEffect(() => {
+    const raw = localStorage.getItem(BUILDER_STATE_KEY);
+    if (!raw) return;
+
+    try {
+      const saved = JSON.parse(raw);
+
+      setWeaponLoadout(saved.weaponLoadout ?? []);
+      setAugmentLoadout(saved.augmentLoadout ?? []);
+      setShieldLoadout(saved.shieldLoadout ?? []);
+      setQuickUseLoadout(saved.quickUseLoadout ?? []);
+      setAmmoLoadout(saved.ammoLoadout ?? []);
+      setModificationLoadout(saved.modificationLoadout ?? []);
+      setExtraMaterialLoadout(saved.extraMaterialLoadout ?? []);
+
+      setMaterialHave(saved.materialHave ?? {});
+      setWeaponCostMode(saved.weaponCostMode ?? "total");
+    } catch (err) {
+      console.warn("Failed to restore saved loadout", err);
+    }
+  }, []);
+
+  useEffect(() => {
+    const state = {
+      weaponLoadout,
+      augmentLoadout,
+      shieldLoadout,
+      quickUseLoadout,
+      ammoLoadout,
+      modificationLoadout,
+      extraMaterialLoadout,
+      materialHave,
+      weaponCostMode,
+    };
+
+    localStorage.setItem(BUILDER_STATE_KEY, JSON.stringify(state));
+  }, [
+    weaponLoadout,
+    augmentLoadout,
+    shieldLoadout,
+    quickUseLoadout,
+    ammoLoadout,
+    modificationLoadout,
+    extraMaterialLoadout,
+    materialHave,
+    weaponCostMode,
+  ]);
 
   useEffect(() => {
     if (!recycleMaterialId) return;
@@ -270,43 +397,43 @@ export default function BuilderClient({
   /* ───────── LOOKUP MAPS ───────── */
   const weaponsById = useMemo(
     () => Object.fromEntries(weapons.map((w) => [w.id, w])),
-    [weapons]
+    [weapons],
   );
 
   const itemsById = useMemo(
     () => Object.fromEntries(items.map((i) => [i.id, i])),
-    [items]
+    [items],
   );
 
   const augmentsById = useMemo(
     () => Object.fromEntries(augments.map((a) => [a.id, a])),
-    [augments]
+    [augments],
   );
 
   const shieldsById = useMemo(
     () => Object.fromEntries(shields.map((s) => [s.id, s])),
-    [shields]
+    [shields],
   );
 
   const quickUsesById = useMemo(
     () => Object.fromEntries(quickUses.map((q) => [q.id, q])),
-    [quickUses]
+    [quickUses],
   );
 
   const ammoById = useMemo(
     () => Object.fromEntries(ammo.map((a) => [a.id, a])),
-    [ammo]
+    [ammo],
   );
 
   const modificationsById = useMemo(
     () => Object.fromEntries(modifications.map((m) => [m.id, m])),
-    [modifications]
+    [modifications],
   );
 
   // Recycle data
   const materialsById = useMemo(
     () => Object.fromEntries(materials.map((m) => [m.id, m])),
-    [materials]
+    [materials],
   );
 
   const allItemsById = useMemo(
@@ -314,7 +441,7 @@ export default function BuilderClient({
       ...itemsById,
       ...materialsById,
     }),
-    [itemsById, materialsById]
+    [itemsById, materialsById],
   );
 
   /* ───────── ADD HANDLERS ───────── */
@@ -331,7 +458,7 @@ export default function BuilderClient({
       const index = prev.findIndex((e) => e.weapon.id === weapon.id);
       if (index !== -1) {
         return prev.map((e, i) =>
-          i === index ? { ...e, quantity: e.quantity + weaponQty } : e
+          i === index ? { ...e, quantity: e.quantity + weaponQty } : e,
         );
       }
       return [...prev, { weapon, quantity: weaponQty }];
@@ -353,7 +480,7 @@ export default function BuilderClient({
       const index = prev.findIndex((e) => e.augment.id === augment.id);
       if (index !== -1) {
         return prev.map((e, i) =>
-          i === index ? { ...e, quantity: e.quantity + augmentQty } : e
+          i === index ? { ...e, quantity: e.quantity + augmentQty } : e,
         );
       }
       return [...prev, { augment, quantity: augmentQty }];
@@ -375,7 +502,7 @@ export default function BuilderClient({
       const index = prev.findIndex((e) => e.shield.id === shield.id);
       if (index !== -1) {
         return prev.map((e, i) =>
-          i === index ? { ...e, quantity: e.quantity + shieldQty } : e
+          i === index ? { ...e, quantity: e.quantity + shieldQty } : e,
         );
       }
       return [...prev, { shield, quantity: shieldQty }];
@@ -397,7 +524,7 @@ export default function BuilderClient({
       const index = prev.findIndex((e) => e.quickUse.id === quickUse.id);
       if (index !== -1) {
         return prev.map((e, i) =>
-          i === index ? { ...e, quantity: e.quantity + quickUseQty } : e
+          i === index ? { ...e, quantity: e.quantity + quickUseQty } : e,
         );
       }
       return [...prev, { quickUse, quantity: quickUseQty }];
@@ -419,7 +546,7 @@ export default function BuilderClient({
       const index = prev.findIndex((e) => e.ammo.id === ammoItem.id);
       if (index !== -1) {
         return prev.map((e, i) =>
-          i === index ? { ...e, quantity: e.quantity + ammoQty } : e
+          i === index ? { ...e, quantity: e.quantity + ammoQty } : e,
         );
       }
       return [...prev, { ammo: ammoItem, quantity: ammoQty }];
@@ -434,11 +561,11 @@ export default function BuilderClient({
 
     setModificationLoadout((prev) => {
       const index = prev.findIndex(
-        (e) => e.modification.id === modification.id
+        (e) => e.modification.id === modification.id,
       );
       if (index !== -1) {
         return prev.map((e, i) =>
-          i === index ? { ...e, quantity: e.quantity + modificationQty } : e
+          i === index ? { ...e, quantity: e.quantity + modificationQty } : e,
         );
       }
       return [...prev, { modification, quantity: modificationQty }];
@@ -455,13 +582,114 @@ export default function BuilderClient({
       const index = prev.findIndex((e) => e.material.id === material.id);
       if (index !== -1) {
         return prev.map((e, i) =>
-          i === index ? { ...e, quantity: e.quantity + extraMaterialQty } : e
+          i === index ? { ...e, quantity: e.quantity + extraMaterialQty } : e,
         );
       }
       return [...prev, { material, quantity: extraMaterialQty }];
     });
 
     setExtraMaterialQty(1);
+  }
+
+  function saveLoadoutSnapshot() {
+    const payload = {
+      weaponLoadout,
+      augmentLoadout,
+      shieldLoadout,
+      quickUseLoadout,
+      ammoLoadout,
+      modificationLoadout,
+      extraMaterialLoadout,
+      weaponCostMode,
+    };
+
+    const signature = getLoadoutSignature(payload);
+
+    if (signature === lastSnapshotRef.current) return;
+    lastSnapshotRef.current = signature;
+
+    const snapshot: LoadoutSnapshot = {
+      id: crypto.randomUUID(),
+      createdAt: Date.now(),
+      ...payload,
+    };
+
+    const raw = localStorage.getItem(LOADOUT_HISTORY_KEY);
+    const prev = raw ? (JSON.parse(raw) as LoadoutSnapshot[]) : [];
+
+    const next = [snapshot, ...prev];
+    localStorage.setItem(LOADOUT_HISTORY_KEY, JSON.stringify(next));
+    setLoadoutHistory(next);
+  }
+
+  function saveLoadoutManually() {
+    const payload = {
+      weaponLoadout,
+      augmentLoadout,
+      shieldLoadout,
+      quickUseLoadout,
+      ammoLoadout,
+      modificationLoadout,
+      extraMaterialLoadout,
+      weaponCostMode,
+    };
+
+    const signature = getLoadoutSignature(payload);
+
+    const raw = localStorage.getItem(LOADOUT_HISTORY_KEY);
+    const prev = raw ? (JSON.parse(raw) as LoadoutSnapshot[]) : [];
+
+    // Fjern evt. automatisk snapshot med samme loadout
+    const filtered = prev.filter(
+      (l) =>
+        getLoadoutSignature({
+          weaponLoadout: l.weaponLoadout,
+          augmentLoadout: l.augmentLoadout,
+          shieldLoadout: l.shieldLoadout,
+          quickUseLoadout: l.quickUseLoadout,
+          ammoLoadout: l.ammoLoadout,
+          modificationLoadout: l.modificationLoadout,
+          extraMaterialLoadout: l.extraMaterialLoadout,
+          weaponCostMode: l.weaponCostMode,
+        }) !== signature,
+    );
+
+    const snapshot: LoadoutSnapshot = {
+      id: crypto.randomUUID(),
+      createdAt: Date.now(),
+      ...payload,
+      note: saveLoadoutNote.trim() || undefined,
+      manuallySaved: true,
+    };
+
+    const next = [snapshot, ...filtered];
+    localStorage.setItem(LOADOUT_HISTORY_KEY, JSON.stringify(next));
+    setLoadoutHistory(next);
+
+    setSaveLoadoutNote("");
+    setShowSaveLoadoutModal(false);
+  }
+
+  function restoreLoadout(l: LoadoutSnapshot) {
+    setWeaponLoadout(l.weaponLoadout);
+    setAugmentLoadout(l.augmentLoadout);
+    setShieldLoadout(l.shieldLoadout);
+    setQuickUseLoadout(l.quickUseLoadout);
+    setAmmoLoadout(l.ammoLoadout);
+    setModificationLoadout(l.modificationLoadout);
+    setExtraMaterialLoadout(l.extraMaterialLoadout);
+    setWeaponCostMode(l.weaponCostMode);
+
+    resetMaterialHave();
+  }
+
+  function clearLoadoutHistory() {
+    localStorage.removeItem(LOADOUT_HISTORY_KEY);
+    setLoadoutHistory([]);
+    setShowClearHistoryConfirm(false);
+
+    // Force re-render
+    window.location.reload();
   }
 
   /* ───────── REMOVE / CLEAR ───────── */
@@ -509,7 +737,7 @@ export default function BuilderClient({
   /* ───────── MATERIAL CALCS ───────── */
   const weaponMaterials = useMemo(
     () => totalsForLoadout(weaponLoadout, weaponsById, weaponCostMode),
-    [weaponLoadout, weaponsById, weaponCostMode]
+    [weaponLoadout, weaponsById, weaponCostMode],
   );
 
   const mergeMaterials = (...lists: Mats[]) =>
@@ -525,7 +753,7 @@ export default function BuilderClient({
     augmentLoadout.forEach(({ augment, quantity }) => {
       if (!augment.recipe) return;
       Object.entries(augment.recipe).forEach(
-        ([k, v]) => (totals[k] = (totals[k] ?? 0) + v * quantity)
+        ([k, v]) => (totals[k] = (totals[k] ?? 0) + v * quantity),
       );
     });
     return totals;
@@ -536,7 +764,7 @@ export default function BuilderClient({
     shieldLoadout.forEach(({ shield, quantity }) => {
       if (!shield.recipe) return;
       Object.entries(shield.recipe).forEach(
-        ([k, v]) => (totals[k] = (totals[k] ?? 0) + v * quantity)
+        ([k, v]) => (totals[k] = (totals[k] ?? 0) + v * quantity),
       );
     });
     return totals;
@@ -547,7 +775,7 @@ export default function BuilderClient({
     quickUseLoadout.forEach(({ quickUse, quantity }) => {
       if (!quickUse.recipe) return;
       Object.entries(quickUse.recipe).forEach(
-        ([k, v]) => (totals[k] = (totals[k] ?? 0) + v * quantity)
+        ([k, v]) => (totals[k] = (totals[k] ?? 0) + v * quantity),
       );
     });
     return totals;
@@ -558,7 +786,7 @@ export default function BuilderClient({
     ammoLoadout.forEach(({ ammo, quantity }) => {
       if (!ammo.recipe) return;
       Object.entries(ammo.recipe).forEach(
-        ([k, v]) => (totals[k] = (totals[k] ?? 0) + v * quantity)
+        ([k, v]) => (totals[k] = (totals[k] ?? 0) + v * quantity),
       );
     });
     return totals;
@@ -569,7 +797,7 @@ export default function BuilderClient({
     modificationLoadout.forEach(({ modification, quantity }) => {
       if (!modification.recipe) return;
       Object.entries(modification.recipe).forEach(
-        ([k, v]) => (totals[k] = (totals[k] ?? 0) + v * quantity)
+        ([k, v]) => (totals[k] = (totals[k] ?? 0) + v * quantity),
       );
     });
     return totals;
@@ -591,18 +819,9 @@ export default function BuilderClient({
       quickUseMaterials,
       ammoMaterials,
       modificationMaterials,
-      extraMaterialTotals
-    )
+      extraMaterialTotals,
+    ),
   ).sort(([, amountA], [, amountB]) => amountB - amountA);
-
-  const hasAnyLoadout =
-    weaponLoadout.length ||
-    augmentLoadout.length ||
-    shieldLoadout.length ||
-    quickUseLoadout.length ||
-    ammoLoadout.length ||
-    modificationLoadout.length ||
-    Object.keys(extraMaterialTotals).length;
 
   /* ───────── FLATTEN LOADOUT ───────── */
   const currentRows: LoadoutRow[] = useMemo(() => {
@@ -614,7 +833,7 @@ export default function BuilderClient({
         item: e.weapon,
         quantity: e.quantity,
         remove: () => removeWeapon(i),
-      })
+      }),
     );
 
     augmentLoadout.forEach((e, i) =>
@@ -623,7 +842,7 @@ export default function BuilderClient({
         item: e.augment,
         quantity: e.quantity,
         remove: () => removeAugment(i),
-      })
+      }),
     );
 
     shieldLoadout.forEach((e, i) =>
@@ -632,7 +851,7 @@ export default function BuilderClient({
         item: e.shield,
         quantity: e.quantity,
         remove: () => removeShield(i),
-      })
+      }),
     );
 
     quickUseLoadout.forEach((e, i) =>
@@ -641,7 +860,7 @@ export default function BuilderClient({
         item: e.quickUse,
         quantity: e.quantity,
         remove: () => removeQuickUse(i),
-      })
+      }),
     );
 
     ammoLoadout.forEach((e, i) =>
@@ -650,7 +869,7 @@ export default function BuilderClient({
         item: e.ammo,
         quantity: e.quantity,
         remove: () => removeAmmo(i),
-      })
+      }),
     );
 
     modificationLoadout.forEach((e, i) =>
@@ -659,7 +878,7 @@ export default function BuilderClient({
         item: e.modification,
         quantity: e.quantity,
         remove: () => removeModification(i),
-      })
+      }),
     );
 
     extraMaterialLoadout.forEach((e, i) =>
@@ -668,7 +887,7 @@ export default function BuilderClient({
         item: e.material,
         quantity: e.quantity,
         remove: () => removeExtraMaterial(i),
-      })
+      }),
     );
 
     return rows;
@@ -682,6 +901,8 @@ export default function BuilderClient({
     extraMaterialLoadout,
   ]);
 
+  const hasAnyLoadout = currentRows.length > 0;
+
   const inputCards: InputCard[] = [
     { order: 1, key: "weapon" },
     { order: 4, key: "augment" },
@@ -694,6 +915,81 @@ export default function BuilderClient({
   /* ---------- UI ---------- */
   return (
     <div className="space-y-6">
+      {hasMounted && loadoutHistory.length > 0 && (
+        <section className="rounded-xl bg-[#16181d] p-6">
+          <div className="mb-3 flex items-center justify-between">
+            <h4 className="font-semibold">Latest loadouts</h4>
+
+            {loadoutHistory.length > 0 && (
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={() => setShowAllLoadouts(true)}
+                  className="border px-2 py-1 rounded text-sm text-[#C9B400] hover:underline"
+                >
+                  Show all previous
+                </button>
+
+                <button
+                  onClick={() => setShowClearHistoryConfirm(true)}
+                  className="border px-2 py-1 rounded text-sm text-red-400 hover:underline"
+                >
+                  Clear history
+                </button>
+              </div>
+            )}
+          </div>
+
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {loadoutHistory.slice(0, 4).map((l) => (
+              <div
+                key={l.id}
+                className="rounded-lg bg-black/40 p-4 flex flex-col"
+              >
+                {/* TOP CONTENT */}
+                <div className="flex flex-col gap-1">
+                  <div className="text-sm text-white/80">
+                    Built {new Date(l.createdAt).toLocaleDateString()}
+                  </div>
+
+                  <div className="text-xs text-white/50">
+                    {l.weaponLoadout.length} weapons · {l.augmentLoadout.length}{" "}
+                    augments · {l.shieldLoadout.length} shields
+                  </div>
+
+                  {l.note && (
+                    <div className="text-xs text-[#C9B400]/70 line-clamp-2">
+                      {l.note}
+                    </div>
+                  )}
+
+                  {l.manuallySaved && (
+                    <div className="text-[10px] uppercase tracking-wide text-[#C9B400]/40">
+                      Saved manually
+                    </div>
+                  )}
+                </div>
+
+                {/* ACTIONS */}
+                <div className="mt-auto flex gap-2 pt-3">
+                  <button
+                    onClick={() => setPreviewLoadout(l)}
+                    className="flex-1 rounded-md bg-black/40 px-3 py-1.5 text-xs text-white/70 hover:text-[#C9B400]"
+                  >
+                    Preview
+                  </button>
+
+                  <button
+                    onClick={() => restoreLoadout(l)}
+                    className="flex-1 rounded-md bg-[#C9B400] px-3 py-1.5 text-sm font-semibold text-black"
+                  >
+                    Build again
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
       {/* INPUT GRID */}
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {inputCards
@@ -1002,13 +1298,24 @@ export default function BuilderClient({
             }
           })}
       </div>
-
       {/* LOADOUT + MATERIALS */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         {/* CURRENT LOADOUT */}
         <section className="rounded-xl bg-[#16181d] p-6">
           <div className="mb-4 flex items-center justify-between">
             <h4 className="font-semibold">Current loadout</h4>
+
+            <button
+              onClick={() => setShowSaveLoadoutModal(true)}
+              disabled={!hasAnyLoadout}
+              className={`text-sm rounded border px-3 py-1 ${
+                hasAnyLoadout
+                  ? "text-[#C9B400] border-[#C9B400]/40 hover:bg-[#C9B400]/10"
+                  : "cursor-not-allowed text-white/30 border-white/10"
+              }`}
+            >
+              Save loadout
+            </button>
 
             <button
               onClick={clearAll}
@@ -1259,7 +1566,7 @@ export default function BuilderClient({
                                       <span className="text-[#E5E7EB]">
                                         {getItemLabel(
                                           itemMeta,
-                                          src.sourceName ?? src.sourceItemId
+                                          src.sourceName ?? src.sourceItemId,
                                         )}
                                       </span>
                                     </div>
@@ -1323,7 +1630,7 @@ export default function BuilderClient({
                     value={extraMaterialQty}
                     onChange={(e) =>
                       setExtraMaterialQty(
-                        Math.max(1, Number(e.target.value) || 1)
+                        Math.max(1, Number(e.target.value) || 1),
                       )
                     }
                     className="w-20 rounded-md bg-white text-black text-center text-sm"
@@ -1345,6 +1652,305 @@ export default function BuilderClient({
           )}
         </section>
       </div>
+
+      {previewLoadout && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          {/* Backdrop */}
+          <div
+            className="absolute inset-0 bg-black/70"
+            onClick={() => setPreviewLoadout(null)}
+          />
+
+          {/* Modal */}
+          <div className="relative z-10 w-full max-w-lg rounded-xl bg-[#16181d] p-6">
+            {/* Header */}
+            <div className="mb-4 flex items-center justify-between">
+              <h3 className="text-lg font-semibold">Loadout preview</h3>
+
+              <button
+                type="button"
+                onClick={() => setPreviewLoadout(null)}
+                className="text-lg text-white/60 hover:text-white"
+                aria-label="Close"
+              >
+                ×
+              </button>
+            </div>
+
+            {/* Body */}
+            <div className="space-y-2 max-h-[60vh] overflow-y-auto pr-1">
+              {[
+                ...previewLoadout.weaponLoadout.map((e) => ({
+                  item: e.weapon,
+                  quantity: e.quantity,
+                })),
+                ...previewLoadout.augmentLoadout.map((e) => ({
+                  item: e.augment,
+                  quantity: e.quantity,
+                })),
+                ...previewLoadout.shieldLoadout.map((e) => ({
+                  item: e.shield,
+                  quantity: e.quantity,
+                })),
+                ...previewLoadout.quickUseLoadout.map((e) => ({
+                  item: e.quickUse,
+                  quantity: e.quantity,
+                })),
+                ...previewLoadout.ammoLoadout.map((e) => ({
+                  item: e.ammo,
+                  quantity: e.quantity,
+                })),
+                ...previewLoadout.modificationLoadout.map((e) => ({
+                  item: e.modification,
+                  quantity: e.quantity,
+                })),
+                ...previewLoadout.extraMaterialLoadout.map((e) => ({
+                  item: e.material,
+                  quantity: e.quantity,
+                })),
+              ].map((row, i) => (
+                <div
+                  key={i}
+                  className="flex items-center gap-3 rounded-lg bg-black/40 px-3 py-2"
+                >
+                  {row.item.imageFilename && (
+                    <img
+                      src={row.item.imageFilename}
+                      alt={row.item.name?.en ?? row.item.id}
+                      className="h-8 w-8"
+                    />
+                  )}
+
+                  <div className="flex-1">
+                    <div>{row.item.name?.en ?? row.item.id}</div>
+                    <div className="text-sm opacity-70">
+                      Qty: {getDisplayQuantity(row.item, row.quantity)}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showAllLoadouts && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          {/* Backdrop */}
+          <div
+            className="absolute inset-0 bg-black/70"
+            onClick={() => setShowAllLoadouts(false)}
+          />
+
+          {/* Modal */}
+          <div className="relative z-10 w-full max-w-2xl rounded-xl bg-[#16181d] p-6">
+            {/* Header */}
+            <div className="mb-4 flex items-center justify-between">
+              <h3 className="text-lg font-semibold">All previous loadouts</h3>
+
+              <button
+                onClick={() => setShowAllLoadouts(false)}
+                className="text-lg text-white/60 hover:text-white"
+              >
+                ×
+              </button>
+            </div>
+
+            {/* List */}
+            <div className="max-h-[65vh] space-y-3 overflow-y-auto pr-1">
+              {loadoutHistory.map((l) => (
+                <div key={l.id}>
+                  <div className="rounded-lg bg-black/40 p-4 flex items-center justify-between gap-4">
+                    <div>
+                      <div className="text-sm text-white/80">
+                        Built {new Date(l.createdAt).toLocaleDateString()}
+                      </div>
+
+                      {l.note && (
+                        <div className="mt-1 text-xs text-[#C9B400]/70">
+                          {l.note}
+                        </div>
+                      )}
+
+                      {l.manuallySaved && (
+                        <div className="mt-1 text-[10px] uppercase text-[#C9B400]/40">
+                          Saved manually
+                        </div>
+                      )}
+
+                      <div className="mt-1 text-xs text-white/50">
+                        {l.weaponLoadout.length} weapons ·{" "}
+                        {l.augmentLoadout.length} augments ·{" "}
+                        {l.shieldLoadout.length} shields
+                      </div>
+                    </div>
+
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() =>
+                          setExpandedLoadoutId(
+                            expandedLoadoutId === l.id ? null : l.id,
+                          )
+                        }
+                        className="rounded-md bg-black/40 px-3 py-1.5 text-xs text-white/70 hover:text-[#C9B400]"
+                      >
+                        {expandedLoadoutId === l.id ? "Hide" : "Preview"}
+                      </button>
+
+                      <button
+                        onClick={() => {
+                          restoreLoadout(l);
+                          setShowAllLoadouts(false);
+                        }}
+                        className="rounded-md bg-[#C9B400] px-3 py-1.5 text-sm font-semibold text-black"
+                      >
+                        Build again
+                      </button>
+                    </div>
+                  </div>
+
+                  {expandedLoadoutId === l.id && (
+                    <div className="mt-3 rounded-lg bg-black/30 p-3 space-y-2">
+                      {[
+                        ...l.weaponLoadout.map((e) => ({
+                          item: e.weapon,
+                          quantity: e.quantity,
+                        })),
+                        ...l.augmentLoadout.map((e) => ({
+                          item: e.augment,
+                          quantity: e.quantity,
+                        })),
+                        ...l.shieldLoadout.map((e) => ({
+                          item: e.shield,
+                          quantity: e.quantity,
+                        })),
+                        ...l.quickUseLoadout.map((e) => ({
+                          item: e.quickUse,
+                          quantity: e.quantity,
+                        })),
+                        ...l.ammoLoadout.map((e) => ({
+                          item: e.ammo,
+                          quantity: e.quantity,
+                        })),
+                        ...l.modificationLoadout.map((e) => ({
+                          item: e.modification,
+                          quantity: e.quantity,
+                        })),
+                        ...l.extraMaterialLoadout.map((e) => ({
+                          item: e.material,
+                          quantity: e.quantity,
+                        })),
+                      ].map((row, i) => (
+                        <div
+                          key={i}
+                          className="flex items-center gap-3 rounded-md bg-black/40 px-3 py-2 text-sm"
+                        >
+                          {row.item.imageFilename && (
+                            <img
+                              src={row.item.imageFilename}
+                              alt={row.item.name?.en ?? row.item.id}
+                              className="h-6 w-6"
+                            />
+                          )}
+
+                          <div className="flex-1">
+                            <div>{row.item.name?.en ?? row.item.id}</div>
+                            <div className="text-xs opacity-60">
+                              Qty: {getDisplayQuantity(row.item, row.quantity)}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showClearHistoryConfirm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          {/* Backdrop */}
+          <div
+            className="absolute inset-0 bg-black/80"
+            onClick={() => setShowClearHistoryConfirm(false)}
+          />
+
+          {/* Modal */}
+          <div className="relative z-10 w-full max-w-md rounded-xl bg-[#16181d] p-6 border border-red-500/30">
+            <h3 className="text-lg font-semibold text-red-400">
+              ⚠ Danger zone
+            </h3>
+
+            <p className="mt-3 text-sm text-white/70">
+              Are you sure you want to clear your loadout history?
+              <br />
+              <span className="text-red-400">
+                This action cannot be undone.
+              </span>
+            </p>
+
+            <div className="mt-6 flex justify-end gap-3">
+              <button
+                onClick={() => setShowClearHistoryConfirm(false)}
+                className="rounded-md bg-black/40 px-4 py-2 text-sm text-white/70 hover:text-white"
+              >
+                No
+              </button>
+
+              <button
+                onClick={clearLoadoutHistory}
+                className="rounded-md bg-red-500 px-4 py-2 text-sm font-semibold text-black hover:bg-red-400"
+              >
+                Yes, clear history
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showSaveLoadoutModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div
+            className="absolute inset-0 bg-black/70"
+            onClick={() => setShowSaveLoadoutModal(false)}
+          />
+
+          <div className="relative z-10 w-full max-w-lg rounded-xl bg-[#16181d] p-6">
+            <h3 className="text-lg font-semibold">Save loadout</h3>
+
+            <p className="mt-2 text-sm text-white/60">
+              Add an optional note to remember why you saved this build.
+            </p>
+
+            <textarea
+              value={saveLoadoutNote}
+              onChange={(e) => setSaveLoadoutNote(e.target.value)}
+              placeholder="e.g. Solo raid build, cheap extract, PvP focus…"
+              className="mt-4 w-full rounded-md bg-black/40 p-3 text-sm text-white resize-none"
+              rows={3}
+            />
+
+            <div className="mt-6 flex justify-end gap-3">
+              <button
+                onClick={() => setShowSaveLoadoutModal(false)}
+                className="rounded-md bg-black/40 px-4 py-2 text-sm text-white/70 hover:text-white"
+              >
+                Cancel
+              </button>
+
+              <button
+                onClick={saveLoadoutManually}
+                className="rounded-md bg-[#C9B400] px-4 py-2 text-sm font-semibold text-black"
+              >
+                Save loadout
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
