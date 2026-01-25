@@ -6,6 +6,20 @@ export type ChangelogEntry = {
 
 export const changelog: ChangelogEntry[] = [
   {
+    date: "2026-01-25",
+    title: "Loadout history, manual saves & preview UX improvements",
+    items: [
+      "Burletta from Tier II to Tier IV added correctly.",
+      "Added manual save option for loadouts with optional notes",
+      "Improved loadout history with clear distinction between automatic and manually saved builds",
+      "Updated latest loadouts to refresh instantly when saving a build",
+      "Prevented duplicate automatic saves when a loadout is saved manually",
+      "Reworked full history view to use inline preview instead of opening nested modals",
+      "Improved overall history and preview UX for better readability and flow",
+      "Stabilized client-side state handling and localStorage sync",
+    ],
+  },
+  {
     date: "2026-01-08",
     title: "Recycle insights – integrated calculator feature & UX improvements",
     items: [

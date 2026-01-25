@@ -79,7 +79,6 @@ export default async function Home() {
       >
         {/* Overlay - no pointer events */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/75 to-black/90 pointer-events-none" />
-
         {/* Content - allows pointer events */}
         <div className="relative mx-auto max-w-6xl px-6 py-40 text-center pointer-events-auto">
           <Image
@@ -155,6 +154,33 @@ export default async function Home() {
               </svg>
             </a>
           </p>
+          <div className="mt-20 max-w-3xl text-center mx-auto space-y-4 border border-[#C9B400] rounded  p-6 bg-[#C9B400]/30">
+            <h2 className="text-2xl font-semibold">
+              A quick update from the dev 👋
+            </h2>
+
+            <p>
+              First of all,{" "}
+              <span className="font-bold underline">thank you</span> for using
+              the Loadout Calculator — and an extra big thanks to everyone who
+              has taken the time to share feedback. It truly helps shape this
+              tool.
+            </p>
+
+            <p>
+              Between full-time work and dad life, updates have been a bit
+              slower lately. That said, I’ve just rolled out a few pretty big
+              improvements today (25/01/2026), and I hope they make the
+              experience even better.
+            </p>
+
+            <p className="text-white/80">
+              Please keep the feedback coming — I genuinely enjoy working on
+              this project and love giving something back to this amazing
+              community ❤️
+            </p>
+            <p className="text-white/80 font-bold">/BovleDK</p>
+          </div>
         </div>
       </section>
 
