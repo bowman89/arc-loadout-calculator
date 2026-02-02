@@ -471,7 +471,7 @@ export default function BuilderClient({
     const augment = augmentsById[selectedAugmentId];
     if (!augment) return;
 
-    track("add_augmentShield", {
+    track("add_augment", {
       augment_id: augment.id,
       quantity: augmentQty,
     });
