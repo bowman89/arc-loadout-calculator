@@ -559,6 +559,11 @@ export default function BuilderClient({
     const modification = modificationsById[selectedModificationId];
     if (!modification) return;
 
+    track("add_modification", {
+      modification_id: modification.id,
+      quantity: modificationQty,
+    });
+
     setModificationLoadout((prev) => {
       const index = prev.findIndex(
         (e) => e.modification.id === modification.id,
