@@ -583,6 +583,11 @@ export default function BuilderClient({
     const material = materials.find((m) => m.id === selectedExtraMaterialId);
     if (!material) return;
 
+    track("add_extramaterial", {
+      extraMaterial_id: material.id,
+      quantity: extraMaterialQty,
+    });
+
     setExtraMaterialLoadout((prev) => {
       const index = prev.findIndex((e) => e.material.id === material.id);
       if (index !== -1) {
