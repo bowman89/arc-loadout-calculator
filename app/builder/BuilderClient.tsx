@@ -3,7 +3,7 @@
 import { useMemo, useState, useEffect, useRef } from "react";
 import { totalsForLoadout } from "../lib/calcCosts";
 import type { Item as Weapon, Mats } from "../lib/calcCosts";
-import { Search } from "lucide-react";
+import { Search, Share2 } from "lucide-react";
 
 import { type Augment } from "../lib/getAugments";
 import { type QuickUseItem as QuickUse } from "../lib/getQuickUse";
@@ -13,6 +13,8 @@ import { type Shield } from "../lib/getShields";
 import { type Material } from "../lib/getMaterials";
 
 import { track } from "../lib/track";
+
+import { encodeLoadout, decodeLoadout } from "../lib/shareLoadout";
 
 /* ─────────────────────────────────────
    TYPES
@@ -88,9 +90,73 @@ type LoadoutSnapshot = {
 };
 type WeaponCostMode = "total" | "upgrade";
 
+type SharedLoadout = {
+  weaponLoadout: LoadoutItem[];
+  augmentLoadout: LoadoutAugment[];
+  shieldLoadout: LoadoutShield[];
+  quickUseLoadout: LoadoutQuickUse[];
+  ammoLoadout: LoadoutAmmo[];
+  modificationLoadout: LoadoutModification[];
+  extraMaterialLoadout: LoadoutExtraMaterial[];
+  weaponCostMode: WeaponCostMode;
+};
+
+type TrackedLoadoutItem = {
+  category:
+    | "weapon"
+    | "augment"
+    | "shield"
+    | "quickuse"
+    | "ammo"
+    | "modification"
+    | "extra_material";
+  id: string;
+  quantity: number;
+};
+
 /* ─────────────────────────────────────
    HELPERS
 ───────────────────────────────────── */
+function buildTrackedLoadout(loadout: SharedLoadout): TrackedLoadoutItem[] {
+  return [
+    ...loadout.weaponLoadout.map((e) => ({
+      category: "weapon" as const,
+      id: e.weapon.id,
+      quantity: e.quantity,
+    })),
+    ...loadout.augmentLoadout.map((e) => ({
+      category: "augment" as const,
+      id: e.augment.id,
+      quantity: e.quantity,
+    })),
+    ...loadout.shieldLoadout.map((e) => ({
+      category: "shield" as const,
+      id: e.shield.id,
+      quantity: e.quantity,
+    })),
+    ...loadout.quickUseLoadout.map((e) => ({
+      category: "quickuse" as const,
+      id: e.quickUse.id,
+      quantity: e.quantity,
+    })),
+    ...loadout.ammoLoadout.map((e) => ({
+      category: "ammo" as const,
+      id: e.ammo.id,
+      quantity: e.quantity,
+    })),
+    ...loadout.modificationLoadout.map((e) => ({
+      category: "modification" as const,
+      id: e.modification.id,
+      quantity: e.quantity,
+    })),
+    ...loadout.extraMaterialLoadout.map((e) => ({
+      category: "extra_material" as const,
+      id: e.material.id,
+      quantity: e.quantity,
+    })),
+  ];
+}
+
 function formatMaterialName(key: string) {
   return key.replace(/_/g, " ").replace(/\b\w/g, (char) => char.toUpperCase());
 }
@@ -298,8 +364,6 @@ export default function BuilderClient({
   const [showSaveLoadoutModal, setShowSaveLoadoutModal] = useState(false);
   const [saveLoadoutNote, setSaveLoadoutNote] = useState("");
 
-  const [hasMounted, setHasMounted] = useState(false);
-
   const [expandedLoadoutId, setExpandedLoadoutId] = useState<string | null>(
     null,
   );
@@ -309,39 +373,36 @@ export default function BuilderClient({
   const lastSnapshotRef = useRef<string | null>(null);
 
   useEffect(() => {
-    setHasMounted(true);
+    if (typeof window === "undefined") return;
+
+    const hash = window.location.hash;
+    if (!hash.startsWith("#loadout=")) return;
+
+    const encoded = hash.replace("#loadout=", "");
+    const data = decodeLoadout<SharedLoadout>(encoded);
+    if (!data) return;
+
+    queueMicrotask(() => {
+      setWeaponLoadout(data.weaponLoadout ?? []);
+      setAugmentLoadout(data.augmentLoadout ?? []);
+      setShieldLoadout(data.shieldLoadout ?? []);
+      setQuickUseLoadout(data.quickUseLoadout ?? []);
+      setAmmoLoadout(data.ammoLoadout ?? []);
+      setModificationLoadout(data.modificationLoadout ?? []);
+      setExtraMaterialLoadout(data.extraMaterialLoadout ?? []);
+      setWeaponCostMode(data.weaponCostMode ?? "total");
+    });
+
+    track("loadout_imported", { source: "share_link" });
   }, []);
 
   useEffect(() => {
-    if (!hasMounted) return;
-
-    const raw = localStorage.getItem(LOADOUT_HISTORY_KEY);
-    setLoadoutHistory(raw ? JSON.parse(raw) : []);
-  }, [hasMounted]);
-
-  useEffect(() => {
-    const raw = localStorage.getItem(BUILDER_STATE_KEY);
-    if (!raw) return;
-
-    try {
-      const saved = JSON.parse(raw);
-
-      setWeaponLoadout(saved.weaponLoadout ?? []);
-      setAugmentLoadout(saved.augmentLoadout ?? []);
-      setShieldLoadout(saved.shieldLoadout ?? []);
-      setQuickUseLoadout(saved.quickUseLoadout ?? []);
-      setAmmoLoadout(saved.ammoLoadout ?? []);
-      setModificationLoadout(saved.modificationLoadout ?? []);
-      setExtraMaterialLoadout(saved.extraMaterialLoadout ?? []);
-
-      setMaterialHave(saved.materialHave ?? {});
-      setWeaponCostMode(saved.weaponCostMode ?? "total");
-    } catch (err) {
-      console.warn("Failed to restore saved loadout", err);
+    if (
+      typeof window !== "undefined" &&
+      window.location.hash.startsWith("#loadout=")
+    ) {
+      return;
     }
-  }, []);
-
-  useEffect(() => {
     const state = {
       weaponLoadout,
       augmentLoadout,
@@ -443,6 +504,52 @@ export default function BuilderClient({
     }),
     [itemsById, materialsById],
   );
+
+  function getSharedLoadout(): SharedLoadout {
+    return {
+      weaponLoadout,
+      augmentLoadout,
+      shieldLoadout,
+      quickUseLoadout,
+      ammoLoadout,
+      modificationLoadout,
+      extraMaterialLoadout,
+      weaponCostMode,
+    };
+  }
+
+  function shareLoadout(loadout: SharedLoadout) {
+    // 1️⃣ Encode + copy link
+    const encoded = encodeLoadout(loadout);
+    const url = `${window.location.origin}${window.location.pathname}#loadout=${encoded}`;
+    navigator.clipboard.writeText(url);
+
+    // 2️⃣ Build GA4-compatible items
+    const ga4Items = buildTrackedLoadout(loadout).map((item) => ({
+      item_id: item.id,
+      item_category: item.category, // weapon | quickuse | modification osv
+      quantity: item.quantity,
+    }));
+
+    // 3️⃣ Track event
+    track("loadout_shared", {
+      source: "button",
+      weapon_cost_mode: loadout.weaponCostMode,
+
+      items: ga4Items, // 👈 VIGTIGSTE DEL
+
+      weapons_count: loadout.weaponLoadout.length,
+      augments_count: loadout.augmentLoadout.length,
+      shields_count: loadout.shieldLoadout.length,
+      quickuse_count: loadout.quickUseLoadout.length,
+      ammo_count: loadout.ammoLoadout.length,
+      modifications_count: loadout.modificationLoadout.length,
+      extra_materials_count: loadout.extraMaterialLoadout.length,
+    });
+
+    // 4️⃣ UX feedback
+    alert("Share link copied to clipboard!");
+  }
 
   /* ───────── ADD HANDLERS ───────── */
   function addWeapon() {
@@ -925,7 +1032,7 @@ export default function BuilderClient({
   /* ---------- UI ---------- */
   return (
     <div className="space-y-6">
-      {hasMounted && loadoutHistory.length > 0 && (
+      {loadoutHistory.length > 0 && (
         <section className="rounded-xl bg-[#16181d] p-6">
           <div className="mb-3 flex items-center justify-between">
             <h4 className="font-semibold">Latest loadouts</h4>
@@ -953,8 +1060,33 @@ export default function BuilderClient({
             {loadoutHistory.slice(0, 4).map((l) => (
               <div
                 key={l.id}
-                className="rounded-lg bg-black/40 p-4 flex flex-col"
+                className="relative rounded-lg bg-black/40 p-4 flex flex-col"
               >
+                <button
+                  onClick={() =>
+                    shareLoadout({
+                      weaponLoadout: l.weaponLoadout,
+                      augmentLoadout: l.augmentLoadout,
+                      shieldLoadout: l.shieldLoadout,
+                      quickUseLoadout: l.quickUseLoadout,
+                      ammoLoadout: l.ammoLoadout,
+                      modificationLoadout: l.modificationLoadout,
+                      extraMaterialLoadout: l.extraMaterialLoadout,
+                      weaponCostMode: l.weaponCostMode,
+                    })
+                  }
+                  className="
+    absolute top-3 right-3
+    text-white/40
+    hover:text-[#C9B400]
+    transition
+  "
+                  title="Share loadout"
+                  aria-label="Share loadout"
+                >
+                  <Share2 size={16} />
+                </button>
+
                 {/* TOP CONTENT */}
                 <div className="flex flex-col gap-1">
                   <div className="text-sm text-white/80">
@@ -1312,17 +1444,31 @@ export default function BuilderClient({
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         {/* CURRENT LOADOUT */}
         <section className="rounded-xl bg-[#16181d] p-6">
-          <div className="mb-4 flex items-center justify-between">
-            <h4 className="font-semibold">Current loadout</h4>
+          <div className="mb-4 flex items-center gap-2">
+            <h4 className="font-semibold flex-1">Current loadout</h4>
+
+            <button
+              onClick={() => shareLoadout(getSharedLoadout())}
+              disabled={!hasAnyLoadout}
+              className={`text-sm rounded border px-3 py-1 flex items-center gap-1
+      ${
+        hasAnyLoadout
+          ? "text-[#C9B400] border-[#C9B400]/40 hover:bg-[#C9B400]/10"
+          : "cursor-not-allowed text-white/30 border-white/10"
+      }`}
+            >
+              Share
+            </button>
 
             <button
               onClick={() => setShowSaveLoadoutModal(true)}
               disabled={!hasAnyLoadout}
-              className={`text-sm rounded border px-3 py-1 ${
-                hasAnyLoadout
-                  ? "text-[#C9B400] border-[#C9B400]/40 hover:bg-[#C9B400]/10"
-                  : "cursor-not-allowed text-white/30 border-white/10"
-              }`}
+              className={`text-sm rounded border px-3 py-1
+      ${
+        hasAnyLoadout
+          ? "text-[#C9B400] border-[#C9B400]/40 hover:bg-[#C9B400]/10"
+          : "cursor-not-allowed text-white/30 border-white/10"
+      }`}
             >
               Save loadout
             </button>
@@ -1330,11 +1476,12 @@ export default function BuilderClient({
             <button
               onClick={clearAll}
               disabled={!hasAnyLoadout}
-              className={`text-sm rounded border px-3 py-1 ${
-                hasAnyLoadout
-                  ? "cursor-pointer text-red-400 hover:text-red-300 border-red-400/30"
-                  : "cursor-not-allowed text-white/30 border-white/10"
-              }`}
+              className={`text-sm rounded border px-3 py-1
+      ${
+        hasAnyLoadout
+          ? "text-red-400 border-red-400/30 hover:text-red-300"
+          : "cursor-not-allowed text-white/30 border-white/10"
+      }`}
             >
               Clear all
             </button>
