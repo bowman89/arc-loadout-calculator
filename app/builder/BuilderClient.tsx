@@ -751,6 +751,30 @@ export default function BuilderClient({
       weaponCostMode,
     };
 
+    // 🔹 Build GA4 items
+    const ga4Items = buildTrackedLoadout(payload).map((item) => ({
+      item_id: item.id,
+      item_category: item.category,
+      quantity: item.quantity,
+    }));
+
+    // 🔹 Track event
+    track("loadout_saved", {
+      source: "manual",
+
+      weapon_cost_mode: weaponCostMode,
+
+      items: ga4Items,
+
+      weapons_count: weaponLoadout.length,
+      augments_count: augmentLoadout.length,
+      shields_count: shieldLoadout.length,
+      quickuse_count: quickUseLoadout.length,
+      ammo_count: ammoLoadout.length,
+      modifications_count: modificationLoadout.length,
+      extra_materials_count: extraMaterialLoadout.length,
+    });
+
     const signature = getLoadoutSignature(payload);
 
     const raw = localStorage.getItem(LOADOUT_HISTORY_KEY);
