@@ -73,5 +73,11 @@
     "metal_parts": 6,
     "wires": 1
   },
-  "craftBench": "weapon_bench"
+  "craftBench": "weapon_bench",
+  "recyclesInto": {
+    "metal_parts": 5
+  },
+  "salvagesInto": {
+    "metal_parts": 3
+  }
 }

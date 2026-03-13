@@ -56,8 +56,8 @@
   "stackSize": 5,
   "updatedAt": "12/07/2025",
   "recipe": {
-    "wires": 3,
-    "electrical_components": 2
+    "electrical_components": 2,
+    "wires": 3
   },
   "craftBench": "refiner"
 }

@@ -96,8 +96,11 @@
     "rubber_parts": 2
   },
   "recipe": {
-    "explosive_compound": 1,
-    "canister": 2
+    "canister": 2,
+    "explosive_compound": 1
   },
-  "craftBench": "explosives_bench"
+  "craftBench": "explosives_bench",
+  "salvagesInto": {
+    "crude_explosives": 1
+  }
 }

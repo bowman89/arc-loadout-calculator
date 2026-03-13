@@ -114,14 +114,15 @@
   "updatedAt": "10/30/2025",
   "recyclesInto": {
     "antiseptic": 1,
-    "canister": 2
+    "canister": 1
   },
   "salvagesInto": {
     "antiseptic": 1
   },
   "recipe": {
     "antiseptic": 3,
-    "canister": 1
+    "canister": 1,
+    "tick_pod": 1
   },
   "craftBench": "med_station"
 }

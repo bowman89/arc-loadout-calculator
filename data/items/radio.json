@@ -24,8 +24,8 @@
   "type": "Recyclable",
   "value": 1000,
   "recyclesInto": {
-    "speaker_component": 1,
-    "sensors": 1
+    "sensors": 1,
+    "speaker_component": 1
   },
   "salvagesInto": {
     "speaker_component": 1

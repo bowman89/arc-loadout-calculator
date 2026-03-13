@@ -156,29 +156,44 @@ export default async function Home() {
           </p>
           <div className="mt-20 max-w-3xl text-center mx-auto space-y-4 border border-[#C9B400] rounded  p-6 bg-[#C9B400]/30">
             <h2 className="text-2xl font-semibold">
-              A quick update from the dev 👋
+              [2026-02-24] A quick update from the dev 👋
             </h2>
 
             <p>
               First of all,{" "}
-              <span className="font-bold underline">thank you</span> for using
-              the Loadout Calculator — and an extra big thanks to everyone who
-              has taken the time to share feedback. It truly helps shape this
-              tool.
+              <span className="font-bold underline">thank you</span> to everyone
+              using the Loadout Calculator — and to all of you who take the time
+              to send feedback, report issues, or suggest improvements. It truly
+              helps shape this tool.
             </p>
 
             <p>
-              Between full-time work and dad life, updates have been a bit
-              slower lately. That said, I’ve just rolled out a few pretty big
-              improvements today (25/01/2026), and I hope they make the
-              experience even better.
+              I also want to apologize for the item data not being updated for a
+              while. A special thanks to ⭐
+              <span className="font-semibold underline">Dawidson</span>⭐ for
+              pointing it out and calling me out on my lack of commitment there
+              — it was a fair reminder that people actually rely on the
+              calculator being up to date.
+            </p>
+
+            <p>
+              The data has now been updated to match the latest game patch, and
+              I’ve also improved my internal scripts so it will be much easier
+              to keep everything in sync going forward.
+            </p>
+
+            <p>
+              Between full-time work and dad life, this project sometimes moves
+              a little slower than I’d like — but seeing people use it and
+              hearing your feedback genuinely motivates me to keep improving it.
             </p>
 
             <p className="text-white/80">
-              Please keep the feedback coming — I genuinely enjoy working on
-              this project and love giving something back to this amazing
-              community ❤️
+              So again — thank you to everyone using the app and especially
+              those who take the time to give feedback or report issues. It
+              really means a lot ❤️
             </p>
+
             <p className="text-white/80 font-bold">/BovleDK</p>
           </div>
         </div>

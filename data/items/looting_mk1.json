@@ -44,8 +44,8 @@
   "rarity": "Uncommon",
   "value": 640,
   "recyclesInto": {
-    "rubber_parts": 3,
-    "plastic_parts": 3
+    "plastic_parts": 3,
+    "rubber_parts": 3
   },
   "weightKg": 1,
   "effects": {
@@ -122,5 +122,8 @@
   "craftBench": [
     "equipment_bench",
     "workbench"
-  ]
+  ],
+  "salvagesInto": {
+    "plastic_parts": 3
+  }
 }

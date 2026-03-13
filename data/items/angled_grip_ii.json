@@ -45,12 +45,12 @@
   "rarity": "Uncommon",
   "weightKg": 0.5,
   "recyclesInto": {
-    "mechanical_components": 1,
-    "duct_tape": 1
+    "duct_tape": 1,
+    "mechanical_components": 1
   },
   "recipe": {
-    "mechanical_components": 2,
-    "duct_tape": 3
+    "duct_tape": 3,
+    "mechanical_components": 2
   },
   "craftBench": "weapon_bench",
   "stationLevelRequired": 2,
@@ -86,5 +86,8 @@
     "Stitcher"
   ],
   "imageFilename": "https://cdn.arctracker.io/items/angled_grip_ii.png",
-  "updatedAt": "11/05/2025"
+  "updatedAt": "11/05/2025",
+  "salvagesInto": {
+    "mechanical_components": 1
+  }
 }

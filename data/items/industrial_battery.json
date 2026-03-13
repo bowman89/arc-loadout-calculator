@@ -44,8 +44,8 @@
   "rarity": "Rare",
   "value": 1000,
   "recyclesInto": {
-    "chemicals": 7,
-    "battery": 2
+    "battery": 2,
+    "chemicals": 7
   },
   "salvagesInto": {
     "battery": 2

@@ -109,15 +109,12 @@
   },
   "value": 7000,
   "weightKg": 0.5,
-  "recipe": {
-    "mod_components": 2,
-    "duct_tape": 5
-  },
+  "recipe": {},
   "craftBench": "weapon_bench",
   "stationLevelRequired": 3,
   "recyclesInto": {
-    "mod_components": 1,
-    "duct_tape": 2
+    "duct_tape": 2,
+    "mod_components": 1
   },
   "salvagesInto": {
     "mechanical_components": 2

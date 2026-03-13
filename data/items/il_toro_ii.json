@@ -180,5 +180,12 @@
     "simple_gun_parts": 1
   },
   "stationLevelRequired": 1,
-  "isWeapon": true
+  "isWeapon": true,
+  "recyclesInto": {
+    "mechanical_components": 3,
+    "simple_gun_parts": 3
+  },
+  "salvagesInto": {
+    "simple_gun_parts": 3
+  }
 }

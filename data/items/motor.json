@@ -46,8 +46,8 @@
   "weightKg": 3,
   "foundIn": "Mechanical",
   "recyclesInto": {
-    "oil": 2,
-    "mechanical_components": 2
+    "mechanical_components": 2,
+    "oil": 2
   },
   "salvagesInto": {
     "oil": 3

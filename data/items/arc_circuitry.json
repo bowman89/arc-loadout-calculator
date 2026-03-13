@@ -54,5 +54,8 @@
   "recipe": {
     "arc_alloy": 8
   },
-  "craftBench": "refiner"
+  "craftBench": "refiner",
+  "salvagesInto": {
+    "arc_alloy": 1
+  }
 }

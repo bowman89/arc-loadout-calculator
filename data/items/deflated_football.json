@@ -42,7 +42,8 @@
   },
   "type": "Recyclable",
   "recyclesInto": {
-    "rubber_parts": 15
+    "fabric": 9,
+    "rubber_parts": 9
   },
   "salvagesInto": {
     "rubber_parts": 9

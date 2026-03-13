@@ -77,5 +77,9 @@
   "imageFilename": "https://cdn.arctracker.io/items/pulse_mine.png",
   "updatedAt": "12/16/2025",
   "craftBench": "explosives_bench",
-  "blueprintLocked": true
+  "blueprintLocked": true,
+  "recipe": {
+    "crude_explosives": 1,
+    "wires": 1
+  }
 }

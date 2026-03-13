@@ -49,7 +49,13 @@
   "stackSize": 5,
   "foundIn": "Electrical",
   "recyclesInto": {
-    "wires": 1,
-    "rubber_parts": 1
+    "rubber_parts": 1,
+    "wires": 1
+  },
+  "recipe": {
+    "signal_amplifier": 1
+  },
+  "salvagesInto": {
+    "rubber_parts": 2
   }
 }

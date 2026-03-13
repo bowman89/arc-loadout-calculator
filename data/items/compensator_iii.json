@@ -110,7 +110,7 @@
     }
   },
   "recyclesInto": {
-    "mechanical_components": 1,
+    "mod_components": 1,
     "wires": 2
   },
   "compatibleWith": [
@@ -137,5 +137,8 @@
   },
   "craftBench": "weapon_bench",
   "stationLevelRequired": 3,
-  "blueprintLocked": true
+  "blueprintLocked": true,
+  "salvagesInto": {
+    "mechanical_components": 2
+  }
 }

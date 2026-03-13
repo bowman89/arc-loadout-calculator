@@ -61,9 +61,9 @@
     "heavy_gun_parts": 2
   },
   "recipe": {
-    "magnetic_accelerator": 1,
+    "exodus_modules": 1,
     "heavy_gun_parts": 3,
-    "exodus_modules": 1
+    "magnetic_accelerator": 1
   },
   "craftBench": "weapon_bench",
   "blueprintLocked": true,
@@ -174,5 +174,8 @@
       "value": "Weak"
     }
   },
-  "isWeapon": true
+  "isWeapon": true,
+  "salvagesInto": {
+    "heavy_gun_parts": 2
+  }
 }

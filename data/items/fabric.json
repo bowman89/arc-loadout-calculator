@@ -113,5 +113,11 @@
       "value": "1s"
     }
   },
-  "updatedAt": "10/30/2025"
+  "updatedAt": "10/30/2025",
+  "recipe": {
+    "tattered_clothes": 1
+  },
+  "salvagesInto": {
+    "bandage": 1
+  }
 }

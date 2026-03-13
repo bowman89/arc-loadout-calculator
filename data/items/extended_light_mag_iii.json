@@ -79,5 +79,8 @@
   },
   "craftBench": "weapon_bench",
   "stationLevelRequired": 3,
-  "blueprintLocked": true
+  "blueprintLocked": true,
+  "salvagesInto": {
+    "mechanical_components": 2
+  }
 }

@@ -47,8 +47,8 @@
   "stackSize": 3,
   "foundIn": "Industrial",
   "recyclesInto": {
-    "rubber_parts": 2,
-    "canister": 3
+    "canister": 3,
+    "rubber_parts": 2
   },
   "salvagesInto": {
     "canister": 2

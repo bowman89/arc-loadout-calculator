@@ -158,8 +158,8 @@
   "weightKg": 9,
   "value": 27500,
   "recipe": {
-    "magnetic_accelerator": 3,
     "complex_gun_parts": 3,
+    "magnetic_accelerator": 3,
     "queen_reactor": 1
   },
   "craftBench": "weapon_bench",
@@ -170,8 +170,8 @@
     "complex_gun_parts": 1
   },
   "recyclesInto": {
-    "magnetic_accelerator": 2,
-    "complex_gun_parts": 1
+    "complex_gun_parts": 1,
+    "magnetic_accelerator": 2
   },
   "salvagesInto": {
     "advanced_mechanical_components": 3

@@ -90,5 +90,15 @@
     }
   },
   "imageFilename": "https://cdn.arctracker.io/items/noisemaker.png",
-  "updatedAt": "10/30/2025"
+  "updatedAt": "10/30/2025",
+  "recipe": {
+    "plastic_parts": 2,
+    "speaker_component": 1
+  },
+  "recyclesInto": {
+    "speaker_component": 1
+  },
+  "salvagesInto": {
+    "speaker_component": 1
+  }
 }

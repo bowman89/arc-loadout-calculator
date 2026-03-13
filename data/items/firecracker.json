@@ -77,8 +77,8 @@
   "imageFilename": "https://cdn.arctracker.io/items/firecracker.png",
   "updatedAt": "12/16/2025",
   "recipe": {
-    "plastic_parts": 4,
-    "chemicals": 2
+    "chemicals": 2,
+    "plastic_parts": 4
   },
   "craftBench": "utility_bench",
   "stationLevelRequired": 1

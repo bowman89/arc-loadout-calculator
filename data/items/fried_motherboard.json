@@ -46,8 +46,8 @@
   "weightKg": 3,
   "foundIn": "Technological",
   "recyclesInto": {
-    "plastic_parts": 5,
-    "electrical_components": 2
+    "electrical_components": 2,
+    "plastic_parts": 5
   },
   "salvagesInto": {
     "wires": 5

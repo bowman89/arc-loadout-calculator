@@ -158,5 +158,12 @@
     "simple_gun_parts": 6
   },
   "craftBench": "weapon_bench",
-  "isWeapon": true
+  "isWeapon": true,
+  "recyclesInto": {
+    "mechanical_components": 2,
+    "simple_gun_parts": 2
+  },
+  "salvagesInto": {
+    "simple_gun_parts": 2
+  }
 }

@@ -49,7 +49,10 @@
   "updatedAt": "11/24/2025",
   "value": 6000,
   "recyclesInto": {
-    "voltage_converter": 4,
+    "exodus_modules": 1,
+    "voltage_converter": 4
+  },
+  "salvagesInto": {
     "exodus_modules": 1
   }
 }

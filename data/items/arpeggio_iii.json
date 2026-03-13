@@ -200,5 +200,12 @@
     "mechanical_components": 5,
     "medium_gun_parts": 1
   },
-  "isWeapon": true
+  "isWeapon": true,
+  "recyclesInto": {
+    "mechanical_components": 4,
+    "simple_gun_parts": 4
+  },
+  "salvagesInto": {
+    "simple_gun_parts": 4
+  }
 }

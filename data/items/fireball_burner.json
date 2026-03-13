@@ -45,7 +45,7 @@
   "value": 640,
   "recyclesInto": {
     "arc_alloy": 1,
-    "chemicals": 1
+    "crude_explosives": 1
   },
   "imageFilename": "https://cdn.arctracker.io/items/fireball_burner.png",
   "weightKg": 0.5,
@@ -116,5 +116,11 @@
       "value": "2m"
     }
   },
-  "updatedAt": "12/07/2025"
+  "updatedAt": "12/07/2025",
+  "recipe": {
+    "flame_spray": 1
+  },
+  "salvagesInto": {
+    "arc_alloy": 1
+  }
 }

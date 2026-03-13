@@ -1,8 +1,6 @@
 {
   "id": "kinetic_converter",
-  "recipe": {
-    
-  },
+  "recipe": {},
   "name": {
     "en": "Kinetic Converter",
     "de": "Kinetischer Konverter",
@@ -114,8 +112,11 @@
   "imageFilename": "https://cdn.arctracker.io/items/kinetic_converter.png",
   "value": 7000,
   "recyclesInto": {
-    "mod_components": 1,
-    "duct_tape": 2
+    "duct_tape": 2,
+    "mod_components": 1
   },
-  "updatedAt": "10/30/2025"
+  "updatedAt": "10/30/2025",
+  "salvagesInto": {
+    "mechanical_components": 2
+  }
 }

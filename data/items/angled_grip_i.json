@@ -70,8 +70,14 @@
   "imageFilename": "https://cdn.arctracker.io/items/angled_grip_i.png",
   "updatedAt": "11/03/2025",
   "recipe": {
-    "plastic_parts": 6,
-    "duct_tape": 1
+    "duct_tape": 1,
+    "plastic_parts": 6
   },
-  "craftBench": "weapon_bench"
+  "craftBench": "weapon_bench",
+  "recyclesInto": {
+    "plastic_parts": 6
+  },
+  "salvagesInto": {
+    "plastic_parts": 3
+  }
 }

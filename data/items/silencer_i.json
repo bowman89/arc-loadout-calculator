@@ -1,8 +1,8 @@
 {
   "id": "silencer_i",
   "recipe": {
-    "wires": 4,
-    "mechanical_components": 2
+    "mechanical_components": 2,
+    "wires": 4
   },
   "name": {
     "en": "Silencer I",
@@ -72,5 +72,12 @@
   },
   "value": 2000,
   "weightKg": 0.25,
-  "imageFilename": "https://cdn.arctracker.io/items/silencer_i.png"
+  "imageFilename": "https://cdn.arctracker.io/items/silencer_i.png",
+  "recyclesInto": {
+    "mechanical_components": 1,
+    "wires": 1
+  },
+  "salvagesInto": {
+    "mechanical_components": 1
+  }
 }

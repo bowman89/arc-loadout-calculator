@@ -44,8 +44,8 @@
   "rarity": "Rare",
   "value": 500,
   "recyclesInto": {
-    "plastic_parts": 3,
-    "chemicals": 2
+    "chemicals": 2,
+    "plastic_parts": 3
   },
   "salvagesInto": {
     "plastic_parts": 2
@@ -54,5 +54,8 @@
   "stackSize": 5,
   "foundIn": "Medical",
   "imageFilename": "https://cdn.arctracker.io/items/syringe.png",
-  "updatedAt": "11/03/2025"
+  "updatedAt": "11/03/2025",
+  "recipe": {
+    "rusted_shut_medical_kit": 1
+  }
 }

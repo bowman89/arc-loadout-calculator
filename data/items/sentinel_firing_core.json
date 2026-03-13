@@ -27,7 +27,7 @@
   "stackSize": 3,
   "recyclesInto": {
     "arc_alloy": 2,
-    "mechanical_components": 3
+    "mechanical_components": 2
   },
   "salvagesInto": {
     "mechanical_components": 2

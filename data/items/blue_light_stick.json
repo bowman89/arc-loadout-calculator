@@ -93,5 +93,11 @@
   "updatedAt": "11/01/2025",
   "recyclesInto": {
     "chemicals": 1
+  },
+  "recipe": {
+    "chemicals": 3
+  },
+  "salvagesInto": {
+    "chemicals": 1
   }
 }

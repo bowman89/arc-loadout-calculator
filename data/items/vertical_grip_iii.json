@@ -90,9 +90,16 @@
   },
   "craftBench": "weapon_bench",
   "recipe": {
-    "mod_components": 2,
-    "duct_tape": 5
+    "duct_tape": 5,
+    "mod_components": 2
   },
   "imageFilename": "https://cdn.arctracker.io/items/vertical_grip_iii.png",
-  "updatedAt": "11/07/2025"
+  "updatedAt": "11/07/2025",
+  "recyclesInto": {
+    "duct_tape": 2,
+    "mechanical_components": 2
+  },
+  "salvagesInto": {
+    "mechanical_components": 2
+  }
 }

@@ -143,5 +143,8 @@
     "arc_circuitry": 1,
     "battery": 4
   },
-  "craftBench": "equipment_bench"
+  "craftBench": "equipment_bench",
+  "salvagesInto": {
+    "arc_alloy": 2
+  }
 }

@@ -24,8 +24,8 @@
   "type": "Recyclable",
   "value": 5000,
   "recyclesInto": {
-    "advanced_mechanical_components": 2,
-    "arc_alloy": 2
+    "advanced_mechanical_components": 1,
+    "arc_alloy": 3
   },
   "description": {
     "en": "Can be recycled into crafting materials.",
@@ -51,5 +51,8 @@
   "stackSize": 3,
   "foundIn": "ARC",
   "imageFilename": "https://cdn.arctracker.io/items/bombardier_cell.png",
-  "updatedAt": "11/01/2025"
+  "updatedAt": "11/01/2025",
+  "salvagesInto": {
+    "advanced_mechanical_components": 1
+  }
 }

@@ -204,5 +204,8 @@
     "mechanical_components": 5,
     "simple_gun_parts": 5
   },
-  "isWeapon": true
+  "isWeapon": true,
+  "salvagesInto": {
+    "simple_gun_parts": 5
+  }
 }

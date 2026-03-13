@@ -44,8 +44,8 @@
   "rarity": "Rare",
   "value": 500,
   "recyclesInto": {
-    "wires": 1,
-    "metal_parts": 1
+    "metal_parts": 1,
+    "wires": 1
   },
   "salvagesInto": {
     "wires": 1
@@ -54,5 +54,8 @@
   "stackSize": 5,
   "foundIn": "Security, Technological",
   "imageFilename": "https://cdn.arctracker.io/items/sensors.png",
-  "updatedAt": "11/03/2025"
+  "updatedAt": "11/03/2025",
+  "recipe": {
+    "broken_handheld_radio": 1
+  }
 }

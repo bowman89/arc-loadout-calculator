@@ -1,0 +1,3956 @@
+{
+  "craftChanges": [
+    {
+      "file": "advanced_electrical_components.json",
+      "name": "Advanced Electrical Components",
+      "old": {
+        "wires": 3,
+        "electrical_components": 2
+      },
+      "new": {
+        "electrical_components": 2,
+        "wires": 3
+      }
+    },
+    {
+      "file": "advanced_mechanical_components.json",
+      "name": "Advanced Mechanical Components",
+      "old": {
+        "steel_spring": 2,
+        "mechanical_components": 2
+      },
+      "new": {
+        "mechanical_components": 2,
+        "steel_spring": 2
+      }
+    },
+    {
+      "file": "angled_grip_i.json",
+      "name": "Angled Grip I",
+      "old": {
+        "plastic_parts": 6,
+        "duct_tape": 1
+      },
+      "new": {
+        "duct_tape": 1,
+        "plastic_parts": 6
+      }
+    },
+    {
+      "file": "angled_grip_ii.json",
+      "name": "Angled Grip II",
+      "old": {
+        "mechanical_components": 2,
+        "duct_tape": 3
+      },
+      "new": {
+        "duct_tape": 3,
+        "mechanical_components": 2
+      }
+    },
+    {
+      "file": "angled_grip_iii.json",
+      "name": "Angled Grip III",
+      "old": {
+        "mod_components": 2,
+        "duct_tape": 5
+      },
+      "new": {
+        "duct_tape": 5,
+        "mod_components": 2
+      }
+    },
+    {
+      "file": "aphelion.json",
+      "name": "Aphelion",
+      "old": {
+        "magnetic_accelerator": 3,
+        "complex_gun_parts": 3,
+        "matriarch_reactor": 1
+      },
+      "new": {
+        "complex_gun_parts": 3,
+        "magnetic_accelerator": 3,
+        "matriarch_reactor": 1
+      }
+    },
+    {
+      "file": "arc_alloy.json",
+      "name": "ARC Alloy",
+      "old": {},
+      "new": {
+        "wasp_driver": 1
+      }
+    },
+    {
+      "file": "arc_powercell.json",
+      "name": "ARC Powercell",
+      "old": {},
+      "new": {
+        "advanced_arc_powercell": 1
+      }
+    },
+    {
+      "file": "assorted_seeds.json",
+      "name": "Assorted Seeds",
+      "old": {},
+      "new": {
+        "agave": 1
+      }
+    },
+    {
+      "file": "battery.json",
+      "name": "Battery",
+      "old": {},
+      "new": {
+        "jolt_mine": 1
+      }
+    },
+    {
+      "file": "bettina_i.json",
+      "name": "Bettina I",
+      "old": {
+        "advanced_mechanical_components": 3,
+        "heavy_gun_parts": 3,
+        "canister": 3
+      },
+      "new": {
+        "advanced_mechanical_components": 3,
+        "canister": 3,
+        "heavy_gun_parts": 3
+      }
+    },
+    {
+      "file": "blaze_grenade.json",
+      "name": "Blaze Grenade",
+      "old": {},
+      "new": {
+        "explosive_compound": 1,
+        "oil": 2
+      }
+    },
+    {
+      "file": "blue_light_stick.json",
+      "name": "Blue Light Stick",
+      "old": {},
+      "new": {
+        "chemicals": 3
+      }
+    },
+    {
+      "file": "bobcat_i.json",
+      "name": "Bobcat I",
+      "old": {
+        "magnetic_accelerator": 1,
+        "light_gun_parts": 3,
+        "exodus_modules": 2
+      },
+      "new": {
+        "exodus_modules": 2,
+        "light_gun_parts": 3,
+        "magnetic_accelerator": 1
+      }
+    },
+    {
+      "file": "canister.json",
+      "name": "Canister",
+      "old": {},
+      "new": {
+        "bicycle_pump": 1
+      }
+    },
+    {
+      "file": "chemicals.json",
+      "name": "Chemicals",
+      "old": {},
+      "new": {
+        "gas_grenade": 1
+      }
+    },
+    {
+      "file": "complex_gun_parts.json",
+      "name": "Complex Gun Parts",
+      "old": {
+        "light_gun_parts": 2,
+        "medium_gun_parts": 2,
+        "heavy_gun_parts": 2
+      },
+      "new": {
+        "heavy_gun_parts": 2,
+        "light_gun_parts": 2,
+        "medium_gun_parts": 2
+      }
+    },
+    {
+      "file": "deadline.json",
+      "name": "Deadline",
+      "old": {
+        "explosive_compound": 3,
+        "arc_circuitry": 2
+      },
+      "new": {
+        "arc_circuitry": 2,
+        "comet_igniter": 1,
+        "explosive_compound": 3
+      }
+    },
+    {
+      "file": "defibrillator.json",
+      "name": "Defibrillator",
+      "old": {
+        "plastic_parts": 9,
+        "moss": 1
+      },
+      "new": {
+        "moss": 1,
+        "plastic_parts": 9
+      }
+    },
+    {
+      "file": "equalizer.json",
+      "name": "Equalizer",
+      "old": {
+        "magnetic_accelerator": 3,
+        "complex_gun_parts": 3,
+        "queen_reactor": 1
+      },
+      "new": {
+        "complex_gun_parts": 3,
+        "magnetic_accelerator": 3,
+        "queen_reactor": 1
+      }
+    },
+    {
+      "file": "exodus_modules.json",
+      "name": "Exodus Modules",
+      "old": {},
+      "new": {
+        "ion_sputter": 1
+      }
+    },
+    {
+      "file": "fabric.json",
+      "name": "Fabric",
+      "old": {},
+      "new": {
+        "tattered_clothes": 1
+      }
+    },
+    {
+      "file": "fireball_burner.json",
+      "name": "Fireball Burner",
+      "old": {},
+      "new": {
+        "flame_spray": 1
+      }
+    },
+    {
+      "file": "firecracker.json",
+      "name": "Firecracker",
+      "old": {
+        "plastic_parts": 4,
+        "chemicals": 2
+      },
+      "new": {
+        "chemicals": 2,
+        "plastic_parts": 4
+      }
+    },
+    {
+      "file": "flame_spray.json",
+      "name": "Flame Spray",
+      "old": {},
+      "new": {
+        "air_freshener": 1,
+        "fireball_burner": 1
+      }
+    },
+    {
+      "file": "fruit_mix.json",
+      "name": "Fruit Mix",
+      "old": {
+        "lemon": 1,
+        "apricot": 1,
+        "prickly_pear": 1
+      },
+      "new": {
+        "apricot": 1,
+        "lemon": 1,
+        "prickly_pear": 1
+      }
+    },
+    {
+      "file": "heavy_ammo.json",
+      "name": "Heavy Ammo",
+      "old": {
+        "metal_parts": 3,
+        "chemicals": 2
+      },
+      "new": {
+        "chemicals": 2,
+        "metal_parts": 3
+      }
+    },
+    {
+      "file": "heavy_fuze_grenade.json",
+      "name": "Heavy Fuze Grenade",
+      "old": {
+        "explosive_compound": 1,
+        "canister": 2
+      },
+      "new": {
+        "canister": 2,
+        "explosive_compound": 1
+      }
+    },
+    {
+      "file": "horizontal_grip.json",
+      "name": "Horizontal Grip",
+      "old": {
+        "mod_components": 2,
+        "duct_tape": 5
+      },
+      "new": {}
+    },
+    {
+      "file": "hullcracker_i.json",
+      "name": "Hullcracker I",
+      "old": {
+        "magnetic_accelerator": 1,
+        "heavy_gun_parts": 3,
+        "exodus_modules": 1
+      },
+      "new": {
+        "exodus_modules": 1,
+        "heavy_gun_parts": 3,
+        "magnetic_accelerator": 1
+      }
+    },
+    {
+      "file": "jolt_mine.json",
+      "name": "Jolt Mine",
+      "old": {
+        "electrical_components": 1,
+        "battery": 1
+      },
+      "new": {
+        "battery": 1,
+        "electrical_components": 1
+      }
+    },
+    {
+      "file": "jupiter.json",
+      "name": "Jupiter",
+      "old": {
+        "magnetic_accelerator": 3,
+        "complex_gun_parts": 3,
+        "queen_reactor": 1
+      },
+      "new": {
+        "complex_gun_parts": 3,
+        "magnetic_accelerator": 3,
+        "queen_reactor": 1
+      }
+    },
+    {
+      "file": "lightweight_stock.json",
+      "name": "Lightweight Stock",
+      "old": {
+        "mod_components": 2,
+        "duct_tape": 5
+      },
+      "new": {
+        "duct_tape": 5,
+        "mod_components": 2
+      }
+    },
+    {
+      "file": "light_ammo.json",
+      "name": "Light Ammo",
+      "old": {
+        "metal_parts": 3,
+        "chemicals": 2
+      },
+      "new": {
+        "chemicals": 2,
+        "metal_parts": 3
+      }
+    },
+    {
+      "file": "looting_mk3_survivor.json",
+      "name": "Looting Mk. 3 (Survivor)",
+      "old": {
+        "advanced_mechanical_components": 2,
+        "processor": 2
+      },
+      "new": {
+        "advanced_electrical_components": 2,
+        "processor": 3
+      }
+    },
+    {
+      "file": "lure_grenade.json",
+      "name": "Lure Grenade",
+      "old": {
+        "speaker_component": 1,
+        "electrical_components": 1
+      },
+      "new": {
+        "electrical_components": 1,
+        "speaker_component": 1
+      }
+    },
+    {
+      "file": "magnet.json",
+      "name": "Magnet",
+      "old": {},
+      "new": {
+        "industrial_magnet": 1
+      }
+    },
+    {
+      "file": "medium_ammo.json",
+      "name": "Medium Ammo",
+      "old": {
+        "metal_parts": 3,
+        "chemicals": 2
+      },
+      "new": {
+        "chemicals": 2,
+        "metal_parts": 3
+      }
+    },
+    {
+      "file": "metal_parts.json",
+      "name": "Metal Parts",
+      "old": {},
+      "new": {
+        "damaged_tick_pod": 1
+      }
+    },
+    {
+      "file": "mod_components.json",
+      "name": "Mod Components",
+      "old": {
+        "steel_spring": 2,
+        "mechanical_components": 2
+      },
+      "new": {
+        "mechanical_components": 2,
+        "steel_spring": 2
+      }
+    },
+    {
+      "file": "noisemaker.json",
+      "name": "Noisemaker",
+      "old": {},
+      "new": {
+        "plastic_parts": 2,
+        "speaker_component": 1
+      }
+    },
+    {
+      "file": "oil.json",
+      "name": "Oil",
+      "old": {},
+      "new": {
+        "motor": 1
+      }
+    },
+    {
+      "file": "padded_stock.json",
+      "name": "Padded Stock",
+      "old": {
+        "mod_components": 2,
+        "duct_tape": 5
+      },
+      "new": {
+        "duct_tape": 5,
+        "mod_components": 2
+      }
+    },
+    {
+      "file": "plastic_parts.json",
+      "name": "Plastic Parts",
+      "old": {},
+      "new": {
+        "surge_shield_recharger": 1
+      }
+    },
+    {
+      "file": "processor.json",
+      "name": "Processor",
+      "old": {},
+      "new": {
+        "projector": 1
+      }
+    },
+    {
+      "file": "pulse_mine.json",
+      "name": "Pulse Mine",
+      "old": {},
+      "new": {
+        "crude_explosives": 1,
+        "wires": 1
+      }
+    },
+    {
+      "file": "rope.json",
+      "name": "Rope",
+      "old": {},
+      "new": {
+        "zipline": 1
+      }
+    },
+    {
+      "file": "rubber_parts.json",
+      "name": "Rubber Parts",
+      "old": {},
+      "new": {
+        "rubber_pad": 1
+      }
+    },
+    {
+      "file": "seeker_grenade.json",
+      "name": "Seeker Grenade",
+      "old": {
+        "crude_explosives": 1,
+        "arc_alloy": 2
+      },
+      "new": {
+        "arc_alloy": 2,
+        "crude_explosives": 1
+      }
+    },
+    {
+      "file": "sensors.json",
+      "name": "Sensors",
+      "old": {},
+      "new": {
+        "broken_handheld_radio": 1
+      }
+    },
+    {
+      "file": "shaker.json",
+      "name": "Shaker",
+      "old": {},
+      "new": {
+        "assorted_seeds": 7,
+        "canister": 1
+      }
+    },
+    {
+      "file": "shield_recharger.json",
+      "name": "Shield Recharger",
+      "old": {
+        "rubber_parts": 5,
+        "arc_powercell": 1
+      },
+      "new": {
+        "arc_powercell": 1,
+        "rubber_parts": 5
+      }
+    },
+    {
+      "file": "shotgun_ammo.json",
+      "name": "Shotgun Ammo",
+      "old": {
+        "metal_parts": 3,
+        "chemicals": 2
+      },
+      "new": {
+        "chemicals": 2,
+        "metal_parts": 3
+      }
+    },
+    {
+      "file": "showstopper.json",
+      "name": "Showstopper",
+      "old": {
+        "advanced_electrical_components": 1,
+        "voltage_converter": 1
+      },
+      "new": {
+        "electrical_components": 1,
+        "hornet_driver": 1,
+        "voltage_converter": 1
+      }
+    },
+    {
+      "file": "silencer_i.json",
+      "name": "Silencer I",
+      "old": {
+        "wires": 4,
+        "mechanical_components": 2
+      },
+      "new": {
+        "mechanical_components": 2,
+        "wires": 4
+      }
+    },
+    {
+      "file": "simple_gun_parts.json",
+      "name": "Simple Gun Parts",
+      "old": {},
+      "new": {
+        "il_toro_ii": 1
+      }
+    },
+    {
+      "file": "smoke_grenade.json",
+      "name": "Smoke Grenade",
+      "old": {
+        "chemicals": 14,
+        "canister": 1
+      },
+      "new": {
+        "canister": 1,
+        "chemicals": 14
+      }
+    },
+    {
+      "file": "snap_hook.json",
+      "name": "Snap Hook",
+      "old": {
+        "power_rod": 2,
+        "rope": 3,
+        "exodus_modules": 1
+      },
+      "new": {
+        "exodus_modules": 1,
+        "power_rod": 2,
+        "rope": 3
+      }
+    },
+    {
+      "file": "speaker_component.json",
+      "name": "Speaker Component",
+      "old": {},
+      "new": {
+        "noisemaker": 1
+      }
+    },
+    {
+      "file": "stable_stock_i.json",
+      "name": "Stable Stock I",
+      "old": {
+        "rubber_parts": 6,
+        "duct_tape": 1
+      },
+      "new": {
+        "duct_tape": 1,
+        "rubber_parts": 7
+      }
+    },
+    {
+      "file": "stable_stock_ii.json",
+      "name": "Stable Stock II",
+      "old": {
+        "mechanical_components": 2,
+        "duct_tape": 3
+      },
+      "new": {
+        "duct_tape": 3,
+        "mechanical_components": 2
+      }
+    },
+    {
+      "file": "stable_stock_iii.json",
+      "name": "Stable Stock III",
+      "old": {
+        "mod_components": 2,
+        "duct_tape": 5
+      },
+      "new": {
+        "duct_tape": 5,
+        "mod_components": 2
+      }
+    },
+    {
+      "file": "steel_spring.json",
+      "name": "Steel Spring",
+      "old": {},
+      "new": {
+        "cooling_coil": 1
+      }
+    },
+    {
+      "file": "surge_shield_recharger.json",
+      "name": "Surge Shield Recharger",
+      "old": {
+        "electrical_components": 1,
+        "advanced_arc_powercell": 1
+      },
+      "new": {
+        "advanced_arc_powercell": 1,
+        "electrical_components": 1
+      }
+    },
+    {
+      "file": "synthesized_fuel.json",
+      "name": "Synthesized Fuel",
+      "old": {},
+      "new": {
+        "rocket_thruster": 1
+      }
+    },
+    {
+      "file": "syringe.json",
+      "name": "Syringe",
+      "old": {},
+      "new": {
+        "rusted_shut_medical_kit": 1
+      }
+    },
+    {
+      "file": "tactical_mk3_healing.json",
+      "name": "Tactical Mk. 3 (Healing)",
+      "old": {},
+      "new": {
+        "advanced_electrical_components": 2,
+        "processor": 3
+      }
+    },
+    {
+      "file": "trailblazer.json",
+      "name": "Trailblazer",
+      "old": {
+        "synthesized_fuel": 1,
+        "explosive_compound": 1
+      },
+      "new": {
+        "crude_explosives": 2,
+        "firefly_burner": 1,
+        "synthesized_fuel": 1
+      }
+    },
+    {
+      "file": "venator_i.json",
+      "name": "Venator I",
+      "old": {
+        "advanced_mechanical_components": 2,
+        "medium_gun_parts": 3,
+        "magnet": 5
+      },
+      "new": {
+        "advanced_mechanical_components": 2,
+        "magnet": 5,
+        "medium_gun_parts": 3
+      }
+    },
+    {
+      "file": "vertical_grip_i.json",
+      "name": "Vertical Grip I",
+      "old": {
+        "plastic_parts": 6,
+        "duct_tape": 1
+      },
+      "new": {
+        "duct_tape": 1,
+        "plastic_parts": 6
+      }
+    },
+    {
+      "file": "vertical_grip_ii.json",
+      "name": "Vertical Grip II",
+      "old": {
+        "mechanical_components": 2,
+        "duct_tape": 3
+      },
+      "new": {
+        "duct_tape": 3,
+        "mechanical_components": 2
+      }
+    },
+    {
+      "file": "vertical_grip_iii.json",
+      "name": "Vertical Grip III",
+      "old": {
+        "mod_components": 2,
+        "duct_tape": 5
+      },
+      "new": {
+        "duct_tape": 5,
+        "mod_components": 2
+      }
+    },
+    {
+      "file": "vita_spray.json",
+      "name": "Vita Spray",
+      "old": {
+        "antiseptic": 3,
+        "canister": 1
+      },
+      "new": {
+        "antiseptic": 3,
+        "canister": 1,
+        "tick_pod": 1
+      }
+    },
+    {
+      "file": "voltage_converter.json",
+      "name": "Voltage Converter",
+      "old": {},
+      "new": {
+        "signal_amplifier": 1
+      }
+    },
+    {
+      "file": "vulcano_i.json",
+      "name": "Vulcano I",
+      "old": {
+        "magnetic_accelerator": 1,
+        "heavy_gun_parts": 3,
+        "exodus_modules": 1
+      },
+      "new": {
+        "exodus_modules": 1,
+        "heavy_gun_parts": 3,
+        "magnetic_accelerator": 1
+      }
+    },
+    {
+      "file": "wires.json",
+      "name": "Wires",
+      "old": {},
+      "new": {
+        "power_cable": 1
+      }
+    },
+    {
+      "file": "wolfpack.json",
+      "name": "Wolfpack",
+      "old": {
+        "explosive_compound": 3,
+        "arc_motion_core": 2
+      },
+      "new": {
+        "arc_motion_core": 2,
+        "explosive_compound": 1,
+        "rocketeer_driver": 1
+      }
+    },
+    {
+      "file": "yellow_light_stick.json",
+      "name": "Yellow Light Stick",
+      "old": {},
+      "new": {
+        "chemicals": 3
+      }
+    },
+    {
+      "file": "zipline.json",
+      "name": "Zipline",
+      "old": {
+        "rope": 1,
+        "mechanical_components": 1
+      },
+      "new": {
+        "mechanical_components": 1,
+        "rope": 1
+      }
+    }
+  ],
+  "recycleChanges": [
+    {
+      "file": "acoustic_guitar.json",
+      "name": "Acoustic Guitar",
+      "old": {},
+      "new": {
+        "metal_parts": 4,
+        "wires": 6
+      }
+    },
+    {
+      "file": "advanced_mechanical_components.json",
+      "name": "Advanced Mechanical Components",
+      "old": {
+        "mechanical_components": 1,
+        "wires": 1
+      },
+      "new": {
+        "mechanical_components": 1,
+        "steel_spring": 1
+      }
+    },
+    {
+      "file": "agave.json",
+      "name": "Agave",
+      "old": {},
+      "new": {
+        "assorted_seeds": 3
+      }
+    },
+    {
+      "file": "angled_grip_i.json",
+      "name": "Angled Grip I",
+      "old": {},
+      "new": {
+        "plastic_parts": 6
+      }
+    },
+    {
+      "file": "angled_grip_ii.json",
+      "name": "Angled Grip II",
+      "old": {
+        "mechanical_components": 1,
+        "duct_tape": 1
+      },
+      "new": {
+        "duct_tape": 1,
+        "mechanical_components": 1
+      }
+    },
+    {
+      "file": "angled_grip_iii.json",
+      "name": "Angled Grip III",
+      "old": {
+        "mod_components": 1,
+        "duct_tape": 2
+      },
+      "new": {
+        "duct_tape": 2,
+        "mod_components": 1
+      }
+    },
+    {
+      "file": "aphelion.json",
+      "name": "Aphelion",
+      "old": {
+        "magnetic_accelerator": 2,
+        "complex_gun_parts": 1
+      },
+      "new": {
+        "complex_gun_parts": 1,
+        "magnetic_accelerator": 2
+      }
+    },
+    {
+      "file": "arc_powercell.json",
+      "name": "ARC Powercell",
+      "old": {},
+      "new": {
+        "arc_alloy": 1
+      }
+    },
+    {
+      "file": "arpeggio_i.json",
+      "name": "Arpeggio I",
+      "old": {},
+      "new": {
+        "mechanical_components": 2,
+        "simple_gun_parts": 2
+      }
+    },
+    {
+      "file": "arpeggio_ii.json",
+      "name": "Arpeggio II",
+      "old": {},
+      "new": {
+        "mechanical_components": 3,
+        "simple_gun_parts": 3
+      }
+    },
+    {
+      "file": "arpeggio_iii.json",
+      "name": "Arpeggio III",
+      "old": {},
+      "new": {
+        "mechanical_components": 4,
+        "simple_gun_parts": 4
+      }
+    },
+    {
+      "file": "bastion_cell.json",
+      "name": "Bastion Cell",
+      "old": {
+        "arc_alloy": 2,
+        "advanced_mechanical_components": 2
+      },
+      "new": {
+        "advanced_mechanical_components": 1,
+        "arc_alloy": 3
+      }
+    },
+    {
+      "file": "bettina_i.json",
+      "name": "Bettina I",
+      "old": {},
+      "new": {
+        "advanced_mechanical_components": 1,
+        "heavy_gun_parts": 2
+      }
+    },
+    {
+      "file": "bettina_ii.json",
+      "name": "Bettina II",
+      "old": {},
+      "new": {
+        "advanced_mechanical_components": 2,
+        "heavy_gun_parts": 2
+      }
+    },
+    {
+      "file": "bettina_iii.json",
+      "name": "Bettina III",
+      "old": {},
+      "new": {
+        "advanced_mechanical_components": 2,
+        "heavy_gun_parts": 3
+      }
+    },
+    {
+      "file": "bettina_iv.json",
+      "name": "Bettina IV",
+      "old": {},
+      "new": {
+        "advanced_mechanical_components": 3,
+        "heavy_gun_parts": 3
+      }
+    },
+    {
+      "file": "binoculars.json",
+      "name": "Binoculars",
+      "old": {
+        "rubber_parts": 2,
+        "plastic_parts": 4
+      },
+      "new": {
+        "plastic_parts": 4,
+        "rubber_parts": 2
+      }
+    },
+    {
+      "file": "blaze_grenade.json",
+      "name": "Blaze Grenade",
+      "old": {
+        "oil": 2,
+        "metal_parts": 4
+      },
+      "new": {
+        "metal_parts": 4,
+        "oil": 2
+      }
+    },
+    {
+      "file": "bobcat_i.json",
+      "name": "Bobcat I",
+      "old": {
+        "light_gun_parts": 2,
+        "advanced_mechanical_components": 2
+      },
+      "new": {
+        "advanced_mechanical_components": 2,
+        "light_gun_parts": 2
+      }
+    },
+    {
+      "file": "bobcat_ii.json",
+      "name": "Bobcat II",
+      "old": {
+        "light_gun_parts": 3,
+        "advanced_mechanical_components": 3
+      },
+      "new": {
+        "advanced_mechanical_components": 3,
+        "light_gun_parts": 3
+      }
+    },
+    {
+      "file": "bobcat_iii.json",
+      "name": "Bobcat III",
+      "old": {
+        "light_gun_parts": 4,
+        "advanced_mechanical_components": 4
+      },
+      "new": {
+        "advanced_mechanical_components": 4,
+        "light_gun_parts": 4
+      }
+    },
+    {
+      "file": "bobcat_iv.json",
+      "name": "Bobcat IV",
+      "old": {
+        "light_gun_parts": 4,
+        "advanced_mechanical_components": 5
+      },
+      "new": {
+        "advanced_mechanical_components": 5,
+        "light_gun_parts": 4
+      }
+    },
+    {
+      "file": "bombardier_cell.json",
+      "name": "Bombardier Cell",
+      "old": {
+        "advanced_mechanical_components": 2,
+        "arc_alloy": 2
+      },
+      "new": {
+        "advanced_mechanical_components": 1,
+        "arc_alloy": 3
+      }
+    },
+    {
+      "file": "combat_mk2.json",
+      "name": "Combat Mk. 2",
+      "old": {
+        "magnet": 1,
+        "electrical_components": 1
+      },
+      "new": {
+        "electrical_components": 1,
+        "magnet": 1
+      }
+    },
+    {
+      "file": "compensator_iii.json",
+      "name": "Compensator III",
+      "old": {
+        "mechanical_components": 1,
+        "wires": 2
+      },
+      "new": {
+        "mod_components": 1,
+        "wires": 2
+      }
+    },
+    {
+      "file": "cracked_bioscanner.json",
+      "name": "Cracked Bioscanner",
+      "old": {
+        "rubber_parts": 3,
+        "battery": 3
+      },
+      "new": {
+        "battery": 3,
+        "rubber_parts": 3
+      }
+    },
+    {
+      "file": "deadline.json",
+      "name": "Deadline",
+      "old": {
+        "explosive_compound": 1
+      },
+      "new": {
+        "arc_circuitry": 1,
+        "explosive_compound": 1
+      }
+    },
+    {
+      "file": "defibrillator.json",
+      "name": "Defibrillator",
+      "old": {
+        "plastic_parts": 1,
+        "moss": 1
+      },
+      "new": {
+        "moss": 1,
+        "plastic_parts": 1
+      }
+    },
+    {
+      "file": "deflated_football.json",
+      "name": "Deflated Football",
+      "old": {
+        "rubber_parts": 15
+      },
+      "new": {
+        "fabric": 9,
+        "rubber_parts": 9
+      }
+    },
+    {
+      "file": "equalizer.json",
+      "name": "Equalizer",
+      "old": {
+        "magnetic_accelerator": 2,
+        "complex_gun_parts": 1
+      },
+      "new": {
+        "complex_gun_parts": 1,
+        "magnetic_accelerator": 2
+      }
+    },
+    {
+      "file": "expired_respirator.json",
+      "name": "Expired Respirator",
+      "old": {
+        "rubber_parts": 8,
+        "fabric": 4
+      },
+      "new": {
+        "fabric": 4,
+        "rubber_parts": 8
+      }
+    },
+    {
+      "file": "explosive_mine.json",
+      "name": "Explosive Mine",
+      "old": {
+        "chemicals": 1,
+        "sensors": 1
+      },
+      "new": {
+        "oil": 1,
+        "sensors": 1
+      }
+    },
+    {
+      "file": "extended_light_mag_ii.json",
+      "name": "Extended Light Mag II",
+      "old": {
+        "steel_spring": 1,
+        "mechanical_components": 1
+      },
+      "new": {
+        "mechanical_components": 1,
+        "steel_spring": 1
+      }
+    },
+    {
+      "file": "extended_medium_mag_i.json",
+      "name": "Extended Medium Mag I",
+      "old": {},
+      "new": {
+        "plastic_parts": 6
+      }
+    },
+    {
+      "file": "extended_medium_mag_ii.json",
+      "name": "Extended Medium Mag II",
+      "old": {},
+      "new": {
+        "mechanical_components": 1,
+        "steel_spring": 1
+      }
+    },
+    {
+      "file": "extended_shotgun_mag_ii.json",
+      "name": "Extended Shotgun Mag II",
+      "old": {},
+      "new": {
+        "mechanical_components": 1,
+        "steel_spring": 1
+      }
+    },
+    {
+      "file": "extended_shotgun_mag_iii.json",
+      "name": "Extended Shotgun Mag III",
+      "old": {},
+      "new": {
+        "mod_components": 1,
+        "steel_spring": 2
+      }
+    },
+    {
+      "file": "fireball_burner.json",
+      "name": "Fireball Burner",
+      "old": {
+        "arc_alloy": 1,
+        "chemicals": 1
+      },
+      "new": {
+        "arc_alloy": 1,
+        "crude_explosives": 1
+      }
+    },
+    {
+      "file": "flame_spray.json",
+      "name": "Flame Spray",
+      "old": {},
+      "new": {
+        "canister": 1,
+        "fireball_burner": 1
+      }
+    },
+    {
+      "file": "fried_motherboard.json",
+      "name": "Fried Motherboard",
+      "old": {
+        "plastic_parts": 5,
+        "electrical_components": 2
+      },
+      "new": {
+        "electrical_components": 2,
+        "plastic_parts": 5
+      }
+    },
+    {
+      "file": "green_light_stick.json",
+      "name": "Green Light Stick",
+      "old": {},
+      "new": {
+        "chemicals": 1
+      }
+    },
+    {
+      "file": "hairpin_ii.json",
+      "name": "Hairpin II",
+      "old": {
+        "metal_parts": 4,
+        "plastic_parts": 4
+      },
+      "new": {
+        "metal_parts": 4,
+        "rubber_parts": 3
+      }
+    },
+    {
+      "file": "heavy_shield.json",
+      "name": "Heavy Shield",
+      "old": {},
+      "new": {
+        "arc_circuitry": 2,
+        "voltage_converter": 1
+      }
+    },
+    {
+      "file": "horizontal_grip.json",
+      "name": "Horizontal Grip",
+      "old": {
+        "mod_components": 1,
+        "duct_tape": 2
+      },
+      "new": {
+        "duct_tape": 2,
+        "mod_components": 1
+      }
+    },
+    {
+      "file": "hornet_driver.json",
+      "name": "Hornet Driver",
+      "old": {
+        "arc_alloy": 2,
+        "electrical_components": 2
+      },
+      "new": {
+        "arc_alloy": 1,
+        "electrical_components": 1
+      }
+    },
+    {
+      "file": "il_toro_ii.json",
+      "name": "Il Toro II",
+      "old": {},
+      "new": {
+        "mechanical_components": 3,
+        "simple_gun_parts": 3
+      }
+    },
+    {
+      "file": "industrial_battery.json",
+      "name": "Industrial Battery",
+      "old": {
+        "chemicals": 7,
+        "battery": 2
+      },
+      "new": {
+        "battery": 2,
+        "chemicals": 7
+      }
+    },
+    {
+      "file": "ion_sputter.json",
+      "name": "Ion Sputter",
+      "old": {
+        "voltage_converter": 4,
+        "exodus_modules": 1
+      },
+      "new": {
+        "exodus_modules": 1,
+        "voltage_converter": 4
+      }
+    },
+    {
+      "file": "jupiter.json",
+      "name": "Jupiter",
+      "old": {
+        "magnetic_accelerator": 2,
+        "complex_gun_parts": 1
+      },
+      "new": {
+        "complex_gun_parts": 1,
+        "magnetic_accelerator": 2
+      }
+    },
+    {
+      "file": "kettle_i.json",
+      "name": "Kettle I",
+      "old": {
+        "plastic_parts": 3,
+        "rubber_parts": 2
+      },
+      "new": {
+        "metal_parts": 3,
+        "rubber_parts": 2
+      }
+    },
+    {
+      "file": "kettle_ii.json",
+      "name": "Kettle II",
+      "old": {
+        "plastic_parts": 6,
+        "rubber_parts": 6
+      },
+      "new": {
+        "metal_parts": 6,
+        "rubber_parts": 6
+      }
+    },
+    {
+      "file": "kettle_iii.json",
+      "name": "Kettle III",
+      "old": {},
+      "new": {
+        "metal_parts": 12,
+        "simple_gun_parts": 1
+      }
+    },
+    {
+      "file": "kettle_iv.json",
+      "name": "Kettle IV",
+      "old": {},
+      "new": {
+        "mechanical_components": 2,
+        "simple_gun_parts": 2
+      }
+    },
+    {
+      "file": "kinetic_converter.json",
+      "name": "Kinetic Converter",
+      "old": {
+        "mod_components": 1,
+        "duct_tape": 2
+      },
+      "new": {
+        "duct_tape": 2,
+        "mod_components": 1
+      }
+    },
+    {
+      "file": "laboratory_reagents.json",
+      "name": "Laboratory Reagents",
+      "old": {
+        "chemicals": 2,
+        "crude_explosives": 2
+      },
+      "new": {
+        "chemicals": 16,
+        "crude_explosives": 3
+      }
+    },
+    {
+      "file": "leaper_pulse_unit.json",
+      "name": "Leaper Pulse Unit",
+      "old": {
+        "advanced_mechanical_components": 2,
+        "arc_alloy": 3
+      },
+      "new": {
+        "advanced_mechanical_components": 1,
+        "arc_alloy": 3
+      }
+    },
+    {
+      "file": "lightweight_stock.json",
+      "name": "Lightweight Stock",
+      "old": {},
+      "new": {
+        "duct_tape": 1,
+        "mod_components": 1
+      }
+    },
+    {
+      "file": "looting_mk1.json",
+      "name": "Looting Mk. 1",
+      "old": {
+        "rubber_parts": 3,
+        "plastic_parts": 3
+      },
+      "new": {
+        "plastic_parts": 3,
+        "rubber_parts": 3
+      }
+    },
+    {
+      "file": "looting_mk2.json",
+      "name": "Looting Mk. 2",
+      "old": {
+        "magnet": 1,
+        "electrical_components": 1
+      },
+      "new": {
+        "electrical_components": 1,
+        "magnet": 1
+      }
+    },
+    {
+      "file": "looting_mk3_cautious.json",
+      "name": "Looting Mk. 3 (Cautious)",
+      "old": {},
+      "new": {
+        "advanced_electrical_components": 1,
+        "processor": 1
+      }
+    },
+    {
+      "file": "magnet.json",
+      "name": "Magnet",
+      "old": {
+        "metal_parts": 3
+      },
+      "new": {
+        "metal_parts": 2
+      }
+    },
+    {
+      "file": "matriarch_reactor.json",
+      "name": "Matriarch Reactor",
+      "old": {
+        "power_rod": 1,
+        "magnetic_accelerator": 1
+      },
+      "new": {
+        "magnetic_accelerator": 1,
+        "power_rod": 1
+      }
+    },
+    {
+      "file": "motor.json",
+      "name": "Motor",
+      "old": {
+        "oil": 2,
+        "mechanical_components": 2
+      },
+      "new": {
+        "mechanical_components": 2,
+        "oil": 2
+      }
+    },
+    {
+      "file": "muzzle_brake_iii.json",
+      "name": "Muzzle Brake III",
+      "old": {},
+      "new": {
+        "mod_components": 1,
+        "wires": 2
+      }
+    },
+    {
+      "file": "noisemaker.json",
+      "name": "Noisemaker",
+      "old": {},
+      "new": {
+        "speaker_component": 1
+      }
+    },
+    {
+      "file": "osprey_i.json",
+      "name": "Osprey I",
+      "old": {},
+      "new": {
+        "advanced_mechanical_components": 1,
+        "medium_gun_parts": 2
+      }
+    },
+    {
+      "file": "padded_stock.json",
+      "name": "Padded Stock",
+      "old": {},
+      "new": {
+        "duct_tape": 1,
+        "mod_components": 1
+      }
+    },
+    {
+      "file": "pop_trigger.json",
+      "name": "Pop Trigger",
+      "old": {
+        "crude_explosives": 1,
+        "arc_alloy": 1
+      },
+      "new": {
+        "arc_alloy": 1,
+        "crude_explosives": 1
+      }
+    },
+    {
+      "file": "processor.json",
+      "name": "Processor",
+      "old": {
+        "wires": 1,
+        "plastic_parts": 1
+      },
+      "new": {
+        "plastic_parts": 1,
+        "wires": 1
+      }
+    },
+    {
+      "file": "projector.json",
+      "name": "Projector",
+      "old": {
+        "wires": 2,
+        "processor": 1
+      },
+      "new": {
+        "processor": 1,
+        "wires": 2
+      }
+    },
+    {
+      "file": "queen_reactor.json",
+      "name": "Queen Reactor",
+      "old": {
+        "power_rod": 1,
+        "magnetic_accelerator": 1
+      },
+      "new": {
+        "magnetic_accelerator": 1,
+        "power_rod": 1
+      }
+    },
+    {
+      "file": "radio.json",
+      "name": "Radio",
+      "old": {
+        "speaker_component": 1,
+        "sensors": 1
+      },
+      "new": {
+        "sensors": 1,
+        "speaker_component": 1
+      }
+    },
+    {
+      "file": "radio_relay.json",
+      "name": "Radio Relay",
+      "old": {
+        "speaker_component": 2,
+        "sensors": 2
+      },
+      "new": {
+        "sensors": 2,
+        "speaker_component": 2
+      }
+    },
+    {
+      "file": "rattler_iii.json",
+      "name": "Rattler III",
+      "old": {},
+      "new": {
+        "mechanical_components": 3,
+        "simple_gun_parts": 1
+      }
+    },
+    {
+      "file": "renegade_ii.json",
+      "name": "Renegade II",
+      "old": {},
+      "new": {
+        "advanced_mechanical_components": 2,
+        "medium_gun_parts": 2
+      }
+    },
+    {
+      "file": "renegade_iii.json",
+      "name": "Renegade III",
+      "old": {},
+      "new": {
+        "advanced_mechanical_components": 2,
+        "medium_gun_parts": 3
+      }
+    },
+    {
+      "file": "renegade_iv.json",
+      "name": "Renegade IV",
+      "old": {},
+      "new": {
+        "advanced_mechanical_components": 3,
+        "medium_gun_parts": 3
+      }
+    },
+    {
+      "file": "rocketeer_driver.json",
+      "name": "Rocketeer Driver",
+      "old": {
+        "advanced_electrical_components": 2,
+        "arc_alloy": 3
+      },
+      "new": {
+        "advanced_electrical_components": 1,
+        "arc_alloy": 3
+      }
+    },
+    {
+      "file": "rocket_thruster.json",
+      "name": "Rocket Thruster",
+      "old": {
+        "synthesized_fuel": 2,
+        "metal_parts": 6
+      },
+      "new": {
+        "metal_parts": 6,
+        "synthesized_fuel": 2
+      }
+    },
+    {
+      "file": "rusted_gear.json",
+      "name": "Rusted Gear",
+      "old": {
+        "metal_parts": 4,
+        "mechanical_components": 2
+      },
+      "new": {
+        "mechanical_components": 2,
+        "metal_parts": 4
+      }
+    },
+    {
+      "file": "rusted_shut_medical_kit.json",
+      "name": "Rusted Shut Medical Kit",
+      "old": {
+        "syringe": 2,
+        "antiseptic": 1
+      },
+      "new": {
+        "antiseptic": 1,
+        "syringe": 2
+      }
+    },
+    {
+      "file": "sample_cleaner.json",
+      "name": "Sample Cleaner",
+      "old": {
+        "electrical_components": 2,
+        "assorted_seeds": 14
+      },
+      "new": {
+        "assorted_seeds": 14,
+        "electrical_components": 2
+      }
+    },
+    {
+      "file": "seeker_grenade.json",
+      "name": "Seeker Grenade",
+      "old": {
+        "chemicals": 1
+      },
+      "new": {
+        "crude_explosives": 1
+      }
+    },
+    {
+      "file": "sensors.json",
+      "name": "Sensors",
+      "old": {
+        "wires": 1,
+        "metal_parts": 1
+      },
+      "new": {
+        "metal_parts": 1,
+        "wires": 1
+      }
+    },
+    {
+      "file": "sentinel_firing_core.json",
+      "name": "Sentinel Firing Core",
+      "old": {
+        "arc_alloy": 2,
+        "mechanical_components": 3
+      },
+      "new": {
+        "arc_alloy": 2,
+        "mechanical_components": 2
+      }
+    },
+    {
+      "file": "shaker.json",
+      "name": "Shaker",
+      "old": {},
+      "new": {
+        "plastic_parts": 10
+      }
+    },
+    {
+      "file": "shotgun_choke_i.json",
+      "name": "Shotgun Choke I",
+      "old": {},
+      "new": {
+        "metal_parts": 5
+      }
+    },
+    {
+      "file": "shotgun_choke_iii.json",
+      "name": "Shotgun Choke III",
+      "old": {},
+      "new": {
+        "mod_components": 1,
+        "wires": 2
+      }
+    },
+    {
+      "file": "shotgun_silencer.json",
+      "name": "Shotgun Silencer",
+      "old": {},
+      "new": {
+        "mod_components": 1,
+        "wires": 1
+      }
+    },
+    {
+      "file": "showstopper.json",
+      "name": "Showstopper",
+      "old": {
+        "electrical_components": 1,
+        "battery": 2
+      },
+      "new": {
+        "electrical_components": 1,
+        "voltage_converter": 1
+      }
+    },
+    {
+      "file": "shredder_gyro.json",
+      "name": "Shredder Gyro",
+      "old": {
+        "mechanical_components": 3,
+        "arc_alloy": 3
+      },
+      "new": {
+        "arc_alloy": 2,
+        "mechanical_components": 2
+      }
+    },
+    {
+      "file": "silencer_i.json",
+      "name": "Silencer I",
+      "old": {},
+      "new": {
+        "mechanical_components": 1,
+        "wires": 1
+      }
+    },
+    {
+      "file": "silencer_ii.json",
+      "name": "Silencer II",
+      "old": {},
+      "new": {
+        "mod_components": 1,
+        "wires": 2
+      }
+    },
+    {
+      "file": "smoke_grenade.json",
+      "name": "Smoke Grenade",
+      "old": {
+        "chemicals": 2,
+        "canister": 1
+      },
+      "new": {
+        "canister": 1,
+        "chemicals": 2
+      }
+    },
+    {
+      "file": "snitch_scanner.json",
+      "name": "Snitch Scanner",
+      "old": {
+        "arc_alloy": 1,
+        "electrical_components": 2
+      },
+      "new": {
+        "arc_alloy": 1,
+        "electrical_components": 1
+      }
+    },
+    {
+      "file": "spectrum_analyzer.json",
+      "name": "Spectrum Analyzer",
+      "old": {
+        "sensors": 1,
+        "exodus_modules": 1
+      },
+      "new": {
+        "exodus_modules": 1,
+        "sensors": 1
+      }
+    },
+    {
+      "file": "spotter_relay.json",
+      "name": "Spotter Relay",
+      "old": {
+        "electrical_components": 2,
+        "arc_alloy": 1
+      },
+      "new": {
+        "arc_alloy": 1,
+        "electrical_components": 1
+      }
+    },
+    {
+      "file": "stable_stock_ii.json",
+      "name": "Stable Stock II",
+      "old": {
+        "mechanical_components": 1,
+        "duct_tape": 1
+      },
+      "new": {
+        "duct_tape": 1,
+        "mechanical_components": 1
+      }
+    },
+    {
+      "file": "stable_stock_iii.json",
+      "name": "Stable Stock III",
+      "old": {},
+      "new": {
+        "duct_tape": 2,
+        "mod_components": 1
+      }
+    },
+    {
+      "file": "sterilized_bandage.json",
+      "name": "Sterilized Bandage",
+      "old": {},
+      "new": {
+        "antiseptic": 1,
+        "fabric": 1
+      }
+    },
+    {
+      "file": "surveyor_vault.json",
+      "name": "Surveyor Vault",
+      "old": {
+        "mechanical_components": 2,
+        "arc_alloy": 2
+      },
+      "new": {
+        "arc_alloy": 1,
+        "mechanical_components": 1
+      }
+    },
+    {
+      "file": "synthesized_fuel.json",
+      "name": "Synthesized Fuel",
+      "old": {
+        "oil": 1,
+        "plastic_parts": 1
+      },
+      "new": {
+        "chemicals": 1,
+        "oil": 1
+      }
+    },
+    {
+      "file": "syringe.json",
+      "name": "Syringe",
+      "old": {
+        "plastic_parts": 3,
+        "chemicals": 2
+      },
+      "new": {
+        "chemicals": 2,
+        "plastic_parts": 3
+      }
+    },
+    {
+      "file": "tactical_mk2.json",
+      "name": "Tactical Mk. 2",
+      "old": {
+        "advanced_electrical_components": 1,
+        "magnet": 1
+      },
+      "new": {
+        "electrical_components": 1,
+        "magnet": 1
+      }
+    },
+    {
+      "file": "tick_pod.json",
+      "name": "Tick Pod",
+      "old": {
+        "chemicals": 2,
+        "arc_alloy": 2
+      },
+      "new": {
+        "arc_alloy": 2,
+        "chemicals": 2
+      }
+    },
+    {
+      "file": "vertical_grip_i.json",
+      "name": "Vertical Grip I",
+      "old": {},
+      "new": {
+        "plastic_parts": 6
+      }
+    },
+    {
+      "file": "vertical_grip_ii.json",
+      "name": "Vertical Grip II",
+      "old": {
+        "mechanical_components": 1,
+        "duct_tape": 1
+      },
+      "new": {
+        "duct_tape": 1,
+        "mechanical_components": 1
+      }
+    },
+    {
+      "file": "vertical_grip_iii.json",
+      "name": "Vertical Grip III",
+      "old": {},
+      "new": {
+        "duct_tape": 2,
+        "mechanical_components": 2
+      }
+    },
+    {
+      "file": "vita_spray.json",
+      "name": "Vita Spray",
+      "old": {
+        "antiseptic": 1,
+        "canister": 2
+      },
+      "new": {
+        "antiseptic": 1,
+        "canister": 1
+      }
+    },
+    {
+      "file": "voltage_converter.json",
+      "name": "Voltage Converter",
+      "old": {
+        "wires": 1,
+        "rubber_parts": 1
+      },
+      "new": {
+        "rubber_parts": 1,
+        "wires": 1
+      }
+    },
+    {
+      "file": "water_filter.json",
+      "name": "Water Filter",
+      "old": {
+        "rubber_parts": 2,
+        "canister": 3
+      },
+      "new": {
+        "canister": 3,
+        "rubber_parts": 2
+      }
+    },
+    {
+      "file": "wolfpack.json",
+      "name": "Wolfpack",
+      "old": {
+        "crude_explosives": 1,
+        "arc_motion_core": 1
+      },
+      "new": {
+        "arc_motion_core": 1,
+        "explosive_compound": 1
+      }
+    },
+    {
+      "file": "zipline.json",
+      "name": "Zipline",
+      "old": {
+        "rope": 1,
+        "metal_parts": 1
+      },
+      "new": {
+        "metal_parts": 1,
+        "rope": 1
+      }
+    }
+  ],
+  "salvageChanges": [
+    {
+      "file": "acoustic_guitar.json",
+      "name": "Acoustic Guitar",
+      "old": {},
+      "new": {
+        "wires": 3
+      }
+    },
+    {
+      "file": "advanced_arc_powercell.json",
+      "name": "Advanced ARC Powercell",
+      "old": {},
+      "new": {
+        "arc_powercell": 1
+      }
+    },
+    {
+      "file": "advanced_mechanical_components.json",
+      "name": "Advanced Mechanical Components",
+      "old": {},
+      "new": {
+        "mechanical_components": 1
+      }
+    },
+    {
+      "file": "agave.json",
+      "name": "Agave",
+      "old": {},
+      "new": {
+        "assorted_seeds": 2
+      }
+    },
+    {
+      "file": "angled_grip_i.json",
+      "name": "Angled Grip I",
+      "old": {},
+      "new": {
+        "plastic_parts": 3
+      }
+    },
+    {
+      "file": "angled_grip_ii.json",
+      "name": "Angled Grip II",
+      "old": {},
+      "new": {
+        "mechanical_components": 1
+      }
+    },
+    {
+      "file": "angled_grip_iii.json",
+      "name": "Angled Grip III",
+      "old": {},
+      "new": {
+        "mechanical_components": 2
+      }
+    },
+    {
+      "file": "antiseptic.json",
+      "name": "Antiseptic",
+      "old": {},
+      "new": {
+        "chemicals": 5
+      }
+    },
+    {
+      "file": "anvil_splitter.json",
+      "name": "Anvil Splitter",
+      "old": {},
+      "new": {
+        "mechanical_components": 2
+      }
+    },
+    {
+      "file": "apricot.json",
+      "name": "Apricot",
+      "old": {},
+      "new": {
+        "assorted_seeds": 2
+      }
+    },
+    {
+      "file": "arc_alloy.json",
+      "name": "ARC Alloy",
+      "old": {},
+      "new": {
+        "metal_parts": 1
+      }
+    },
+    {
+      "file": "arc_circuitry.json",
+      "name": "ARC Circuitry",
+      "old": {},
+      "new": {
+        "arc_alloy": 1
+      }
+    },
+    {
+      "file": "arc_motion_core.json",
+      "name": "ARC Motion Core",
+      "old": {},
+      "new": {
+        "arc_alloy": 1
+      }
+    },
+    {
+      "file": "arc_powercell.json",
+      "name": "ARC Powercell",
+      "old": {},
+      "new": {
+        "metal_parts": 1
+      }
+    },
+    {
+      "file": "arc_synthetic_resin.json",
+      "name": "ARC Synthetic Resin",
+      "old": {
+        "plastic_parts": 8
+      },
+      "new": {
+        "plastic_parts": 9
+      }
+    },
+    {
+      "file": "arpeggio_i.json",
+      "name": "Arpeggio I",
+      "old": {},
+      "new": {
+        "simple_gun_parts": 2
+      }
+    },
+    {
+      "file": "arpeggio_ii.json",
+      "name": "Arpeggio II",
+      "old": {},
+      "new": {
+        "simple_gun_parts": 3
+      }
+    },
+    {
+      "file": "arpeggio_iii.json",
+      "name": "Arpeggio III",
+      "old": {},
+      "new": {
+        "simple_gun_parts": 4
+      }
+    },
+    {
+      "file": "arpeggio_iv.json",
+      "name": "Arpeggio IV",
+      "old": {},
+      "new": {
+        "simple_gun_parts": 5
+      }
+    },
+    {
+      "file": "bandage.json",
+      "name": "Bandage",
+      "old": {},
+      "new": {
+        "fabric": 1
+      }
+    },
+    {
+      "file": "barricade_kit.json",
+      "name": "Barricade Kit",
+      "old": {},
+      "new": {
+        "metal_parts": 3
+      }
+    },
+    {
+      "file": "bastion_cell.json",
+      "name": "Bastion Cell",
+      "old": {
+        "advanced_mechanical_components": 2
+      },
+      "new": {
+        "advanced_mechanical_components": 1
+      }
+    },
+    {
+      "file": "bettina_i.json",
+      "name": "Bettina I",
+      "old": {},
+      "new": {
+        "advanced_mechanical_components": 1
+      }
+    },
+    {
+      "file": "bettina_ii.json",
+      "name": "Bettina II",
+      "old": {},
+      "new": {
+        "advanced_mechanical_components": 2
+      }
+    },
+    {
+      "file": "bettina_iii.json",
+      "name": "Bettina III",
+      "old": {},
+      "new": {
+        "advanced_mechanical_components": 3
+      }
+    },
+    {
+      "file": "bettina_iv.json",
+      "name": "Bettina IV",
+      "old": {},
+      "new": {
+        "advanced_mechanical_components": 4
+      }
+    },
+    {
+      "file": "binoculars.json",
+      "name": "Binoculars",
+      "old": {},
+      "new": {
+        "plastic_parts": 4
+      }
+    },
+    {
+      "file": "blaze_grenade.json",
+      "name": "Blaze Grenade",
+      "old": {},
+      "new": {
+        "oil": 1
+      }
+    },
+    {
+      "file": "blue_light_stick.json",
+      "name": "Blue Light Stick",
+      "old": {},
+      "new": {
+        "chemicals": 1
+      }
+    },
+    {
+      "file": "bobcat_iv.json",
+      "name": "Bobcat IV",
+      "old": {
+        "light_gun_parts": 5
+      },
+      "new": {
+        "light_gun_parts": 4
+      }
+    },
+    {
+      "file": "bombardier_cell.json",
+      "name": "Bombardier Cell",
+      "old": {},
+      "new": {
+        "advanced_mechanical_components": 1
+      }
+    },
+    {
+      "file": "broken_handheld_radio.json",
+      "name": "Broken Handheld Radio",
+      "old": {},
+      "new": {
+        "sensors": 2
+      }
+    },
+    {
+      "file": "broken_taser.json",
+      "name": "Broken Taser",
+      "old": {},
+      "new": {
+        "battery": 2
+      }
+    },
+    {
+      "file": "burletta_i.json",
+      "name": "Burletta I",
+      "old": {},
+      "new": {
+        "simple_gun_parts": 2
+      }
+    },
+    {
+      "file": "burletta_ii.json",
+      "name": "Burletta II",
+      "old": {},
+      "new": {
+        "simple_gun_parts": 2
+      }
+    },
+    {
+      "file": "burletta_iii.json",
+      "name": "Burletta III",
+      "old": {},
+      "new": {
+        "simple_gun_parts": 3
+      }
+    },
+    {
+      "file": "burletta_iv.json",
+      "name": "Burletta IV",
+      "old": {},
+      "new": {
+        "simple_gun_parts": 4
+      }
+    },
+    {
+      "file": "canister.json",
+      "name": "Canister",
+      "old": {},
+      "new": {
+        "plastic_parts": 1
+      }
+    },
+    {
+      "file": "combat_mk1.json",
+      "name": "Combat Mk. 1",
+      "old": {},
+      "new": {
+        "plastic_parts": 3
+      }
+    },
+    {
+      "file": "combat_mk2.json",
+      "name": "Combat Mk. 2",
+      "old": {},
+      "new": {
+        "electrical_components": 1
+      }
+    },
+    {
+      "file": "combat_mk3_aggressive.json",
+      "name": "Combat Mk. 3 (Aggressive)",
+      "old": {},
+      "new": {
+        "electrical_components": 2
+      }
+    },
+    {
+      "file": "combat_mk3_flanking.json",
+      "name": "Combat Mk. 3 (Flanking)",
+      "old": {},
+      "new": {
+        "electrical_components": 2
+      }
+    },
+    {
+      "file": "compensator_ii.json",
+      "name": "Compensator II",
+      "old": {},
+      "new": {
+        "mechanical_components": 1
+      }
+    },
+    {
+      "file": "compensator_iii.json",
+      "name": "Compensator III",
+      "old": {},
+      "new": {
+        "mechanical_components": 2
+      }
+    },
+    {
+      "file": "complex_gun_parts.json",
+      "name": "Complex Gun Parts",
+      "old": {},
+      "new": {
+        "simple_gun_parts": 2
+      }
+    },
+    {
+      "file": "cooling_coil.json",
+      "name": "Cooling Coil",
+      "old": {},
+      "new": {
+        "steel_spring": 2
+      }
+    },
+    {
+      "file": "cooling_fan.json",
+      "name": "Cooling Fan",
+      "old": {},
+      "new": {
+        "wires": 4
+      }
+    },
+    {
+      "file": "cracked_bioscanner.json",
+      "name": "Cracked Bioscanner",
+      "old": {},
+      "new": {
+        "battery": 2
+      }
+    },
+    {
+      "file": "damaged_fireball_burner.json",
+      "name": "Damaged Fireball Burner",
+      "old": {},
+      "new": {
+        "metal_parts": 1
+      }
+    },
+    {
+      "file": "damaged_rocketeer_driver.json",
+      "name": "Damaged Rocketeer Driver",
+      "old": {},
+      "new": {
+        "arc_alloy": 2
+      }
+    },
+    {
+      "file": "deadline.json",
+      "name": "Deadline",
+      "old": {},
+      "new": {
+        "explosive_compound": 1
+      }
+    },
+    {
+      "file": "defibrillator.json",
+      "name": "Defibrillator",
+      "old": {},
+      "new": {
+        "chemicals": 2
+      }
+    },
+    {
+      "file": "diving_goggles.json",
+      "name": "Diving Goggles",
+      "old": {},
+      "new": {
+        "rubber_parts": 5
+      }
+    },
+    {
+      "file": "door_blocker.json",
+      "name": "Door Blocker",
+      "old": {},
+      "new": {
+        "metal_parts": 1
+      }
+    },
+    {
+      "file": "dried_out_arc_resin.json",
+      "name": "Dried-Out ARC Resin",
+      "old": {},
+      "new": {
+        "plastic_parts": 4
+      }
+    },
+    {
+      "file": "duct_tape.json",
+      "name": "Duct Tape",
+      "old": {},
+      "new": {
+        "fabric": 1
+      }
+    },
+    {
+      "file": "durable_cloth.json",
+      "name": "Durable Cloth",
+      "old": {},
+      "new": {
+        "fabric": 2
+      }
+    },
+    {
+      "file": "explosive_mine.json",
+      "name": "Explosive Mine",
+      "old": {},
+      "new": {
+        "oil": 2
+      }
+    },
+    {
+      "file": "extended_barrel.json",
+      "name": "Extended Barrel",
+      "old": {},
+      "new": {
+        "mechanical_components": 2
+      }
+    },
+    {
+      "file": "extended_light_mag_ii.json",
+      "name": "Extended Light Mag II",
+      "old": {},
+      "new": {
+        "mechanical_components": 1
+      }
+    },
+    {
+      "file": "extended_light_mag_iii.json",
+      "name": "Extended Light Mag III",
+      "old": {},
+      "new": {
+        "mechanical_components": 2
+      }
+    },
+    {
+      "file": "extended_medium_mag_i.json",
+      "name": "Extended Medium Mag I",
+      "old": {},
+      "new": {
+        "plastic_parts": 3
+      }
+    },
+    {
+      "file": "extended_medium_mag_ii.json",
+      "name": "Extended Medium Mag II",
+      "old": {},
+      "new": {
+        "mechanical_components": 1
+      }
+    },
+    {
+      "file": "extended_medium_mag_iii.json",
+      "name": "Extended Medium Mag III",
+      "old": {},
+      "new": {
+        "mechanical_components": 2
+      }
+    },
+    {
+      "file": "extended_shotgun_mag_i.json",
+      "name": "Extended Shotgun Mag I",
+      "old": {},
+      "new": {
+        "plastic_parts": 3
+      }
+    },
+    {
+      "file": "extended_shotgun_mag_ii.json",
+      "name": "Extended Shotgun Mag II",
+      "old": {},
+      "new": {
+        "mechanical_components": 1
+      }
+    },
+    {
+      "file": "extended_shotgun_mag_iii.json",
+      "name": "Extended Shotgun Mag III",
+      "old": {},
+      "new": {
+        "mechanical_components": 2
+      }
+    },
+    {
+      "file": "fabric.json",
+      "name": "Fabric",
+      "old": {},
+      "new": {
+        "bandage": 1
+      }
+    },
+    {
+      "file": "ferro_ii.json",
+      "name": "Ferro II",
+      "old": {},
+      "new": {
+        "metal_parts": 4
+      }
+    },
+    {
+      "file": "ferro_iii.json",
+      "name": "Ferro III",
+      "old": {},
+      "new": {
+        "simple_gun_parts": 1
+      }
+    },
+    {
+      "file": "ferro_iv.json",
+      "name": "Ferro IV",
+      "old": {
+        "metal_parts": 2
+      },
+      "new": {
+        "simple_gun_parts": 2
+      }
+    },
+    {
+      "file": "fertilizer.json",
+      "name": "Fertilizer",
+      "old": {},
+      "new": {
+        "assorted_seeds": 1
+      }
+    },
+    {
+      "file": "fireball_burner.json",
+      "name": "Fireball Burner",
+      "old": {},
+      "new": {
+        "arc_alloy": 1
+      }
+    },
+    {
+      "file": "flame_spray.json",
+      "name": "Flame Spray",
+      "old": {},
+      "new": {
+        "fireball_burner": 1
+      }
+    },
+    {
+      "file": "flow_controller.json",
+      "name": "Flow Controller",
+      "old": {},
+      "new": {
+        "mechanical_components": 2
+      }
+    },
+    {
+      "file": "fossilized_lightning.json",
+      "name": "Fossilized Lightning",
+      "old": {},
+      "new": {
+        "explosive_compound": 2
+      }
+    },
+    {
+      "file": "frequency_modulation_box.json",
+      "name": "Frequency Modulation Box",
+      "old": {},
+      "new": {
+        "electrical_components": 2
+      }
+    },
+    {
+      "file": "gas_grenade.json",
+      "name": "Gas Grenade",
+      "old": {},
+      "new": {
+        "chemicals": 1
+      }
+    },
+    {
+      "file": "gas_mine.json",
+      "name": "Gas Mine",
+      "old": {},
+      "new": {
+        "chemicals": 2
+      }
+    },
+    {
+      "file": "geiger_counter.json",
+      "name": "Geiger Counter",
+      "old": {},
+      "new": {
+        "battery": 3
+      }
+    },
+    {
+      "file": "great_mullein.json",
+      "name": "Great Mullein",
+      "old": {},
+      "new": {
+        "assorted_seeds": 1
+      }
+    },
+    {
+      "file": "green_light_stick.json",
+      "name": "Green Light Stick",
+      "old": {},
+      "new": {
+        "chemicals": 1
+      }
+    },
+    {
+      "file": "headphones.json",
+      "name": "Headphones",
+      "old": {},
+      "new": {
+        "speaker_component": 1
+      }
+    },
+    {
+      "file": "heavy_fuze_grenade.json",
+      "name": "Heavy Fuze Grenade",
+      "old": {},
+      "new": {
+        "crude_explosives": 1
+      }
+    },
+    {
+      "file": "heavy_gun_parts.json",
+      "name": "Heavy Gun Parts",
+      "old": {},
+      "new": {
+        "simple_gun_parts": 1
+      }
+    },
+    {
+      "file": "heavy_shield.json",
+      "name": "Heavy Shield",
+      "old": {},
+      "new": {
+        "arc_alloy": 4
+      }
+    },
+    {
+      "file": "herbal_bandage.json",
+      "name": "Herbal Bandage",
+      "old": {},
+      "new": {
+        "fabric": 8
+      }
+    },
+    {
+      "file": "hornet_driver.json",
+      "name": "Hornet Driver",
+      "old": {
+        "electrical_components": 2
+      },
+      "new": {
+        "electrical_components": 1
+      }
+    },
+    {
+      "file": "household_cleaner.json",
+      "name": "Household Cleaner",
+      "old": {},
+      "new": {
+        "chemicals": 5
+      }
+    },
+    {
+      "file": "hullcracker_i.json",
+      "name": "Hullcracker I",
+      "old": {},
+      "new": {
+        "heavy_gun_parts": 2
+      }
+    },
+    {
+      "file": "hullcracker_iv.json",
+      "name": "Hullcracker IV",
+      "old": {},
+      "new": {
+        "heavy_gun_parts": 5
+      }
+    },
+    {
+      "file": "humidifier.json",
+      "name": "Humidifier",
+      "old": {},
+      "new": {
+        "canister": 2
+      }
+    },
+    {
+      "file": "il_toro_i.json",
+      "name": "Il Toro I",
+      "old": {},
+      "new": {
+        "simple_gun_parts": 2
+      }
+    },
+    {
+      "file": "il_toro_ii.json",
+      "name": "Il Toro II",
+      "old": {},
+      "new": {
+        "simple_gun_parts": 3
+      }
+    },
+    {
+      "file": "il_toro_iii.json",
+      "name": "Il Toro III",
+      "old": {},
+      "new": {
+        "simple_gun_parts": 4
+      }
+    },
+    {
+      "file": "il_toro_iv.json",
+      "name": "Il Toro IV",
+      "old": {},
+      "new": {
+        "simple_gun_parts": 5
+      }
+    },
+    {
+      "file": "impure_arc_coolant.json",
+      "name": "Impure ARC Coolant",
+      "old": {},
+      "new": {
+        "chemicals": 5
+      }
+    },
+    {
+      "file": "ion_sputter.json",
+      "name": "Ion Sputter",
+      "old": {},
+      "new": {
+        "exodus_modules": 1
+      }
+    },
+    {
+      "file": "jolt_mine.json",
+      "name": "Jolt Mine",
+      "old": {},
+      "new": {
+        "battery": 1
+      }
+    },
+    {
+      "file": "kettle_i.json",
+      "name": "Kettle I",
+      "old": {},
+      "new": {
+        "metal_parts": 3
+      }
+    },
+    {
+      "file": "kettle_ii.json",
+      "name": "Kettle II",
+      "old": {},
+      "new": {
+        "metal_parts": 6
+      }
+    },
+    {
+      "file": "kettle_iii.json",
+      "name": "Kettle III",
+      "old": {},
+      "new": {
+        "simple_gun_parts": 1
+      }
+    },
+    {
+      "file": "kettle_iv.json",
+      "name": "Kettle IV",
+      "old": {},
+      "new": {
+        "simple_gun_parts": 2
+      }
+    },
+    {
+      "file": "kinetic_converter.json",
+      "name": "Kinetic Converter",
+      "old": {},
+      "new": {
+        "mechanical_components": 2
+      }
+    },
+    {
+      "file": "laboratory_reagents.json",
+      "name": "Laboratory Reagents",
+      "old": {},
+      "new": {
+        "crude_explosives": 3
+      }
+    },
+    {
+      "file": "leaper_pulse_unit.json",
+      "name": "Leaper Pulse Unit",
+      "old": {},
+      "new": {
+        "mechanical_components": 2
+      }
+    },
+    {
+      "file": "lemon.json",
+      "name": "Lemon",
+      "old": {},
+      "new": {
+        "assorted_seeds": 2
+      }
+    },
+    {
+      "file": "lightweight_stock.json",
+      "name": "Lightweight Stock",
+      "old": {},
+      "new": {
+        "mechanical_components": 2
+      }
+    },
+    {
+      "file": "light_gun_parts.json",
+      "name": "Light Gun Parts",
+      "old": {},
+      "new": {
+        "simple_gun_parts": 1
+      }
+    },
+    {
+      "file": "light_shield.json",
+      "name": "Light Shield",
+      "old": {},
+      "new": {
+        "arc_alloy": 1
+      }
+    },
+    {
+      "file": "lil_smoke_grenade.json",
+      "name": "Li'l Smoke Grenade",
+      "old": {},
+      "new": {
+        "chemicals": 2
+      }
+    },
+    {
+      "file": "looting_mk1.json",
+      "name": "Looting Mk. 1",
+      "old": {},
+      "new": {
+        "plastic_parts": 3
+      }
+    },
+    {
+      "file": "looting_mk2.json",
+      "name": "Looting Mk. 2",
+      "old": {},
+      "new": {
+        "electrical_components": 1
+      }
+    },
+    {
+      "file": "looting_mk3_cautious.json",
+      "name": "Looting Mk. 3 (Cautious)",
+      "old": {},
+      "new": {
+        "electrical_components": 2
+      }
+    },
+    {
+      "file": "looting_mk3_survivor.json",
+      "name": "Looting Mk. 3 (Survivor)",
+      "old": {},
+      "new": {
+        "electrical_components": 2
+      }
+    },
+    {
+      "file": "lure_grenade.json",
+      "name": "Lure Grenade",
+      "old": {},
+      "new": {
+        "speaker_component": 1
+      }
+    },
+    {
+      "file": "magnet.json",
+      "name": "Magnet",
+      "old": {},
+      "new": {
+        "metal_parts": 1
+      }
+    },
+    {
+      "file": "magnetic_accelerator.json",
+      "name": "Magnetic Accelerator",
+      "old": {},
+      "new": {
+        "advanced_mechanical_components": 1
+      }
+    },
+    {
+      "file": "magnetron.json",
+      "name": "Magnetron",
+      "old": {},
+      "new": {
+        "advanced_mechanical_components": 1
+      }
+    },
+    {
+      "file": "matriarch_reactor.json",
+      "name": "Matriarch Reactor",
+      "old": {
+        "power_rod": 1
+      },
+      "new": {
+        "magnetic_accelerator": 1
+      }
+    },
+    {
+      "file": "mechanical_components.json",
+      "name": "Mechanical Components",
+      "old": {},
+      "new": {
+        "metal_parts": 3
+      }
+    },
+    {
+      "file": "medium_gun_parts.json",
+      "name": "Medium Gun Parts",
+      "old": {},
+      "new": {
+        "simple_gun_parts": 1
+      }
+    },
+    {
+      "file": "medium_shield.json",
+      "name": "Medium Shield",
+      "old": {},
+      "new": {
+        "arc_alloy": 2
+      }
+    },
+    {
+      "file": "microscope.json",
+      "name": "Microscope",
+      "old": {},
+      "new": {
+        "mechanical_components": 2
+      }
+    },
+    {
+      "file": "mini_centrifuge.json",
+      "name": "Mini Centrifuge",
+      "old": {},
+      "new": {
+        "mechanical_components": 2
+      }
+    },
+    {
+      "file": "mod_components.json",
+      "name": "Mod Components",
+      "old": {},
+      "new": {
+        "mechanical_components": 1
+      }
+    },
+    {
+      "file": "muzzle_brake_i.json",
+      "name": "Muzzle Brake I",
+      "old": {},
+      "new": {
+        "metal_parts": 3
+      }
+    },
+    {
+      "file": "muzzle_brake_ii.json",
+      "name": "Muzzle Brake II",
+      "old": {},
+      "new": {
+        "mechanical_components": 1
+      }
+    },
+    {
+      "file": "muzzle_brake_iii.json",
+      "name": "Muzzle Brake III",
+      "old": {},
+      "new": {
+        "mechanical_components": 2
+      }
+    },
+    {
+      "file": "noisemaker.json",
+      "name": "Noisemaker",
+      "old": {},
+      "new": {
+        "speaker_component": 1
+      }
+    },
+    {
+      "file": "number_plate.json",
+      "name": "Number Plate",
+      "old": {
+        "metal_parts": 1
+      },
+      "new": {
+        "metal_parts": 2
+      }
+    },
+    {
+      "file": "oil.json",
+      "name": "Oil",
+      "old": {},
+      "new": {
+        "chemicals": 1
+      }
+    },
+    {
+      "file": "olives.json",
+      "name": "Olives",
+      "old": {},
+      "new": {
+        "assorted_seeds": 1
+      }
+    },
+    {
+      "file": "osprey_i.json",
+      "name": "Osprey I",
+      "old": {},
+      "new": {
+        "medium_gun_parts": 2
+      }
+    },
+    {
+      "file": "padded_stock.json",
+      "name": "Padded Stock",
+      "old": {},
+      "new": {
+        "mechanical_components": 2
+      }
+    },
+    {
+      "file": "pop_trigger.json",
+      "name": "Pop Trigger",
+      "old": {},
+      "new": {
+        "crude_explosives": 1
+      }
+    },
+    {
+      "file": "portable_tv.json",
+      "name": "Portable TV",
+      "old": {},
+      "new": {
+        "wires": 4
+      }
+    },
+    {
+      "file": "power_cable.json",
+      "name": "Power Cable",
+      "old": {},
+      "new": {
+        "wires": 3
+      }
+    },
+    {
+      "file": "power_rod.json",
+      "name": "Power Rod",
+      "old": {},
+      "new": {
+        "advanced_electrical_components": 1
+      }
+    },
+    {
+      "file": "prickly_pear.json",
+      "name": "Prickly Pear",
+      "old": {},
+      "new": {
+        "assorted_seeds": 2
+      }
+    },
+    {
+      "file": "processor.json",
+      "name": "Processor",
+      "old": {},
+      "new": {
+        "plastic_parts": 2
+      }
+    },
+    {
+      "file": "queen_reactor.json",
+      "name": "Queen Reactor",
+      "old": {},
+      "new": {
+        "power_rod": 1
+      }
+    },
+    {
+      "file": "radio_relay.json",
+      "name": "Radio Relay",
+      "old": {},
+      "new": {
+        "sensors": 2
+      }
+    },
+    {
+      "file": "rattler_i.json",
+      "name": "Rattler I",
+      "old": {},
+      "new": {
+        "metal_parts": 4
+      }
+    },
+    {
+      "file": "rattler_iii.json",
+      "name": "Rattler III",
+      "old": {},
+      "new": {
+        "metal_parts": 12
+      }
+    },
+    {
+      "file": "recorder.json",
+      "name": "Recorder",
+      "old": {},
+      "new": {
+        "plastic_parts": 4
+      }
+    },
+    {
+      "file": "red_light_stick.json",
+      "name": "Red Light Stick",
+      "old": {},
+      "new": {
+        "chemicals": 1
+      }
+    },
+    {
+      "file": "remote_raider_flare.json",
+      "name": "Remote Raider Flare",
+      "old": {},
+      "new": {
+        "chemicals": 1
+      }
+    },
+    {
+      "file": "renegade_i.json",
+      "name": "Renegade I",
+      "old": {},
+      "new": {
+        "medium_gun_parts": 2
+      }
+    },
+    {
+      "file": "renegade_ii.json",
+      "name": "Renegade II",
+      "old": {},
+      "new": {
+        "medium_gun_parts": 2
+      }
+    },
+    {
+      "file": "renegade_iii.json",
+      "name": "Renegade III",
+      "old": {},
+      "new": {
+        "medium_gun_parts": 3
+      }
+    },
+    {
+      "file": "renegade_iv.json",
+      "name": "Renegade IV",
+      "old": {},
+      "new": {
+        "medium_gun_parts": 3
+      }
+    },
+    {
+      "file": "rocketeer_driver.json",
+      "name": "Rocketeer Driver",
+      "old": {},
+      "new": {
+        "arc_circuitry": 1
+      }
+    },
+    {
+      "file": "rocket_thruster.json",
+      "name": "Rocket Thruster",
+      "old": {},
+      "new": {
+        "synthesized_fuel": 1
+      }
+    },
+    {
+      "file": "roots.json",
+      "name": "Roots",
+      "old": {},
+      "new": {
+        "assorted_seeds": 1
+      }
+    },
+    {
+      "file": "rope.json",
+      "name": "Rope",
+      "old": {},
+      "new": {
+        "fabric": 2
+      }
+    },
+    {
+      "file": "rotary_encoder.json",
+      "name": "Rotary Encoder",
+      "old": {},
+      "new": {
+        "processor": 2
+      }
+    },
+    {
+      "file": "rubber_pad.json",
+      "name": "Rubber Pad",
+      "old": {
+        "rubber_parts": 9
+      },
+      "new": {
+        "rubber_parts": 12
+      }
+    },
+    {
+      "file": "ruined_augment.json",
+      "name": "Ruined Augment",
+      "old": {},
+      "new": {
+        "plastic_parts": 3
+      }
+    },
+    {
+      "file": "ruined_baton.json",
+      "name": "Ruined Baton",
+      "old": {},
+      "new": {
+        "metal_parts": 4
+      }
+    },
+    {
+      "file": "ruined_handcuffs.json",
+      "name": "Ruined Handcuffs",
+      "old": {},
+      "new": {
+        "metal_parts": 4
+      }
+    },
+    {
+      "file": "rusted_gear.json",
+      "name": "Rusted Gear",
+      "old": {},
+      "new": {
+        "metal_parts": 12
+      }
+    },
+    {
+      "file": "rusted_shut_medical_kit.json",
+      "name": "Rusted Shut Medical Kit",
+      "old": {},
+      "new": {
+        "syringe": 2
+      }
+    },
+    {
+      "file": "sample_cleaner.json",
+      "name": "Sample Cleaner",
+      "old": {},
+      "new": {
+        "assorted_seeds": 12
+      }
+    },
+    {
+      "file": "seeker_grenade.json",
+      "name": "Seeker Grenade",
+      "old": {},
+      "new": {
+        "chemicals": 3
+      }
+    },
+    {
+      "file": "shaker.json",
+      "name": "Shaker",
+      "old": {},
+      "new": {
+        "plastic_parts": 4
+      }
+    },
+    {
+      "file": "shield_recharger.json",
+      "name": "Shield Recharger",
+      "old": {},
+      "new": {
+        "rubber_parts": 3
+      }
+    },
+    {
+      "file": "shotgun_choke_i.json",
+      "name": "Shotgun Choke I",
+      "old": {},
+      "new": {
+        "metal_parts": 3
+      }
+    },
+    {
+      "file": "shotgun_choke_ii.json",
+      "name": "Shotgun Choke II",
+      "old": {},
+      "new": {
+        "mechanical_components": 1
+      }
+    },
+    {
+      "file": "shotgun_choke_iii.json",
+      "name": "Shotgun Choke III",
+      "old": {},
+      "new": {
+        "mechanical_components": 2
+      }
+    },
+    {
+      "file": "shotgun_silencer.json",
+      "name": "Shotgun Silencer",
+      "old": {},
+      "new": {
+        "mechanical_components": 2
+      }
+    },
+    {
+      "file": "showstopper.json",
+      "name": "Showstopper",
+      "old": {},
+      "new": {
+        "electrical_components": 1
+      }
+    },
+    {
+      "file": "shrapnel_grenade.json",
+      "name": "Shrapnel Grenade",
+      "old": {},
+      "new": {
+        "crude_explosives": 1
+      }
+    },
+    {
+      "file": "shredder_gyro.json",
+      "name": "Shredder Gyro",
+      "old": {},
+      "new": {
+        "mechanical_components": 2
+      }
+    },
+    {
+      "file": "signal_amplifier.json",
+      "name": "Signal Amplifier",
+      "old": {},
+      "new": {
+        "voltage_converter": 2
+      }
+    },
+    {
+      "file": "silencer_i.json",
+      "name": "Silencer I",
+      "old": {},
+      "new": {
+        "mechanical_components": 1
+      }
+    },
+    {
+      "file": "silencer_ii.json",
+      "name": "Silencer II",
+      "old": {},
+      "new": {
+        "mechanical_components": 2
+      }
+    },
+    {
+      "file": "simple_gun_parts.json",
+      "name": "Simple Gun Parts",
+      "old": {},
+      "new": {
+        "metal_parts": 1
+      }
+    },
+    {
+      "file": "smoke_grenade.json",
+      "name": "Smoke Grenade",
+      "old": {},
+      "new": {
+        "chemicals": 3
+      }
+    },
+    {
+      "file": "snap_blast_grenade.json",
+      "name": "Snap Blast Grenade",
+      "old": {},
+      "new": {
+        "chemicals": 2
+      }
+    },
+    {
+      "file": "snap_hook.json",
+      "name": "Snap Hook",
+      "old": {},
+      "new": {
+        "advanced_electrical_components": 2
+      }
+    },
+    {
+      "file": "speaker_component.json",
+      "name": "Speaker Component",
+      "old": {},
+      "new": {
+        "plastic_parts": 2
+      }
+    },
+    {
+      "file": "spectrometer.json",
+      "name": "Spectrometer",
+      "old": {},
+      "new": {
+        "electrical_components": 2
+      }
+    },
+    {
+      "file": "spectrum_analyzer.json",
+      "name": "Spectrum Analyzer",
+      "old": {},
+      "new": {
+        "processor": 2
+      }
+    },
+    {
+      "file": "spotter_relay.json",
+      "name": "Spotter Relay",
+      "old": {},
+      "new": {
+        "electrical_components": 1
+      }
+    },
+    {
+      "file": "stable_stock_ii.json",
+      "name": "Stable Stock II",
+      "old": {},
+      "new": {
+        "mechanical_components": 1
+      }
+    },
+    {
+      "file": "stable_stock_iii.json",
+      "name": "Stable Stock III",
+      "old": {},
+      "new": {
+        "mechanical_components": 2
+      }
+    },
+    {
+      "file": "steel_spring.json",
+      "name": "Steel Spring",
+      "old": {
+        "metal_parts": 2
+      },
+      "new": {
+        "metal_parts": 1
+      }
+    },
+    {
+      "file": "sterilized_bandage.json",
+      "name": "Sterilized Bandage",
+      "old": {},
+      "new": {
+        "durable_cloth": 1
+      }
+    },
+    {
+      "file": "surge_shield_recharger.json",
+      "name": "Surge Shield Recharger",
+      "old": {},
+      "new": {
+        "plastic_parts": 5
+      }
+    },
+    {
+      "file": "surveyor_vault.json",
+      "name": "Surveyor Vault",
+      "old": {
+        "mechanical_components": 2
+      },
+      "new": {
+        "mechanical_components": 1
+      }
+    },
+    {
+      "file": "synthesized_fuel.json",
+      "name": "Synthesized Fuel",
+      "old": {},
+      "new": {
+        "oil": 1
+      }
+    },
+    {
+      "file": "tactical_mk1.json",
+      "name": "Tactical Mk. 1",
+      "old": {},
+      "new": {
+        "plastic_parts": 3
+      }
+    },
+    {
+      "file": "tactical_mk2.json",
+      "name": "Tactical Mk. 2",
+      "old": {},
+      "new": {
+        "electrical_components": 1
+      }
+    },
+    {
+      "file": "tactical_mk3_defensive.json",
+      "name": "Tactical Mk. 3 (Defensive)",
+      "old": {},
+      "new": {
+        "electrical_components": 2
+      }
+    },
+    {
+      "file": "tactical_mk3_healing.json",
+      "name": "Tactical Mk. 3 (Healing)",
+      "old": {},
+      "new": {
+        "electrical_components": 2
+      }
+    },
+    {
+      "file": "tattered_arc_lining.json",
+      "name": "Tattered Arc Lining",
+      "old": {},
+      "new": {
+        "fabric": 5
+      }
+    },
+    {
+      "file": "telemetry_transceiver.json",
+      "name": "Telemetry Transceiver",
+      "old": {},
+      "new": {
+        "electrical_components": 2
+      }
+    },
+    {
+      "file": "tempest_i.json",
+      "name": "Tempest I",
+      "old": {},
+      "new": {
+        "medium_gun_parts": 2
+      }
+    },
+    {
+      "file": "tempest_ii.json",
+      "name": "Tempest II",
+      "old": {},
+      "new": {
+        "medium_gun_parts": 3
+      }
+    },
+    {
+      "file": "tempest_iii.json",
+      "name": "Tempest III",
+      "old": {},
+      "new": {
+        "medium_gun_parts": 4
+      }
+    },
+    {
+      "file": "tempest_iv.json",
+      "name": "Tempest IV",
+      "old": {},
+      "new": {
+        "medium_gun_parts": 5
+      }
+    },
+    {
+      "file": "torn_blanket.json",
+      "name": "Torn Blanket",
+      "old": {},
+      "new": {
+        "fabric": 5
+      }
+    },
+    {
+      "file": "torrente_i.json",
+      "name": "Torrente I",
+      "old": {},
+      "new": {
+        "medium_gun_parts": 2
+      }
+    },
+    {
+      "file": "torrente_ii.json",
+      "name": "Torrente II",
+      "old": {},
+      "new": {
+        "medium_gun_parts": 2
+      }
+    },
+    {
+      "file": "torrente_iii.json",
+      "name": "Torrente III",
+      "old": {},
+      "new": {
+        "medium_gun_parts": 3
+      }
+    },
+    {
+      "file": "torrente_iv.json",
+      "name": "Torrente IV",
+      "old": {},
+      "new": {
+        "medium_gun_parts": 3
+      }
+    },
+    {
+      "file": "trailblazer.json",
+      "name": "Trailblazer",
+      "old": {},
+      "new": {
+        "crude_explosives": 2
+      }
+    },
+    {
+      "file": "trigger_nade.json",
+      "name": "Trigger 'Nade",
+      "old": {},
+      "new": {
+        "processor": 1
+      }
+    },
+    {
+      "file": "turbo_pump.json",
+      "name": "Turbo Pump",
+      "old": {},
+      "new": {
+        "steel_spring": 3
+      }
+    },
+    {
+      "file": "venator_i.json",
+      "name": "Venator I",
+      "old": {},
+      "new": {
+        "medium_gun_parts": 2
+      }
+    },
+    {
+      "file": "venator_ii.json",
+      "name": "Venator II",
+      "old": {},
+      "new": {
+        "medium_gun_parts": 2
+      }
+    },
+    {
+      "file": "venator_iii.json",
+      "name": "Venator III",
+      "old": {},
+      "new": {
+        "medium_gun_parts": 3
+      }
+    },
+    {
+      "file": "venator_iv.json",
+      "name": "Venator IV",
+      "old": {},
+      "new": {
+        "medium_gun_parts": 3
+      }
+    },
+    {
+      "file": "vertical_grip_i.json",
+      "name": "Vertical Grip I",
+      "old": {},
+      "new": {
+        "plastic_parts": 3
+      }
+    },
+    {
+      "file": "vertical_grip_ii.json",
+      "name": "Vertical Grip II",
+      "old": {},
+      "new": {
+        "mechanical_components": 1
+      }
+    },
+    {
+      "file": "vertical_grip_iii.json",
+      "name": "Vertical Grip III",
+      "old": {},
+      "new": {
+        "mechanical_components": 2
+      }
+    },
+    {
+      "file": "vita_shot.json",
+      "name": "Vita Shot",
+      "old": {},
+      "new": {
+        "syringe": 1
+      }
+    },
+    {
+      "file": "voltage_converter.json",
+      "name": "Voltage Converter",
+      "old": {},
+      "new": {
+        "rubber_parts": 2
+      }
+    },
+    {
+      "file": "vulcano_i.json",
+      "name": "Vulcano I",
+      "old": {},
+      "new": {
+        "heavy_gun_parts": 2
+      }
+    },
+    {
+      "file": "vulcano_ii.json",
+      "name": "Vulcano II",
+      "old": {},
+      "new": {
+        "heavy_gun_parts": 3
+      }
+    },
+    {
+      "file": "vulcano_iii.json",
+      "name": "Vulcano III",
+      "old": {},
+      "new": {
+        "heavy_gun_parts": 4
+      }
+    },
+    {
+      "file": "vulcano_iv.json",
+      "name": "Vulcano IV",
+      "old": {},
+      "new": {
+        "heavy_gun_parts": 5
+      }
+    },
+    {
+      "file": "wasp_driver.json",
+      "name": "Wasp Driver",
+      "old": {
+        "electrical_components": 1
+      },
+      "new": {
+        "arc_alloy": 2
+      }
+    },
+    {
+      "file": "wolfpack.json",
+      "name": "Wolfpack",
+      "old": {},
+      "new": {
+        "explosive_compound": 2
+      }
+    },
+    {
+      "file": "yellow_light_stick.json",
+      "name": "Yellow Light Stick",
+      "old": {},
+      "new": {
+        "chemicals": 1
+      }
+    },
+    {
+      "file": "zipline.json",
+      "name": "Zipline",
+      "old": {},
+      "new": {
+        "rope": 1
+      }
+    }
+  ],
+  "missingInNew": [
+    "backpack_black_hiker_color.json",
+    "banana.json",
+    "blue_radio_renegade_color.json",
+    "burgerboy.json",
+    "cans_backpack_attachment.json",
+    "cheer.json",
+    "junior_outfit.json",
+    "radio_renegade.json"
+  ],
+  "newItems": [
+    "agave_juice.json",
+    "alien_duck.json",
+    "ancient_fort_security_code.json",
+    "comet_igniter.json",
+    "dam_controlled_access_zone_key.json",
+    "doodly_duck.json",
+    "dusty_film_reel.json",
+    "espresso_machine_parts.json",
+    "familiar_duck.json",
+    "firefly_burner.json",
+    "flashy_duck.json",
+    "gentle_duck.json",
+    "kinetic_converter_blueprint.json",
+    "library_book.json",
+    "looting_mk3_safekeeper.json",
+    "looting_mk3_safekeeper_blueprint.json",
+    "major_aivas_mementos.json",
+    "moisture_meter.json",
+    "nutrient_meter.json",
+    "old_world_books.json",
+    "pilgrims_peak_security_code.json",
+    "possibly_toxic_plant.json",
+    "project_heartwood_blueprints.json",
+    "raiders_refuge_security_code.json",
+    "reinforced_reception_security_code.json",
+    "silencer_iii_blueprint.json",
+    "stack_of_movie_tapes.json",
+    "tactical_mk3_revival.json",
+    "tactical_mk3_revival_blueprint.json",
+    "tropical_duck.json"
+  ]
+}

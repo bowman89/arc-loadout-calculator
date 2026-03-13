@@ -137,16 +137,16 @@
   "weightKg": 14,
   "value": 27500,
   "recipe": {
-    "magnetic_accelerator": 3,
     "complex_gun_parts": 3,
+    "magnetic_accelerator": 3,
     "queen_reactor": 1
   },
   "craftBench": "weapon_bench",
   "stationLevelRequired": 3,
   "blueprintLocked": true,
   "recyclesInto": {
-    "magnetic_accelerator": 2,
-    "complex_gun_parts": 1
+    "complex_gun_parts": 1,
+    "magnetic_accelerator": 2
   },
   "salvagesInto": {
     "magnetic_accelerator": 1

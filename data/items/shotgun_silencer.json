@@ -75,5 +75,12 @@
   },
   "craftBench": "weapon_bench",
   "stationLevelRequired": 3,
-  "blueprintLocked": true
+  "blueprintLocked": true,
+  "recyclesInto": {
+    "mod_components": 1,
+    "wires": 1
+  },
+  "salvagesInto": {
+    "mechanical_components": 2
+  }
 }

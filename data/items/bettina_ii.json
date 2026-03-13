@@ -200,5 +200,12 @@
     "advanced_mechanical_components": 1,
     "heavy_gun_parts": 2
   },
-  "isWeapon": true
+  "isWeapon": true,
+  "recyclesInto": {
+    "advanced_mechanical_components": 2,
+    "heavy_gun_parts": 2
+  },
+  "salvagesInto": {
+    "advanced_mechanical_components": 2
+  }
 }

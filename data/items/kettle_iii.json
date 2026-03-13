@@ -181,5 +181,12 @@
     "metal_parts": 10,
     "simple_gun_parts": 1
   },
-  "isWeapon": true
+  "isWeapon": true,
+  "recyclesInto": {
+    "metal_parts": 12,
+    "simple_gun_parts": 1
+  },
+  "salvagesInto": {
+    "simple_gun_parts": 1
+  }
 }

@@ -44,12 +44,18 @@
   "rarity": "Rare",
   "value": 500,
   "recyclesInto": {
-    "wires": 1,
-    "plastic_parts": 1
+    "plastic_parts": 1,
+    "wires": 1
   },
   "weightKg": 0.2,
   "stackSize": 5,
   "foundIn": "Technological",
   "imageFilename": "https://cdn.arctracker.io/items/processor.png",
-  "updatedAt": "10/30/2025"
+  "updatedAt": "10/30/2025",
+  "recipe": {
+    "projector": 1
+  },
+  "salvagesInto": {
+    "plastic_parts": 2
+  }
 }

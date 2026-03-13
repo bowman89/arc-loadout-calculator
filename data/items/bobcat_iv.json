@@ -44,11 +44,11 @@
   "rarity": "Epic",
   "value": 27000,
   "recyclesInto": {
-    "light_gun_parts": 4,
-    "advanced_mechanical_components": 5
+    "advanced_mechanical_components": 5,
+    "light_gun_parts": 4
   },
   "salvagesInto": {
-    "light_gun_parts": 5
+    "light_gun_parts": 4
   },
   "imageFilename": "https://cdn.arctracker.io/items/bobcat.png",
   "updatedAt": "11/25/2025",

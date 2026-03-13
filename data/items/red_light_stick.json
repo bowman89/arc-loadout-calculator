@@ -98,5 +98,8 @@
     "chemicals": 3
   },
   "craftBench": "utility_bench",
-  "stationLevelRequired": 1
+  "stationLevelRequired": 1,
+  "salvagesInto": {
+    "chemicals": 1
+  }
 }

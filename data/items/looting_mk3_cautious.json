@@ -115,5 +115,12 @@
     "advanced_electrical_components": 2,
     "processor": 3
   },
-  "craftBench": "equipment_bench"
+  "craftBench": "equipment_bench",
+  "recyclesInto": {
+    "advanced_electrical_components": 1,
+    "processor": 1
+  },
+  "salvagesInto": {
+    "electrical_components": 2
+  }
 }

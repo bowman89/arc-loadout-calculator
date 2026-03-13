@@ -45,8 +45,8 @@
   "value": 2000,
   "weightKg": 0.5,
   "recyclesInto": {
-    "mechanical_components": 1,
-    "duct_tape": 1
+    "duct_tape": 1,
+    "mechanical_components": 1
   },
   "effects": {
     "Reduced Vertical Recoil": {
@@ -81,10 +81,13 @@
   "imageFilename": "https://cdn.arctracker.io/items/vertical_grip_ii.png",
   "updatedAt": "12/07/2025",
   "recipe": {
-    "mechanical_components": 2,
-    "duct_tape": 3
+    "duct_tape": 3,
+    "mechanical_components": 2
   },
   "craftBench": "weapon_bench",
   "stationLevelRequired": 2,
-  "blueprintLocked": true
+  "blueprintLocked": true,
+  "salvagesInto": {
+    "mechanical_components": 1
+  }
 }

@@ -46,8 +46,9 @@
   "weightKg": 1,
   "stackSize": 3,
   "recipe": {
-    "synthesized_fuel": 1,
-    "explosive_compound": 1
+    "crude_explosives": 2,
+    "firefly_burner": 1,
+    "synthesized_fuel": 1
   },
   "craftBench": "explosives_bench",
   "stationLevelRequired": 3,
@@ -95,13 +96,12 @@
       "value": "2m"
     }
   },
-  "recipe": {
-    "synthesized_fuel": 1,
-    "explosive_compound": 1
-  },
   "recyclesInto": {
     "crude_explosives": 2
   },
   "imageFilename": "https://cdn.arctracker.io/items/trailblazer.png",
-  "updatedAt": "11/14/2025"
+  "updatedAt": "11/14/2025",
+  "salvagesInto": {
+    "crude_explosives": 2
+  }
 }

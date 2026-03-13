@@ -94,5 +94,11 @@
   "recipe": {
     "chemicals": 3
   },
-  "craftBench": "utility_bench"
+  "craftBench": "utility_bench",
+  "recyclesInto": {
+    "chemicals": 1
+  },
+  "salvagesInto": {
+    "chemicals": 1
+  }
 }

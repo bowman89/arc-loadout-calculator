@@ -44,8 +44,8 @@
   "rarity": "Rare",
   "value": 640,
   "recyclesInto": {
-    "rubber_parts": 8,
-    "fabric": 4
+    "fabric": 4,
+    "rubber_parts": 8
   },
   "salvagesInto": {
     "rubber_parts": 5

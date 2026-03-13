@@ -68,8 +68,8 @@
     }
   },
   "recyclesInto": {
-    "steel_spring": 1,
-    "mechanical_components": 1
+    "mechanical_components": 1,
+    "steel_spring": 1
   },
   "imageFilename": "https://cdn.arctracker.io/items/extended_light_mag_ii.png",
   "updatedAt": "12/07/2025",
@@ -79,5 +79,8 @@
   },
   "craftBench": "weapon_bench",
   "stationLevelRequired": 2,
-  "blueprintLocked": true
+  "blueprintLocked": true,
+  "salvagesInto": {
+    "mechanical_components": 1
+  }
 }

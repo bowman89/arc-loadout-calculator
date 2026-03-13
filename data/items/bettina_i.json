@@ -155,9 +155,16 @@
   "updatedAt": "11/09/2025",
   "recipe": {
     "advanced_mechanical_components": 3,
-    "heavy_gun_parts": 3,
-    "canister": 3
+    "canister": 3,
+    "heavy_gun_parts": 3
   },
   "craftBench": "weapon_bench",
-  "isWeapon": true
+  "isWeapon": true,
+  "recyclesInto": {
+    "advanced_mechanical_components": 1,
+    "heavy_gun_parts": 2
+  },
+  "salvagesInto": {
+    "advanced_mechanical_components": 1
+  }
 }

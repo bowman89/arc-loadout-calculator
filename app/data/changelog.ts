@@ -6,6 +6,20 @@ export type ChangelogEntry = {
 
 export const changelog: ChangelogEntry[] = [
   {
+    date: "2026-02-24",
+    title: "Item database update – new items & balance adjustments",
+    items: [
+      "Updated the internal item database to match the latest ARC Raiders patch",
+      "Added 30 newly introduced items to the calculator",
+      "Removed 8 deprecated items no longer present in the game files",
+      "Updated crafting recipes for 79 items based on the latest game data",
+      "Updated recycle outputs for 113 items to reflect new material returns",
+      "Updated salvage results for 227 items to match current drop values",
+      "Adjusted item values and metadata where changed in the latest patch",
+      "Improved internal data validation scripts to automatically detect recipe and recycle changes between patches",
+    ],
+  },
+  {
     date: "2026-01-25",
     title: "Loadout history, manual saves & preview UX improvements",
     items: [

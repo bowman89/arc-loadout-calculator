@@ -52,8 +52,8 @@
     "Bettina"
   ],
   "recipe": {
-    "rubber_parts": 6,
-    "duct_tape": 1
+    "duct_tape": 1,
+    "rubber_parts": 7
   },
   "recyclesInto": {
     "rubber_parts": 6

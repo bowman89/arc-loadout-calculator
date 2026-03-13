@@ -46,10 +46,13 @@
   "value": 13000,
   "weightKg": 10,
   "recyclesInto": {
-    "power_rod": 1,
-    "magnetic_accelerator": 1
+    "magnetic_accelerator": 1,
+    "power_rod": 1
   },
   "foundIn": "ARC",
   "imageFilename": "https://cdn.arctracker.io/items/queen_part.png",
-  "updatedAt": "10/30/2025"
+  "updatedAt": "10/30/2025",
+  "salvagesInto": {
+    "power_rod": 1
+  }
 }

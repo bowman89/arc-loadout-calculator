@@ -24,8 +24,8 @@
   "type": "Recyclable",
   "value": 1000,
   "recyclesInto": {
-    "wires": 2,
-    "processor": 1
+    "processor": 1,
+    "wires": 2
   },
   "salvagesInto": {
     "processor": 1

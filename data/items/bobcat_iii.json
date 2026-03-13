@@ -44,8 +44,8 @@
   "rarity": "Epic",
   "value": 22000,
   "recyclesInto": {
-    "light_gun_parts": 4,
-    "advanced_mechanical_components": 4
+    "advanced_mechanical_components": 4,
+    "light_gun_parts": 4
   },
   "salvagesInto": {
     "light_gun_parts": 4

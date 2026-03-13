@@ -44,8 +44,8 @@
   "rarity": "Epic",
   "value": 13000,
   "recyclesInto": {
-    "light_gun_parts": 2,
-    "advanced_mechanical_components": 2
+    "advanced_mechanical_components": 2,
+    "light_gun_parts": 2
   },
   "salvagesInto": {
     "light_gun_parts": 2
@@ -53,9 +53,9 @@
   "imageFilename": "https://cdn.arctracker.io/items/bobcat.png",
   "updatedAt": "11/25/2025",
   "recipe": {
-    "magnetic_accelerator": 1,
+    "exodus_modules": 2,
     "light_gun_parts": 3,
-    "exodus_modules": 2
+    "magnetic_accelerator": 1
   },
   "craftBench": [
     "weapon_bench"

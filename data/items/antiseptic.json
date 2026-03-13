@@ -55,5 +55,8 @@
     "chemicals": 10,
     "great_mullein": 2
   },
-  "craftBench": "refiner"
+  "craftBench": "refiner",
+  "salvagesInto": {
+    "chemicals": 5
+  }
 }

@@ -26,8 +26,8 @@
   "weightKg": 2,
   "stackSize": 3,
   "recyclesInto": {
-    "rubber_parts": 3,
-    "battery": 3
+    "battery": 3,
+    "rubber_parts": 3
   },
   "description": {
     "en": "Can be recycled into crafting materials.",
@@ -51,5 +51,8 @@
   },
   "foundIn": "Medical",
   "imageFilename": "https://cdn.arctracker.io/items/cracked_bioscanner.png",
-  "updatedAt": "11/14/2025"
+  "updatedAt": "11/14/2025",
+  "salvagesInto": {
+    "battery": 2
+  }
 }

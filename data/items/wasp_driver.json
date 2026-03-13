@@ -49,7 +49,7 @@
     "electrical_components": 1
   },
   "salvagesInto": {
-    "electrical_components": 1
+    "arc_alloy": 2
   },
   "imageFilename": "https://cdn.arctracker.io/items/wasp_driver.png",
   "weightKg": 0.6,

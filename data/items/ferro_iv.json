@@ -53,7 +53,7 @@
     "materials": null
   },
   "salvagesInto": {
-    "metal_parts": 2
+    "simple_gun_parts": 2
   },
   "upgradeCost": {
     "mechanical_components": 1,

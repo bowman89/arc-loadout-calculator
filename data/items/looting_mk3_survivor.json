@@ -116,9 +116,12 @@
   },
   "craftBench": "equipment_bench",
   "recipe": {
-    "advanced_mechanical_components": 2,
-    "processor": 2
+    "advanced_electrical_components": 2,
+    "processor": 3
   },
   "imageFilename": "https://cdn.arctracker.io/items/looting_mk3_survivor.png",
-  "updatedAt": "11/11/2025"
+  "updatedAt": "11/11/2025",
+  "salvagesInto": {
+    "electrical_components": 2
+  }
 }

@@ -43,7 +43,9 @@
   "type": "Topside Material",
   "rarity": "Common",
   "value": 270,
-  "recyclesInto": {},
+  "recyclesInto": {
+    "arc_alloy": 1
+  },
   "imageFilename": "https://cdn.arctracker.io/items/arc_powercell.png",
   "updatedAt": "11/20/2025",
   "weightKg": 0.5,
@@ -113,5 +115,11 @@
       "sr": "Vreme Korišćenja",
       "value": "3s"
     }
+  },
+  "recipe": {
+    "advanced_arc_powercell": 1
+  },
+  "salvagesInto": {
+    "metal_parts": 1
   }
 }

@@ -45,8 +45,8 @@
   "value": 1600,
   "imageFilename": "https://cdn.arctracker.io/items/blaze_grenade.png",
   "recyclesInto": {
-    "oil": 2,
-    "metal_parts": 4
+    "metal_parts": 4,
+    "oil": 2
   },
   "weightKg": 0.2,
   "stackSize": 5,
@@ -115,5 +115,12 @@
       "value": "10m"
     }
   },
-  "updatedAt": "10/30/2025"
+  "updatedAt": "10/30/2025",
+  "recipe": {
+    "explosive_compound": 1,
+    "oil": 2
+  },
+  "salvagesInto": {
+    "oil": 1
+  }
 }

@@ -93,5 +93,8 @@
     "processor": 1
   },
   "updatedAt": "11/01/2025",
-  "imageFilename": "https://cdn.arctracker.io/items/anvil_splitter.png"
+  "imageFilename": "https://cdn.arctracker.io/items/anvil_splitter.png",
+  "salvagesInto": {
+    "mechanical_components": 2
+  }
 }

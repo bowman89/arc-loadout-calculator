@@ -46,11 +46,11 @@
   "stackSize": 1,
   "value": 13000,
   "recyclesInto": {
-    "power_rod": 1,
-    "magnetic_accelerator": 1
+    "magnetic_accelerator": 1,
+    "power_rod": 1
   },
   "salvagesInto": {
-    "power_rod": 1
+    "magnetic_accelerator": 1
   },
   "imageFilename": "https://cdn.arctracker.io/items/matriarch_reactor.png",
   "updatedAt": "12/07/2025"

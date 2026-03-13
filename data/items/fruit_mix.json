@@ -111,8 +111,8 @@
     }
   },
   "recipe": {
-    "lemon": 1,
     "apricot": 1,
+    "lemon": 1,
     "prickly_pear": 1
   },
   "craftBench": "Inventory",
