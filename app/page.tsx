@@ -1,37 +1,31 @@
 // app/page.tsx
-export const dynamic = "force-dynamic";
+export const dynamic = "force-dynamic"
 
-import Image from "next/image";
-import BuilderClient from "./builder/BuilderClient";
-import Changelog from "@/app/components/Changelog";
-import { ArrowRight, Search } from "lucide-react";
-import Poll from "./components/Poll";
-import Footer from "./components/Footer";
+import Image from "next/image"
+import BuilderClient from "./builder/BuilderClient"
+import Changelog from "@/app/components/Changelog"
+import { ArrowRight, Search } from "lucide-react"
+import Poll from "./components/Poll"
+import Footer from "./components/Footer"
 
 // SERVER DATA
-import { getWeapons } from "./lib/getWeapons";
-import { getItems } from "./lib/getItems";
-import { getAugments } from "./lib/getAugments";
-import { getShields } from "./lib/getShields";
-import { getQuickUse } from "./lib/getQuickUse";
-import { getAmmo } from "./lib/getAmmo";
-import { getModifications } from "./lib/getModifications";
-import { getMaterials } from "./lib/getMaterials";
-import { getRecycleGraph } from "./lib/getRecycleGraph";
+import { getWeapons } from "./lib/getWeapons"
+import { getItems } from "./lib/getItems"
+import { getAugments } from "./lib/getAugments"
+import { getShields } from "./lib/getShields"
+import { getQuickUse } from "./lib/getQuickUse"
+import { getAmmo } from "./lib/getAmmo"
+import { getModifications } from "./lib/getModifications"
+import { getMaterials } from "./lib/getMaterials"
+import { getRecycleGraph } from "./lib/getRecycleGraph"
 
 // ICONS
-import {
-  PackageCheck,
-  Layers3,
-  Repeat,
-  Brain,
-  Users,
-  Calculator,
-} from "lucide-react";
+import { PackageCheck, Layers3, Repeat, Brain, Users, Calculator } from "lucide-react"
 
 // IMAGE
-import Mockup from "../public/mockup.png";
-import SteamWhite from "../public/steam-white.png";
+import Mockup from "../public/mockup.png"
+import SteamWhite from "../public/steam-white.png"
+import DevPoll from "./components/DevPoll"
 
 // THEME COLORS
 const COLORS = {
@@ -43,18 +37,18 @@ const COLORS = {
   textLight: "#FFFFFF",
   mutedLight: "#A0A4AA",
   mutedDark: "#6B7077",
-};
+}
 
 export default async function Home() {
-  const weapons = getWeapons();
-  const items = getItems();
-  const augments = getAugments();
-  const shields = getShields();
-  const quickUses = getQuickUse();
-  const ammo = getAmmo();
-  const modification = getModifications();
-  const materials = getMaterials();
-  const recycleGraph = getRecycleGraph();
+  const weapons = getWeapons()
+  const items = getItems()
+  const augments = getAugments()
+  const shields = getShields()
+  const quickUses = getQuickUse()
+  const ammo = getAmmo()
+  const modification = getModifications()
+  const materials = getMaterials()
+  const recycleGraph = getRecycleGraph()
 
   //console.log("WEAPONS:", weapons.length);
   //console.log("ITEMS:", items.length);
@@ -92,10 +86,7 @@ export default async function Home() {
 
           <h2 className="mt-6 text-3xl font-semibold sm:text-4xl">
             LOADOUT{" "}
-            <span
-              className="rounded-md px-3 py-1"
-              style={{ backgroundColor: COLORS.accent, color: COLORS.dark }}
-            >
+            <span className="rounded-md px-3 py-1" style={{ backgroundColor: COLORS.accent, color: COLORS.dark }}>
               CALC
             </span>
           </h2>
@@ -109,9 +100,8 @@ export default async function Home() {
           </p>
 
           <p className="mx-auto mt-4 max-w-2xl text-base text-gray-400 sm:text-lg leading-relaxed">
-            <span className="font-medium text-white">LoadoutCALC</span> gives
-            you instant material breakdowns for what you need to craft weapons,
-            augments, ammo, and quick use items.
+            <span className="font-medium text-white">LoadoutCALC</span> gives you instant material breakdowns for what
+            you need to craft weapons, augments, ammo, and quick use items.
           </p>
 
           <a
@@ -143,59 +133,12 @@ export default async function Home() {
               aria-label="Discord"
               className="hover:opacity-80 inline-flex items-center justify-center cursor-pointer"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="#F4F4F5"
-                viewBox="0 0 24 24"
-              >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#F4F4F5" viewBox="0 0 24 24">
                 <path d="M20.317 4.369A19.791 19.791 0 0 0 15.956 3c-.2.364-.426.85-.58 1.234a18.37 18.37 0 0 0-5.752 0A12.7 12.7 0 0 0 9.042 3c-1.86.315-3.627.92-5.271 1.869C.807 10.247-.26 16.007.201 21.693c2.201 1.612 4.86 2.49 7.602 2.307l.576-.675c-2.468-.559-4.735-1.647-6.84-3.243-.119-2.442.292-4.866 1.296-7.064.725-.176 1.462-.337 2.22-.475.304 1.466.978 2.839 1.938 4.006.088.107.186.208.287.309 1.034.248 2.11.38 3.205.384 1.095-.003 2.171-.136 3.205-.384.101-.101.2-.202.287-.309.96-1.167 1.634-2.54 1.938-4.006a24.65 24.65 0 0 1 2.22.475c1.004 2.198 1.415 4.622 1.296 7.064-2.105 1.596-4.372 2.684-6.84 3.243l.576.675c2.742.183 5.401-.695 7.602-2.307.46-5.686-.606-11.446-3.701-17.324zM9.6 15.72c-1.067 0-1.933-.978-1.933-2.184s.866-2.184 1.933-2.184c1.068 0 1.933.978 1.933 2.184S10.668 15.72 9.6 15.72zm4.8 0c-1.067 0-1.933-.978-1.933-2.184s.866-2.184 1.933-2.184c1.068 0 1.933.978 1.933 2.184s-.865 2.184-1.933 2.184z" />
               </svg>
             </a>
           </p>
-          <div className="mt-20 max-w-3xl text-center mx-auto space-y-4 border border-[#C9B400] rounded  p-6 bg-[#C9B400]/30">
-            <h2 className="text-2xl font-semibold">
-              [2026-02-24] A quick update from the dev 👋
-            </h2>
-
-            <p>
-              First of all,{" "}
-              <span className="font-bold underline">thank you</span> to everyone
-              using the Loadout Calculator — and to all of you who take the time
-              to send feedback, report issues, or suggest improvements. It truly
-              helps shape this tool.
-            </p>
-
-            <p>
-              I also want to apologize for the item data not being updated for a
-              while. A special thanks to ⭐
-              <span className="font-semibold underline">Dawidson</span>⭐ for
-              pointing it out and calling me out on my lack of commitment there
-              — it was a fair reminder that people actually rely on the
-              calculator being up to date.
-            </p>
-
-            <p>
-              The data has now been updated to match the latest game patch, and
-              I’ve also improved my internal scripts so it will be much easier
-              to keep everything in sync going forward.
-            </p>
-
-            <p>
-              Between full-time work and dad life, this project sometimes moves
-              a little slower than I’d like — but seeing people use it and
-              hearing your feedback genuinely motivates me to keep improving it.
-            </p>
-
-            <p className="text-white/80">
-              So again — thank you to everyone using the app and especially
-              those who take the time to give feedback or report issues. It
-              really means a lot ❤️
-            </p>
-
-            <p className="text-white/80 font-bold">/BovleDK</p>
-          </div>
+          <DevPoll />
         </div>
       </section>
 
@@ -203,16 +146,11 @@ export default async function Home() {
           BENEFITS / VALUE PROPOSITION
       ───────────────────────────────────── */}
       <section className="mx-auto max-w-6xl px-6 pt-24">
-        <p
-          className="mb-3 text-xs uppercase tracking-widest"
-          style={{ color: COLORS.accentDark }}
-        >
+        <p className="mb-3 text-xs uppercase tracking-widest" style={{ color: COLORS.accentDark }}>
           Why Use LoadoutCALC?
         </p>
 
-        <h3 className="mb-12 text-3xl font-semibold">
-          Smarter Loadouts. Less Grinding.
-        </h3>
+        <h3 className="mb-12 text-3xl font-semibold">Smarter Loadouts. Less Grinding.</h3>
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-4">
           <div
@@ -222,8 +160,7 @@ export default async function Home() {
             <Calculator className="mb-4 h-6 w-6 text-accent" />
             <h4 className="mb-2 font-semibold">Instant Calculations</h4>
             <p className="text-sm" style={{ color: COLORS.mutedLight }}>
-              Get immediate material requirements as you build weapons and
-              attachments.
+              Get immediate material requirements as you build weapons and attachments.
             </p>
           </div>
 
@@ -234,8 +171,7 @@ export default async function Home() {
             <Layers3 className="mb-4 h-6 w-6 text-accent" />
             <h4 className="mb-2 font-semibold">Combined Totals</h4>
             <p className="text-sm" style={{ color: COLORS.mutedLight }}>
-              See total materials across your entire loadout without manual
-              math.
+              See total materials across your entire loadout without manual math.
             </p>
           </div>
 
@@ -276,8 +212,7 @@ export default async function Home() {
             <h4 className="mb-2 font-semibold">Recycle Lab</h4>
 
             <p className="text-sm mb-4" style={{ color: COLORS.mutedLight }}>
-              Break down items and see exactly what materials you get back
-              before recycling.
+              Break down items and see exactly what materials you get back before recycling.
             </p>
 
             {/*  <a
@@ -305,51 +240,28 @@ export default async function Home() {
       {/* ─────────────────────────────────────
           HOW IT WORKS SECTION
       ───────────────────────────────────── */}
-      <section
-        className="mt-24 py-24"
-        style={{ backgroundColor: COLORS.darkSoft }}
-      >
+      <section className="mt-24 py-24" style={{ backgroundColor: COLORS.darkSoft }}>
         <div className="mx-auto max-w-6xl px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             {/* TEXT */}
             <div>
-              <p
-                className="mb-3 text-xs uppercase tracking-widest"
-                style={{ color: COLORS.accentDark }}
-              >
+              <p className="mb-3 text-xs uppercase tracking-widest" style={{ color: COLORS.accentDark }}>
                 How it works
               </p>
-              <h2 className="mt-2 text-3xl sm:text-4xl font-bold text-white">
-                Plan smarter in 3 steps:
-              </h2>
+              <h2 className="mt-2 text-3xl sm:text-4xl font-bold text-white">Plan smarter in 3 steps:</h2>
 
               <div className="mt-6 space-y-6 text-gray-300 text-sm sm:text-base">
                 <div>
-                  <h4 className="font-semibold text-white mb-1">
-                    1. Build your loadout
-                  </h4>
-                  <p>
-                    Select your desired weapons, augments, ammo and quick use
-                    items.
-                  </p>
+                  <h4 className="font-semibold text-white mb-1">1. Build your loadout</h4>
+                  <p>Select your desired weapons, augments, ammo and quick use items.</p>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-white mb-1">
-                    2. See exact materials needed
-                  </h4>
-                  <p>
-                    Instantly get total crafting requirements – across your
-                    entire build.
-                  </p>
+                  <h4 className="font-semibold text-white mb-1">2. See exact materials needed</h4>
+                  <p>Instantly get total crafting requirements – across your entire build.</p>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-white mb-1">
-                    3. Farm with a plan
-                  </h4>
-                  <p>
-                    Use the breakdown to collect only what you need. No
-                    overfarming.
-                  </p>
+                  <h4 className="font-semibold text-white mb-1">3. Farm with a plan</h4>
+                  <p>Use the breakdown to collect only what you need. No overfarming.</p>
                 </div>
               </div>
             </div>
@@ -367,13 +279,7 @@ export default async function Home() {
                 `,
               }}
             >
-              <Image
-                src={Mockup}
-                alt="Loadout calculator example"
-                width={640}
-                height={400}
-                className="w-full h-auto"
-              />
+              <Image src={Mockup} alt="Loadout calculator example" width={640} height={400} className="w-full h-auto" />
             </div>
           </div>
 
@@ -403,24 +309,18 @@ export default async function Home() {
             `,
           }}
         >
-          <h3 className="mb-4 text-xl font-semibold">
-            About the Loadout Calculator
-          </h3>
+          <h3 className="mb-4 text-xl font-semibold">About the Loadout Calculator</h3>
 
-          <div
-            className="max-w-3xl space-y-4 text-sm leading-relaxed"
-            style={{ color: COLORS.mutedLight }}
-          >
+          <div className="max-w-3xl space-y-4 text-sm leading-relaxed" style={{ color: COLORS.mutedLight }}>
             <p>
-              The ARC Raiders Loadout Calculator is a fan-made utility built to
-              help players plan weapon loadouts and attachments before
-              deploying. It instantly calculates total crafting materials —
-              eliminating guesswork and manual calculations.
+              The ARC Raiders Loadout Calculator is a fan-made utility built to help players plan weapon loadouts and
+              attachments before deploying. It instantly calculates total crafting materials — eliminating guesswork and
+              manual calculations.
             </p>
 
             <p>
-              All crafting data is sourced from community-driven projects and
-              continuously refined by dedicated ARC Raiders fans.
+              All crafting data is sourced from community-driven projects and continuously refined by dedicated ARC
+              Raiders fans.
             </p>
 
             <p className="text-xs" style={{ color: COLORS.mutedDark }}>
@@ -436,23 +336,15 @@ export default async function Home() {
       {/* ─────────────────────────────────────
           CALCULATOR SECTION
       ───────────────────────────────────── */}
-      <section
-        id="calculator"
-        className="scroll-mt-24"
-        style={{ backgroundColor: COLORS.darkSoft }}
-      >
+      <section id="calculator" className="scroll-mt-24" style={{ backgroundColor: COLORS.darkSoft }}>
         <div className="mx-auto max-w-7xl px-4 py-24">
           <div className="mb-10 text-center">
-            <p
-              className="mb-1 text-xs uppercase tracking-widest"
-              style={{ color: COLORS.accentDark }}
-            >
+            <p className="mb-1 text-xs uppercase tracking-widest" style={{ color: COLORS.accentDark }}>
               Help me shape the tool
             </p>
 
             <p className="mx-auto mb-4 max-w-xl text-xs text-[#A0A4AA]">
-              Your feedback helps prioritize new features and improvements for
-              the community.
+              Your feedback helps prioritize new features and improvements for the community.
             </p>
 
             <Poll />
@@ -471,16 +363,11 @@ export default async function Home() {
             }}
           >
             <div className="mb-10 text-center">
-              <p
-                className="mb-2 text-xs uppercase tracking-widest"
-                style={{ color: COLORS.accentDark }}
-              >
+              <p className="mb-2 text-xs uppercase tracking-widest" style={{ color: COLORS.accentDark }}>
                 Loadout Calculator
               </p>
 
-              <h3 className="text-2xl font-semibold">
-                Build your raid loadout
-              </h3>
+              <h3 className="text-2xl font-semibold">Build your raid loadout</h3>
               <p className="mt-3 text-xs text-[#A0A4AA]">
                 <a
                   href="https://docs.google.com/forms/d/e/1FAIpQLSf1PgLtEkk91pI--JvRLkGhKM_KPgtK8O1LdN_zT9ez8g66GQ/viewform"
@@ -501,10 +388,7 @@ export default async function Home() {
 
                   <span className="inline-flex items-center gap-1 text-[#C9B400]">
                     Let me know
-                    <ArrowRight
-                      size={12}
-                      className="transition-transform group-hover:translate-x-0.5"
-                    />
+                    <ArrowRight size={12} className="transition-transform group-hover:translate-x-0.5" />
                   </span>
                 </a>
               </p>
@@ -530,5 +414,5 @@ export default async function Home() {
       ───────────────────────────────────── */}
       <Footer />
     </div>
-  );
+  )
 }
